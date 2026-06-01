@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — 글로핀드 소개 | Glofind 글로벌 B2B 마케팅</title>
+  <meta name="description" content="Glofind는 B2B 기업의 해외 시장 진입과 성장을 설계하는 글로벌 마케팅 파트너입니다. Find. Enter. Grow.">
+  <link rel="canonical" href="https://glofind.co/about">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .page-hero {
+      padding: 140px 0 72px;
+      background:
+        radial-gradient(ellipse 65% 80% at 85% 15%, rgba(0,173,189,.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 5% 85%, rgba(77,208,220,.10) 0%, transparent 52%),
+        var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--ink20) 1px, transparent 1px), linear-gradient(90deg, var(--ink20) 1px, transparent 1px);
+      background-size: 64px 64px; opacity: 0.022; pointer-events: none;
+    }
+    .page-breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .06em;
+      color: var(--ink50); margin-bottom: 24px; text-transform: uppercase;
+    }
+    .page-breadcrumb a { color: var(--ink50); transition: color .2s; }
+    .page-breadcrumb a:hover { color: var(--cyan); }
+    .page-breadcrumb-sep { color: var(--ink20); }
+    .page-h1 {
+      font-family: 'Montserrat', 'SUIT', sans-serif;
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.08;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    .page-h1 .accent { color: var(--cyan); }
+    .page-sub {
+      font-size: 17px; color: var(--ink70);
+      max-width: 560px; line-height: 1.78; margin-bottom: 36px; word-break: keep-all;
+    }
+
+    /* Mission section */
+    .mission-section {
+      padding: var(--sp-2xl) 0;
+      background: linear-gradient(145deg, #1a1a1a 0%, #111 100%);
+      color: var(--dark-text);
+    }
+    .mission-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--sp-xl); align-items: center;
+    }
+    .mission-h2 {
+      font-family: 'Montserrat', 'SUIT', sans-serif;
+      font-size: clamp(28px, 4vw, 48px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--dark-text); margin-bottom: var(--sp-md);
+    }
+    .mission-h2 .accent { color: var(--cyan-l); }
+    .mission-body { font-size: 16px; color: var(--dark-text-s); line-height: 1.85; }
+    .mission-slogan {
+      display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap;
+    }
+    .slogan-word {
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      background: rgba(0,173,189,.12); border: 1px solid rgba(0,173,189,.22);
+      color: var(--cyan-l); padding: 8px 18px; border-radius: var(--r-full);
+    }
+    @media (max-width: 767px) {
+      .mission-inner { grid-template-columns: 1fr; }
+    }
+
+    /* FEG section */
+    .feg-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--ink20);
+      border: 1px solid var(--ink20); border-radius: var(--r-xl); overflow: hidden;
+      margin-top: var(--sp-xl);
+    }
+    .feg-item {
+      background: var(--white); padding: 40px 32px; text-align: center;
+    }
+    .feg-icon {
+      width: 64px; height: 64px; margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--cyan-pale) 0%, rgba(0,173,189,.08) 100%);
+      border: 1px solid var(--cyan-ll); border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan);
+    }
+    .feg-label {
+      font-family: 'Montserrat', sans-serif; font-size: 22px;
+      font-weight: 900; color: var(--cyan); letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .feg-title {
+      font-family: 'Montserrat', 'SUIT', sans-serif; font-size: 15px;
+      font-weight: 700; color: var(--ink); margin-bottom: 10px;
+    }
+    .feg-body { font-size: 14px; color: var(--ink70); line-height: 1.78; }
+    @media (max-width: 767px) { .feg-grid { grid-template-columns: 1fr; } }
+
+    /* Values */
+    .values-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: var(--sp-sm); margin-top: var(--sp-xl);
+    }
+    .value-card {
+      background: var(--white); border: 1px solid var(--ink20);
+      border-radius: var(--r-lg); padding: 28px 20px; text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+    .value-card:hover { border-color: var(--cyan-ll); transform: translateY(-4px); }
+    .value-icon {
+      margin-bottom: 12px; color: var(--cyan); display: flex;
+    }
+    .value-icon svg { width: 32px; height: 32px; }
+    .value-name {
+      font-family: 'Montserrat', sans-serif; font-size: 13px;
+      font-weight: 700; color: var(--cyan-d); margin-bottom: 8px;
+    }
+    .value-desc { font-size: 12px; color: var(--ink70); line-height: 1.7; }
+    @media (max-width: 900px) { .values-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* Target */
+    .target-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-md); margin-top: var(--sp-xl);
+    }
+    .target-card {
+      background: var(--white); border: 1.5px solid var(--ink20);
+      border-radius: var(--r-xl); padding: 32px 24px;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .target-card:hover { border-color: var(--cyan-ll); box-shadow: var(--shadow-md); }
+    .target-rank {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--cyan); color: var(--white);
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .target-name {
+      font-family: 'Montserrat', 'SUIT', sans-serif; font-size: 16px;
+      font-weight: 800; color: var(--ink); margin-bottom: 8px;
+    }
+    .target-msg {
+      font-size: 14px; color: var(--cyan-d); font-weight: 600;
+      font-style: italic; margin-bottom: 12px; line-height: 1.6;
+    }
+    .target-need { font-size: 13px; color: var(--ink70); line-height: 1.7; }
+    @media (max-width: 767px) { .target-grid { grid-template-columns: 1fr; } }
+
+    /* CTA strip */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--cyan-dd) 0%, var(--cyan) 100%);
+      padding: 64px 0; text-align: center; margin-top: var(--sp-2xl);
+    }
+    .cta-strip h2 {
+      font-family: 'Montserrat', 'SUIT', sans-serif; font-size: clamp(24px, 3vw, 38px);
+      font-weight: 900; color: var(--white); letter-spacing: -0.03em; margin-bottom: 12px;
+    }
+    .cta-strip p { font-size: 15px; color: rgba(255,255,255,.82); margin-bottom: 28px; }
+  </style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-trail" aria-hidden="true"></div>
+<div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
+
+<nav id="nav" role="navigation" aria-label="주 내비게이션">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="Glofind 홈으로">
+        <img src="assets/images/logo-light.png" alt="Glofind" width="81" height="32">
+      </a>
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li class="nav-has-dropdown">
+            <a href="services/index.html">Services <span class="nav-chevron">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="services/gtm.html">해외 진출 전략 수립</a>
+              <a href="services/media.html">브랜드 미디어 운영</a>
+              <a href="services/influencer.html">인플루언서 캠페인</a>
+              <a href="services/ads.html">퍼포먼스 광고</a>
+              <a href="services/seo-geo-aeo.html">SEO · GEO · AEO</a>
+            </div>
+          </li>
+          <li><a href="cases.html">Cases</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="insights/index.html">Insights</a></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary btn-sm">무료 상담 신청</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" aria-labelledby="page-h1">
+  <div class="page-hero-grid" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <nav class="page-breadcrumb" aria-label="breadcrumb">
+      <a href="/">Home</a>
+      <span class="page-breadcrumb-sep" aria-hidden="true">/</span>
+      <span aria-current="page">About</span>
+    </nav>
+    <h1 class="page-h1" id="page-h1">
+      해외 시장에서<br>
+      <span class="accent">발견되고 선택되는 구조</span>를<br>설계합니다
+    </h1>
+    <p class="page-sub">Glofind는 B2B 기업의 해외 시장 진입과 성장을 설계하는 글로벌 마케팅 파트너입니다. 시장 선정부터 리드 확보까지 전략과 실행을 하나의 팀이 완결합니다.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="services/index.html" class="btn btn-primary">서비스 보기 →</a>
+      <a href="cases.html" class="btn btn-outline">성공사례 보기</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- MISSION -->
+<section class="mission-section" aria-labelledby="mission-heading">
+  <div class="container">
+    <div class="mission-inner">
+      <div class="reveal-left">
+        <span class="sec-label" style="color:var(--cyan-l);" aria-hidden="true">Our Mission</span>
+        <h2 class="mission-h2" id="mission-heading">
+          제품력은 있습니다.<br>이제 <span class="accent">발견되고<br>선택되는 구조</span>가<br>필요합니다.
+        </h2>
+        <p class="mission-body">글로핀드는 한국 B2B 기업들이 좋은 제품을 갖고도 해외 시장에서 발견되지 못하는 문제를 해결하기 위해 만들어졌습니다. 전략 없는 실행, 실행 없는 전략 — 이 두 가지 실패를 동시에 방지하는 전략 기반 실행 파트너입니다.</p>
+        <div class="mission-slogan">
+          <span class="slogan-word">Find</span>
+          <span class="slogan-word">Enter</span>
+          <span class="slogan-word">Grow</span>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <!-- Hero visual image -->
+        <div style="border-radius:var(--r-xl);overflow:hidden;margin-bottom:20px;box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 0 1px rgba(0,173,189,.15);">
+          <img src="assets/images/about-dashboard.webp" alt="글로핀드 글로벌 마케팅 대시보드 — 데이터 기반 성과 관리" width="800" height="450" loading="lazy" style="width:100%;height:auto;display:block;">
+        </div>
+        <!-- Stats overlay card -->
+        <div style="background:rgba(0,173,189,.06);border:1px solid rgba(0,173,189,.14);border-radius:var(--r-xl);padding:28px;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;color:var(--cyan-l);line-height:1;">65+</div>
+              <div style="font-size:11px;color:var(--dark-text-s);margin-top:5px;">B2B 브랜드</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;color:var(--cyan-l);line-height:1;">11+</div>
+              <div style="font-size:11px;color:var(--dark-text-s);margin-top:5px;">업종</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;background:linear-gradient(135deg,#7ee8f0,var(--cyan-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">320%+</div>
+              <div style="font-size:11px;color:var(--dark-text-s);margin-top:5px;">리드 증가율</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;color:var(--cyan-l);line-height:1;">82%+</div>
+              <div style="font-size:11px;color:var(--dark-text-s);margin-top:5px;">재계약률</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FIND ENTER GROW -->
+<section style="padding: var(--sp-2xl) 0; background: var(--white);">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="sec-label" aria-hidden="true">Our Approach</span>
+      <h2 class="section-h2">Find. Enter. Grow.</h2>
+      <p class="section-sub reveal">글로핀드의 세 단어에 모든 서비스 철학이 담겨 있습니다.</p>
+    </div>
+    <div class="feg-grid reveal">
+      <div class="feg-item">
+        <div class="feg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="feg-label">Find</div>
+        <div class="feg-title">시장을 발견합니다</div>
+        <p class="feg-body">어느 시장에, 누구에게 먼저 진입할지를 데이터와 전략으로 정의합니다. 거시·미시 시장 분석, 경쟁사 포지셔닝, ICP(이상 고객 프로파일) 설계까지 — 방향이 없으면 실행도 없습니다.</p>
+      </div>
+      <div class="feg-item" style="border-left:1px solid var(--ink20);border-right:1px solid var(--ink20);">
+        <div class="feg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        </div>
+        <div class="feg-label">Enter</div>
+        <div class="feg-title">시장에 진입합니다</div>
+        <p class="feg-body">해외 진출 전략을 바탕으로 브랜드 현지화, 채널 론칭, 광고 집행, 인플루언서 캠페인까지 실행합니다. 전략을 짠 팀이 실행까지 완결하기 때문에 간극이 없습니다.</p>
+      </div>
+      <div class="feg-item">
+        <div class="feg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <div class="feg-label">Grow</div>
+        <div class="feg-title">지속 성장합니다</div>
+        <p class="feg-body">리드 확보 이후에도 퍼포먼스를 지속 최적화하고, SEO·GEO·AEO로 인바운드 구조를 쌓아 장기 성장 기반을 만듭니다. 매주 성과 리포트로 데이터를 공유합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CORE VALUES -->
+<section style="padding: var(--sp-2xl) 0; background: var(--bg);">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="sec-label" aria-hidden="true">Core Values</span>
+      <h2 class="section-h2">글로핀드의<br>핵심 가치 체계</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="value-name">Discovery</div>
+        <p class="value-desc">올바른 시장과 고객을 찾습니다. 시장 선정, 타깃 고객 정의, ICP 설계.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div>
+        <div class="value-name">Strategy</div>
+        <p class="value-desc">성장을 위한 방향을 설계합니다. 메시지 설계, 포지셔닝, 채널 전략.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="value-name">One Source, Any Market</div>
+        <p class="value-desc">소재 하나로 어느 시장이든 즉시 대응합니다. AI 비주얼·현지화 제작.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <div class="value-name">Integrated Execution</div>
+        <p class="value-desc">통합마케팅으로 실행합니다. 콘텐츠·검색·광고·채널 운영 통합.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="value-name">Lead Growth</div>
+        <p class="value-desc">리드 확보로 연결합니다. 문의·리드·비즈니스 기회 전환 설계.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TARGET CUSTOMERS -->
+<section style="padding: var(--sp-2xl) 0; background: var(--white);">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="sec-label" aria-hidden="true">Who We Serve</span>
+      <h2 class="section-h2">글로핀드가 함께하는<br>파트너 기업</h2>
+    </div>
+    <div class="target-grid">
+      <div class="target-card reveal-left">
+        <span class="target-rank">1</span>
+        <h3 class="target-name">B2B 제조기업</h3>
+        <p class="target-msg">"제품력은 있습니다. 이제 발견되고 선택되는 구조가 필요합니다."</p>
+        <p class="target-need">국내 검증된 제품 보유, 전시회 경험 있음. 해외 바이어·파트너 발굴과 지속적 리드 확보가 필요한 기업.</p>
+      </div>
+      <div class="target-card reveal">
+        <span class="target-rank">2</span>
+        <h3 class="target-name">B2B SaaS / IT 솔루션</h3>
+        <p class="target-msg">"기능 설명을 넘어, 해외 고객이 선택할 이유를 설계합니다."</p>
+        <p class="target-need">해외 진출 과제를 담당하지만 내부 전략·실행 인력이 부족한 기업. 명확한 해외 ICP와 글로벌 메시지가 필요.</p>
+      </div>
+      <div class="target-card reveal-right">
+        <span class="target-rank">3</span>
+        <h3 class="target-name">해외마케팅 성과 부족 기업</h3>
+        <p class="target-msg">"노출은 있지만 리드가 없다면, 타깃·메시지·채널 구조를 다시 봐야 합니다."</p>
+        <p class="target-need">광고·콘텐츠·전시회를 이미 시도했지만 성과가 부족한 기업. 마케팅 구조 진단과 재정렬이 필요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="cta-strip">
+  <div class="container">
+    <h2>해외 시장, 전략대로 열립니다.</h2>
+    <p>무료 초기 상담 · 빠른 전략 방향 제안 · NDA 체결 가능</p>
+    <a href="#contact" class="btn btn-white">무료 전략 상담 신청 →</a>
+  </div>
+</div>
+
+
+<!-- CONTACT -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <span class="sec-label" aria-hidden="true">Contact Us</span>
+        <h2 class="contact-h2 reveal" id="contact-heading">글로벌 진출,<br>함께 설계합니다</h2>
+        <p class="contact-sub reveal">귀사의 업종, 타겟 시장, 현재 상황을 알려주세요. 글로핀드 전략팀이 직접 검토하고 연락드립니다.</p>
+        <div class="contact-info reveal">
+          <div class="contact-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:hello@glofind.co">hello@glofind.co</a>
+          </div>
+          <div class="contact-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>평일 09:00 — 18:00 KST</span>
+          </div>
+        </div>
+        <div class="contact-promises reveal">
+          <div class="contact-promise">초기 상담 무료</div>
+          <div class="contact-promise">빠른 전략 방향 제안</div>
+          <div class="contact-promise">NDA 체결 가능</div>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" id="contact-form" novalidate aria-label="상담 신청 폼">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company">회사명<span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="company" name="company" placeholder="(주)글로핀드" required autocomplete="organization">
+              <span class="form-error-msg" role="alert">회사명을 입력해주세요.</span>
+            </div>
+            <div class="form-group">
+              <label for="contact-name">담당자 성함<span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="contact-name" name="name" placeholder="홍길동" required autocomplete="name">
+              <span class="form-error-msg" role="alert">성함을 입력해주세요.</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-email">업무 이메일<span class="required" aria-hidden="true">*</span></label>
+              <input type="email" id="contact-email" name="email" placeholder="name@company.com" required autocomplete="work email">
+              <span class="form-error-msg" role="alert">올바른 이메일을 입력해주세요.</span>
+            </div>
+            <div class="form-group">
+              <label for="phone">연락처</label>
+              <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="service">관심 서비스<span class="required" aria-hidden="true">*</span></label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>서비스를 선택해주세요</option>
+              <option value="gtm">해외 진출 전략 수립</option>
+              
+              <option value="media">브랜드 미디어 운영</option>
+              <option value="influencer">인플루언서 캠페인</option>
+              <option value="ads">디지털 광고 운영</option>
+              <option value="seo">검색 · AI 최적화</option>
+              <option value="bundle">복합 서비스</option>
+            </select>
+            <span class="form-error-msg" role="alert">서비스를 선택해주세요.</span>
+          </div>
+          <div class="form-group">
+            <label for="message">문의 내용<span class="required" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" placeholder="귀사의 현황과 해외 진출 목표를 자유롭게 알려주세요." required rows="4"></textarea>
+            <span class="form-error-msg" role="alert">문의 내용을 입력해주세요.</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">상담 신청하기 →</button>
+        </form>
+        <div class="form-success" id="form-success" role="alert" aria-live="polite">
+          ✓ 상담 신청이 완료되었습니다.<br>
+          <small style="font-weight:400;display:block;margin-top:8px;opacity:0.8;">담당자가 빠르게 연락드리겠습니다.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <a href="/" class="nav-logo" aria-label="Glofind 홈으로">
+            <img src="assets/images/logo-dark.png" alt="Glofind" width="81" height="32">
+          </a>
+        </div>
+        <p class="footer-tagline">Find. Enter. Grow.</p>
+        <p>B2B 기업의 해외 시장 진입과 성장을 설계하는 글로벌 마케팅 파트너.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services/gtm.html">해외 진출 전략 수립</a></li>
+          
+          <li><a href="services/media.html">브랜드 미디어 운영</a></li>
+          <li><a href="services/influencer.html">인플루언서 캠페인</a></li>
+          <li><a href="services/ads.html">디지털 광고 운영</a></li>
+          <li><a href="services/seo-geo-aeo.html">검색 · AI 최적화</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="cases.html">Cases</a></li>
+          <li><a href="insights/index.html">Insights</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@glofind.co">hello@glofind.co</a></li>
+          <li><a href="https://www.linkedin.com/company/glofind" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><span style="font-size:13px;color:var(--dark-text-s)">평일 09:00–18:00 KST</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 글로핀드. All rights reserved.</p>
+      <span>Brand Guidelines V1.0</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

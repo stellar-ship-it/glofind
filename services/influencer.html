@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인플루언서 캠페인 — 글로벌 KOL 네트워크 | Glofind</title>
+  <meta name="description" content="북미·동남아·유럽 글로벌 인플루언서 네트워크로 신뢰 기반 B2B 브랜드 인지도를 구축합니다.">
+  <link rel="canonical" href="https://glofind.co/services/influencer.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=SUIT:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <style>
+    .page-hero {
+      padding: 140px 0 80px;
+      background:
+        radial-gradient(ellipse 65% 80% at 85% 15%, rgba(0,173,189,.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 5% 85%, rgba(77,208,220,.10) 0%, transparent 52%),
+        var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--ink20) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ink20) 1px, transparent 1px);
+      background-size: 64px 64px; opacity: 0.022; pointer-events: none;
+    }
+    .page-breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; letter-spacing: .06em;
+      color: var(--ink50); margin-bottom: 24px; text-transform: uppercase;
+    }
+    .page-breadcrumb a { color: var(--ink50); transition: color .2s; }
+    .page-breadcrumb a:hover { color: var(--cyan); }
+    .page-breadcrumb-sep { color: var(--ink20); }
+    .page-h1 {
+      font-family: 'Montserrat', 'SUIT', sans-serif;
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.08;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    .page-h1 .accent { color: var(--cyan); }
+    .page-sub {
+      font-size: 17px; color: var(--ink70);
+      max-width: 560px; line-height: 1.78; margin-bottom: 48px; word-break: keep-all;
+    }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--ink20);
+      border: 1px solid var(--ink20); border-radius: var(--r-lg);
+      overflow: hidden; max-width: 720px;
+    }
+    @media(max-width:600px){ .hero-stats { grid-template-columns: 1fr; } }
+    .hero-stat { background: var(--white); padding: 24px 28px; }
+    .hero-stat-val {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(28px, 3.2vw, 40px); font-weight: 900;
+      color: var(--cyan-d); line-height: 1; margin-bottom: 8px;
+    }
+    .hero-stat-label { font-size: 15px; color: var(--ink60); line-height: 1.55; }
+
+    /* KOL Types */
+    .types-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px; margin-top: var(--sp-lg);
+    }
+    .type-card {
+      border: 1px solid var(--ink20); border-radius: var(--r-lg);
+      padding: 26px; background: var(--white);
+      transition: box-shadow .25s, border-color .25s;
+    }
+    .type-card:hover { box-shadow: var(--shadow-md); border-color: var(--cyan); }
+    .type-icon { margin-bottom: 14px; color: var(--cyan); display: flex; }
+    .type-icon svg { width: 32px; height: 32px; }
+    .type-card h3 { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .type-card p { font-size: 14px; color: var(--ink60); line-height: 1.7; margin-bottom: 12px; }
+    .type-tag {
+      display: inline-block; padding: 3px 10px;
+      background: var(--cyan-pale); color: var(--cyan-d);
+      border-radius: 999px; font-size: 12px; font-weight: 700;
+    }
+
+    /* Process timeline */
+    .process-list { display: flex; flex-direction: column; gap: 0; margin-top: var(--sp-lg); position: relative; }
+    .process-list::before {
+      content: ''; position: absolute; left: 19px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--cyan), transparent);
+    }
+    .process-item { display: flex; gap: 20px; padding: 20px 0; }
+    .process-dot {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--dark-bg); border: 2px solid var(--cyan);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1;
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; color: var(--cyan);
+    }
+    .process-item h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .process-item p { font-size: 14px; color: var(--ink60); line-height: 1.7; }
+
+    /* Sub sections */
+    .sub-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--sp-xl); align-items: start;
+    }
+    @media(max-width:768px){ .sub-section { grid-template-columns: 1fr; } }
+    .sub-section.reverse { direction: rtl; }
+    .sub-section.reverse > * { direction: ltr; }
+    .sub-label {
+      font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 12px;
+    }
+    .sub-h3 {
+      font-family: 'Montserrat', 'SUIT', sans-serif;
+      font-size: clamp(20px, 2.5vw, 28px); font-weight: 900;
+      letter-spacing: -.03em; color: var(--ink); line-height: 1.25; margin-bottom: 16px;
+    }
+    .sub-body { font-size: 16px; color: var(--ink70); line-height: 1.8; margin-bottom: 20px; }
+    .sub-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .sub-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--ink70); line-height: 1.6;
+    }
+    .sub-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--cyan); flex-shrink: 0; margin-top: 6px;
+    }
+    .sub-visual {
+      background: var(--dark-bg); border-radius: var(--r-xl);
+      padding: var(--sp-lg); display: flex; flex-direction: column; gap: 12px;
+    }
+    .sub-visual-item {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--r-md); padding: 14px 16px;
+    }
+    .sub-visual-num {
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 800;
+      color: var(--cyan); min-width: 28px; flex-shrink: 0;
+    }
+    .sub-visual-item p { font-size: 13px; color: var(--dark-text); font-weight: 600; }
+    .sub-visual-item span { font-size: 12px; color: var(--dark-text-s); display: block; margin-top: 2px; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 0; margin-top: var(--sp-lg); }
+    .faq-item { border-bottom: 1px solid var(--ink20); overflow: hidden; }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0; cursor: pointer; gap: 16px;
+      font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.45;
+      user-select: none; list-style: none;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-arrow {
+      width: 24px; height: 24px; flex-shrink: 0;
+      border: 1.5px solid var(--ink20); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink50); font-size: 14px; transition: transform .3s, border-color .3s;
+    }
+    details[open] .faq-arrow { transform: rotate(45deg); border-color: var(--cyan); color: var(--cyan); }
+    .faq-a { padding: 0 0 22px; font-size: 16px; color: var(--ink60); line-height: 1.8; max-width: 720px; }
+
+    /* CTA */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--cyan-d) 0%, var(--cyan) 100%);
+      padding: var(--sp-xl) 0; text-align: center;
+    }
+    .cta-strip h2 {
+      font-family: 'Montserrat', sans-serif; font-size: clamp(22px, 3vw, 32px);
+      font-weight: 900; color: #fff; margin-bottom: 12px; letter-spacing: -.02em;
+    }
+    .cta-strip p { font-size: 15px; color: rgba(255,255,255,.85); margin-bottom: 28px; }
+    .btn-white {
+      background: #fff; color: var(--cyan-d); padding: 14px 32px;
+      border-radius: var(--r-full); font-weight: 800; font-size: 15px;
+      display: inline-block; transition: transform .2s, box-shadow .2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+
+    /* ── Section Spacing ── */
+    .section { padding: var(--sp-xl) 0; }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">본문 바로가기</a>
+<div class="scroll-progress" role="progressbar" aria-label="스크롤 진행도"></div>
+
+<nav class="nav" role="navigation" aria-label="메인 내비게이션">
+  <div class="container nav-inner">
+    <a href="../" class="nav-logo" aria-label="Glofind 홈으로">
+      <img src="../assets/images/logo-light.png" alt="Glofind" width="81" height="32">
+    </a>
+    <button class="nav-hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links" role="list">
+      <li class="nav-has-dropdown">
+            <a href="index.html" class="active">Services <span class="nav-chevron">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="gtm.html">해외 진출 전략 수립</a>
+              <a href="media.html">브랜드 미디어 운영</a>
+              <a href="influencer.html">인플루언서 캠페인</a>
+              <a href="ads.html">퍼포먼스 광고</a>
+              <a href="seo-geo-aeo.html">SEO · GEO · AEO</a>
+            </div>
+          </li>
+      <li><a href="../cases.html">Cases</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../insights/index.html">Insights</a></li>
+      <li><a href="../#contact" class="btn btn-sm btn-primary">상담 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="page-hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <nav class="page-breadcrumb" aria-label="경로">
+      <a href="../">Home</a><span class="page-breadcrumb-sep">/</span>
+      <a href="index.html">Services</a><span class="page-breadcrumb-sep">/</span>
+      <span aria-current="page">인플루언서 캠페인</span>
+    </nav>
+    <h1 class="page-h1"><span class="accent">인플루언서</span> 캠페인<br>글로벌 KOL 네트워크</h1>
+    <p class="page-sub">광고가 아닌 신뢰로 팔립니다. 북미·동남아·유럽의 버티컬 인플루언서와 LinkedIn KOL이 실제 사용자로서 브랜드를 소개합니다.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val">92%</div>
+        <div class="hero-stat-label">소비자가 광고보다<br>신뢰하는 인플루언서 콘텐츠</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">+180%</div>
+        <div class="hero-stat-label">KOL 협업 후<br>평균 브랜드 검색량 증가</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">원스톱</div>
+        <div class="hero-stat-label">발굴·검증·계약·실행·측정<br>전 과정 대행</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- KOL Types -->
+<section class="section" aria-labelledby="types-h">
+  <div class="container">
+    <p class="sec-label reveal">KOL Types</p>
+    <h2 class="section-h2 reveal" id="types-h">4가지 인플루언서 유형</h2>
+    <div class="types-grid">
+      <div class="type-card reveal">
+        <div class="type-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <h3>LinkedIn KOL</h3>
+        <p>B2B 의사결정자·구매담당자가 팔로우하는 업계 전문가. 제품 리뷰·케이스 스터디 형식의 신뢰도 높은 콘텐츠를 생성합니다.</p>
+        <span class="type-tag">B2B 특화</span>
+      </div>
+      <div class="type-card reveal">
+        <div class="type-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3>버티컬 유튜버</h3>
+        <p>특정 산업·카테고리 전문 채널. 구독자 충성도가 높아 실제 구매 전환율이 일반 광고 대비 3~5배 높습니다.</p>
+        <span class="type-tag">전환율 특화</span>
+      </div>
+      <div class="type-card reveal">
+        <div class="type-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <h3>나노 · 마이크로</h3>
+        <p>팔로워 1만~10만 규모의 고관여 계정. 특정 지역·커뮤니티 내 입소문 효과가 강력합니다.</p>
+        <span class="type-tag">인지도 확산</span>
+      </div>
+      <div class="type-card reveal">
+        <div class="type-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>뉴스레터 작성자</h3>
+        <p>업계 전문 뉴스레터 구독자는 구매 결정자 비율이 높습니다. 스폰서드 콘텐츠로 직접 도달합니다.</p>
+        <span class="type-tag">구매자 도달</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Influencer Validation -->
+<section class="section" style="background:var(--dark-bg)" aria-labelledby="valid-h">
+  <div class="container">
+    <div class="sub-section">
+      <div class="reveal">
+        <p class="sub-label" style="color:var(--cyan)">Influencer Validation</p>
+        <h3 class="sub-h3" id="valid-h" style="color:var(--dark-text)">팔로워 수보다<br>신뢰도가 중요합니다</h3>
+        <p class="sub-body" style="color:var(--dark-text-s)">팔로워 100만 계정이 팔로워 5만 계정보다 전환율이 낮은 경우가 많습니다. Glofind는 팔로워 신뢰도·참여율·팔로워 구성·허위 계정 비율을 다층 검증해 실제 타겟에게 닿는 인플루언서만 선별합니다.</p>
+        <ul class="sub-list" style="--color:var(--dark-text-s)">
+          <li style="color:var(--dark-text-s)">팔로워 참여율 (Engagement Rate) 분석</li>
+          <li style="color:var(--dark-text-s)">팔로워 구성 (국가·직업·연령) 검증</li>
+          <li style="color:var(--dark-text-s)">허위 팔로워·봇 계정 필터링</li>
+          <li style="color:var(--dark-text-s)">과거 협업 이력 & 브랜드 적합성 검토</li>
+        </ul>
+      </div>
+      <div class="sub-visual reveal">
+        <div class="sub-visual-item">
+          <span class="sub-visual-num">①</span>
+          <div><p>1차 롱리스트 작성</p><span>카테고리·시장·팔로워 규모 기준 100명+</span></div>
+        </div>
+        <div class="sub-visual-item">
+          <span class="sub-visual-num">②</span>
+          <div><p>데이터 기반 검증</p><span>참여율·팔로워 구성·봇 필터링</span></div>
+        </div>
+        <div class="sub-visual-item">
+          <span class="sub-visual-num">③</span>
+          <div><p>브랜드 적합성 검토</p><span>과거 협업·콘텐츠 톤앤매너 확인</span></div>
+        </div>
+        <div class="sub-visual-item">
+          <span class="sub-visual-num">④</span>
+          <div><p>최종 숏리스트 제안</p><span>클라이언트 승인 후 컨택 진행</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Campaign Process -->
+<section class="section" aria-labelledby="process-h">
+  <div class="container">
+    <p class="sec-label reveal">Campaign Process</p>
+    <h2 class="section-h2 reveal" id="process-h">캠페인 진행 5단계</h2>
+    <div class="process-list reveal">
+      <div class="process-item">
+        <div class="process-dot">01</div>
+        <div>
+          <h4>브리프 & 목표 설정</h4>
+          <p>캠페인 목표(인지도·전환·리드), 타깃 시장, 메시지 방향, 금지 사항을 확정합니다.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-dot">02</div>
+        <div>
+          <h4>인플루언서 발굴 & 검증</h4>
+          <p>다층 검증 프로세스로 팔로워 신뢰도·참여율·허위 계정 비율을 확인하고 숏리스트를 제안합니다.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-dot">03</div>
+        <div>
+          <h4>컨택 & 계약 대행</h4>
+          <p>인플루언서 아웃리치, 조건 협상, 계약 처리까지 전 과정을 대행합니다.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-dot">04</div>
+        <div>
+          <h4>콘텐츠 제작 & 배포</h4>
+          <p>크리에이터와 협력해 자연스러운 콘텐츠를 제작합니다. 브랜드 검토 후 배포합니다.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="process-dot">05</div>
+        <div>
+          <h4>성과 측정 & 보고</h4>
+          <p>도달수·참여율·링크 클릭·리드 전환을 측정하고 캠페인 종료 2주 내 성과 보고서를 납품합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="section" style="background:var(--cyan-pale)" aria-labelledby="faq-h">
+  <div class="container" style="max-width:820px">
+    <p class="sec-label reveal">FAQ</p>
+    <h2 class="section-h2 reveal" id="faq-h">자주 묻는 질문</h2>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary class="faq-q">
+          B2B 제품도 인플루언서 캠페인이 효과적인가요?
+          <span class="faq-arrow">+</span>
+        </summary>
+        <p class="faq-a">네, B2B에서 인플루언서 마케팅은 빠르게 성장하고 있습니다. LinkedIn KOL, 버티컬 유튜버, 업계 뉴스레터 작성자를 활용한 캠페인은 의사결정자에게 직접 신뢰를 구축합니다. 특히 SaaS, 산업 장비, 전문 서비스 분야에서 효과가 검증되어 있습니다.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">
+          최소 몇 명의 인플루언서부터 캠페인이 가능한가요?
+          <span class="faq-arrow">+</span>
+        </summary>
+        <p class="faq-a">최소 3명의 인플루언서 씨딩 캠페인부터 진행 가능합니다. 단, 5명 이상일 때 통계적으로 의미 있는 성과 데이터를 수집할 수 있어 10명 이상을 권장합니다. 소규모로 시작해 성과를 확인 후 확대하는 파일럿 방식도 지원합니다.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">
+          콘텐츠 방향은 인플루언서가 자유롭게 결정하나요?
+          <span class="faq-arrow">+</span>
+        </summary>
+        <p class="faq-a">크리에이터의 자연스러운 목소리가 가장 효과적이므로, 콘텐츠 방향은 크리에이터에게 주도권을 드리되 핵심 메시지·금지 사항·브랜드 가이드라인을 브리프로 공유합니다. 배포 전 브랜드 검토를 통해 최소한의 기준을 확인합니다.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">
+          어떤 시장의 인플루언서 네트워크를 보유하고 있나요?
+          <span class="faq-arrow">+</span>
+        </summary>
+        <p class="faq-a">북미(미국·캐나다), 동남아(베트남·태국·인도네시아·싱가포르·말레이시아), 유럽(영국·독일·프랑스·네덜란드), 일본·호주 시장 인플루언서 네트워크를 보유하고 있습니다. 특정 시장이나 산업 버티컬을 말씀해 주시면 네트워크 보유 현황을 확인해 드립니다.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">
+          인플루언서 계약과 저작권은 어떻게 처리되나요?
+          <span class="faq-arrow">+</span>
+        </summary>
+        <p class="faq-a">Glofind가 인플루언서와의 계약을 대행하며, 콘텐츠 사용 기간·채널·용도를 계약서에 명시합니다. 브랜드가 콘텐츠를 광고 소재로 재활용할 경우 별도 라이선스 조항을 추가합니다. 계약서 초안 검토를 위해 법무팀 공유가 가능합니다.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div class="container">
+    <h2>신뢰가 가장 강력한 광고입니다.</h2>
+    <p>무료 인플루언서 전략 상담 · 시장·목표 맞춤 제안</p>
+    <a href="../#contact" class="btn btn-white">캠페인 상담 신청 →</a>
+  </div>
+</div>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <a href="../" class="nav-logo" aria-label="Glofind 홈으로">
+            <img src="../assets/images/logo-dark.png" alt="Glofind" width="81" height="32">
+          </a>
+        </div>
+        <p class="footer-tagline">Find. Enter. Grow.</p>
+        <p>B2B 기업의 해외 시장 진입과 성장을 설계하는 글로벌 마케팅 파트너.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="gtm.html">GTM 전략 수립</a></li>
+          
+          <li><a href="media.html">브랜드 미디어 운영</a></li>
+          <li><a href="influencer.html">인플루언서 캠페인</a></li>
+          <li><a href="ads.html">디지털 광고 운영</a></li>
+          <li><a href="seo-geo-aeo.html">검색 · AI 최적화</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../cases.html">Cases</a></li>
+          <li><a href="../insights/index.html">Insights</a></li>
+          <li><a href="../#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@glofind.co">hello@glofind.co</a></li>
+          <li><a href="https://www.linkedin.com/company/glofind" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><span style="font-size:13px;color:var(--dark-text-s)">평일 09:00–18:00 KST</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 글로핀드. All rights reserved.</p>
+      <span>Brand Guidelines V1.0</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
