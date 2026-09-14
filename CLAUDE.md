@@ -91,7 +91,7 @@
 ## 파일 구성
 
 - `assets/css/tokens.css` — 위 토큰. 다른 파일에서 hex/px를 직접 쓰지 않는다
-- `assets/css/site.css` — 컴포넌트 (main.css 는 구 시스템 — 서브페이지 이관 전까지만 유지)
+- `assets/css/site.css` — 컴포넌트 · `assets/css/pages/*.css` — 서비스·인사이트 페이지 전용 (구 main.css 는 2026-09-14 제거)
 - `assets/css/motion.css` — 모션·질감 레이어
 - `assets/js/motion.js` — Tier 1 모션 (리빌·패럴랙스·자기력·상하이동·커서·단어 분해)
 - `assets/js/motion2.js` — Tier 2 모션 (GSAP ScrollTrigger + Lenis: 히어로 스크럽·프로세스 진행선·티커 속도·호버 이미지) — 가드로 감싸 미로드 시 Tier 1만 동작

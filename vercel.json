@@ -1,0 +1,11 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/services/index.html", "destination": "/services/", "permanent": true },
+    { "source": "/insights/index.html", "destination": "/insights/", "permanent": true },
+    { "source": "/services/:slug.html", "destination": "/services/:slug/", "permanent": true },
+    { "source": "/insights/:slug.html", "destination": "/insights/:slug/", "permanent": true },
+    { "source": "/:page.html", "destination": "/:page/", "permanent": true }
+  ]
+}

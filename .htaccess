@@ -1,0 +1,12 @@
+# 카페24(Apache) 이전용 — Vercel 에서는 .vercelignore 로 제외된다.
+Options -Indexes
+DirectoryIndex index.html
+RewriteEngine On
+
+# 옛 .html 주소 → 확장자 없는 폴더 주소로 301 (클라이언트가 직접 요청한 경우에만)
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]
+RewriteRule ^index\.html$ / [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+(services|insights)/index\.html[\s?]
+RewriteRule ^(services|insights)/index\.html$ /$1/ [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+[^?\s]+\.html[\s?]
+RewriteRule ^(.+)\.html$ /$1/ [R=301,L]

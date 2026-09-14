@@ -3,13 +3,16 @@
 ## 폴더 구조
 
 ```
-index.html              메인 (신규 시스템)
-about.html              About (신규 시스템)
-cases.html · services/* · insights/*   구 시스템(main.css) — 승인 후 이관 예정
+index.html              메인
+about/ · cases/ · privacy/          각 폴더의 index.html — URL 은 /about/ 처럼 확장자 없이 노출 (2026-09-14)
+services/<slug>/ · insights/<slug>/   동일 구조. 링크·에셋 경로는 전부 루트 절대경로(/assets/…)
+sitemap.xml · robots.txt · favicon.ico   검색 엔진·브라우저용
+vercel.json             Vercel — 옛 .html 주소 301 · trailingSlash. .vercelignore 로 문서·.htaccess 제외
+.htaccess               카페24(Apache) 이전용 — 같은 301 규칙. 폴더째 올리면 그대로 동작
 assets/css/tokens.css   디자인 토큰 — 색·타입·간격·모션. 다른 파일에서 hex/px 직접 사용 금지
 assets/css/site.css     컴포넌트 (신규 시스템 페이지 전용)
 assets/css/motion.css   모션·질감 레이어
-assets/css/main.css     구 시스템 (이관 전까지 유지)
+assets/css/pages/     services.css · insights.css — 해당 섹션 전용
 assets/js/site.js       헤더·모바일 메뉴·카운트업·폼·앵커
 assets/js/motion.js     Tier 1 모션 — 의존성 없음 (리빌·단어 스태거·히어로 네트워크 canvas·자기력·상하 버튼)
 assets/js/motion2.js    Tier 2 모션 — GSAP + ScrollTrigger + Lenis: 히어로 커튼(clip) · 역량 가로 스크롤 핀 · 스택 상태 · 표 와이프 · 커서 링
@@ -76,7 +79,7 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 
 ## 2026-09-04 밤 — 전체 페이지 신규 시스템 이관 완료
 
-- 모든 라이브 페이지가 `tokens.css + site.css + motion.css`(+ `assets/css/pages/services.css` · `insights.css`)로 동작한다. `main.css`는 `_backup_20260723/`과 프로토타입 파일만 참조 — 삭제 가능 시점.
+- 모든 라이브 페이지가 `tokens.css + site.css + motion.css`(+ `assets/css/pages/services.css` · `insights.css`)로 동작한다. `main.css`·백업·프로토타입은 2026-09-14 `../글로핀드_archive_20260914/`로 이동했다.
 - 신규: `cases.html`(실사례 6건 4블록 + 후기), `privacy.html`(개인정보처리방침 초안, "확인 필요" 표시), about `.history` 섹션, 폼 동의 체크박스(`.field--consent`, site.js `contactForm`이 체크박스 검증), 푸터 `.footer__legal`.
 - 로고: `assets/images/logo-{light,dark}.webp`(투명, 14KB). 원본 PNG는 체커보드가 박힌 불투명 파일이었으므로 다시 쓰지 말 것. `logo-*.png`도 투명본으로 교체됨.
 - 승인·확인 대기 항목은 `보완사항_체크리스트_20260904.md` 상단 "진행 현황" 참조.
