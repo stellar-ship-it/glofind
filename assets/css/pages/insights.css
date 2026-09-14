@@ -1,0 +1,169 @@
+/* ============================================================
+   Glofind — pages/insights.css  (2026-09-04)
+   인사이트 목록·아티클 전용. 값은 전부 tokens.css 에서 온다.
+   그림자 0 · 라운드 0(원형만) · 시안 면 없음 · 700 은 디스플레이만 — CLAUDE.md
+   site.css 다음에 로드한다. .prose / .legal / .page-hero / .tag / .arrow 는 site.css 것을 재사용.
+   ============================================================ */
+
+/* ── 목록 — 페이지 히어로 하단 필터 (밑줄 탭 · nav 와 같은 어휘) ── */
+.ins-filter { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin-block-start: var(--s5); border-block-end: var(--hair) solid var(--line); }
+.ins-filter button { position: relative; padding-block: 14px; font-size: var(--fs-sm); font-weight: var(--w-mid); letter-spacing: inherit; color: var(--ink-50); transition: color var(--d-ui) var(--e); }
+.ins-filter button::after { content: ''; position: absolute; inset: auto 0 -1px 0; block-size: 2px; background: var(--cyan); transform: scaleX(0); transform-origin: right; transition: transform 320ms var(--e); }
+.ins-filter button:hover, .ins-filter button[aria-selected="true"] { color: var(--ink); }
+.ins-filter button[aria-selected="true"]::after { transform: scaleX(1); transform-origin: left; }
+.ins-filter button b { font-family: var(--font-en); font-size: var(--fs-micro); font-weight: var(--w-strong); letter-spacing: .16em; color: var(--ink-30); margin-inline-start: 6px; font-variant-numeric: tabular-nums; }
+.page-hero .ins-filter { margin-block-end: calc(var(--s5) * -1); border-block-end: 0; }
+
+/* ── 목록 — 대표 아티클 7:5 ── */
+.ins-featured { padding-block: var(--section-y); background: var(--surface); }
+.ins-feature { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s5); align-items: stretch; margin-block-start: var(--s4); border-block: var(--hair) solid var(--line); }
+.ins-feature[hidden] { display: none; }
+.ins-feature__media { position: relative; display: block; overflow: hidden; min-block-size: 420px; }
+.ins-feature__media img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform 900ms var(--e); }
+.ins-feature__media.duo::before { opacity: .45; }
+.ins-feature__body { display: flex; flex-direction: column; padding: var(--s4) var(--s4) var(--s4) 0; }
+.ins-feature__body h2 { font-size: clamp(26px, 2.4vw, 36px); font-weight: var(--w-mid); line-height: 1.22; letter-spacing: -.03em; margin-block: var(--s2) var(--s3); text-wrap: initial; transition: color var(--d-ui) var(--e); }
+.ins-feature__body > p:not(.ins-meta) { color: var(--ink-70); max-inline-size: 30rem; }
+.ins-feature__body .arrow { margin-block-start: auto; align-self: flex-start; padding-block-start: var(--s3); }
+
+/* ── 메타 행 — 13px 라벨 벌 · 구분점은 site.css .tag ── */
+.ins-meta { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: var(--fs-label); color: var(--ink-50); }
+.page-hero .ins-meta { margin-block-end: var(--s2); }
+
+/* ── 목록 — 헤어라인 3열 격자 (이미지 없는 카드) · 관련 아티클 3열 (이미지 카드) ── */
+.ins-list { padding-block: var(--section-y); background: var(--bg); }
+.ins-list__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--s3); margin-block-end: var(--s4); }
+.ins-list__head .t-h2, .ins-related .t-h2 { margin-block-start: var(--s3); font-size: clamp(32px, 4vw, 56px); }
+.ins-list__count { font-family: var(--font-en); font-size: var(--fs-micro); font-weight: var(--w-strong); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-50); font-variant-numeric: tabular-nums; }
+.ins-list__count b { font-weight: var(--w-strong); color: var(--ink); }
+.ins-list__empty { padding: var(--s4) 0; font-size: var(--fs-sm); color: var(--ink-50); border-block-start: var(--hair) solid var(--line); }
+
+.ins-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); }
+.ins-grid--lines { gap: var(--hair); background: var(--line); border: var(--hair) solid var(--line); }
+.ins-card { display: grid; grid-template-rows: auto 1fr; background: var(--surface); }
+.ins-card[hidden] { display: none; }
+.ins-card__media { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; }
+.ins-card__media img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform 760ms var(--e); }
+.ins-card__media.duo::before { opacity: .45; }
+.ins-card__body { display: flex; flex-direction: column; padding: var(--s3) var(--s3) var(--s4); }
+.ins-grid--lines .ins-card__body { padding: var(--s3) var(--s3) var(--s4); }
+.ins-card__body .ins-meta { margin-block-end: var(--s2); }
+.ins-card h3 { font-size: clamp(19px, 1.6vw, 22px); font-weight: var(--w-mid); line-height: 1.35; letter-spacing: -.02em; margin-block-end: var(--s2); text-wrap: initial; transition: color var(--d-ui) var(--e); }
+.ins-card__desc { font-size: var(--fs-sm); color: var(--ink-70); margin-block-end: var(--s3); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ins-card__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); margin-block-start: auto; padding-block-start: var(--s2); border-block-start: var(--hair) solid var(--line); font-size: var(--fs-label); color: var(--ink-50); }
+
+@media (hover: hover) and (pointer: fine) {
+  .ins-card:hover h3, .ins-feature:hover h2 { color: var(--cyan-ink); }
+  .ins-card:hover .ins-card__media img, .ins-feature:hover .ins-feature__media img { transform: scale(1.05); }
+}
+
+/* ── 아티클 — 히어로 제목(긴 한글 제목용 축소) · 대표 이미지 밴드 ── */
+.ins-title { font-size: clamp(32px, 4.2vw, 56px); font-weight: var(--w-strong); line-height: 1.16; letter-spacing: -.035em; text-wrap: initial; }
+.page-hero .label + .ins-title { margin-block-start: var(--s3); }
+.ins-hero { padding-block-start: var(--s4); background: var(--surface); }
+.ins-hero__fig { position: relative; margin: 0; aspect-ratio: 21 / 9; overflow: hidden; border: var(--hair) solid var(--line); }
+.ins-hero__fig img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+/* ── 아티클 — 목차 (site.css .legal__toc 위에 제목·현재 표시만 추가) ── */
+.ins-toc__t { font-size: var(--fs-label); font-weight: var(--w-mid); color: var(--ink-50); padding-block-end: var(--s2); border-block-end: var(--hair) solid var(--line); margin-block-end: 4px; }
+.legal__toc a { position: relative; padding-inline-start: 14px; line-height: 1.5; transition: color var(--d-ui) var(--e); }
+.legal__toc a::before { content: ''; position: absolute; inset-inline-start: 0; inset-block-start: .7em; inline-size: 6px; block-size: var(--hair); background: var(--line); transition: background-color var(--d-ui) var(--e), inline-size var(--d-ui) var(--e); }
+.legal__toc a[aria-current="true"] { color: var(--ink); }
+.legal__toc a[aria-current="true"]::before { background: var(--cyan); }
+
+/* ── 아티클 본문 — site.css .prose 위에 아티클 규격만 덧입힌다 ── */
+.prose.prose--article { max-inline-size: 46rem; }
+.prose.prose--article p, .prose.prose--article li { font-size: var(--fs-body); line-height: 1.8; }
+.prose.prose--article strong { font-weight: var(--w-strong); color: var(--ink); }
+.prose.prose--article section { scroll-margin-top: 96px; }
+.prose.prose--article section > h2 { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.3; margin-block: var(--s5) var(--s3); padding-block-start: var(--s3); border-block-start: var(--hair) solid var(--line); }
+.prose.prose--article h3 { font-size: clamp(18px, 1.5vw, 21px); margin-block: var(--s4) var(--s2); }
+.prose.prose--article ul, .prose.prose--article ol { gap: 8px; margin-block: var(--s3); }
+.prose.prose--article ol { padding-inline-start: 22px; }
+.prose.prose--article ol > li::marker { font-family: var(--font-en); font-weight: var(--w-mid); color: var(--cyan-ink); }
+.prose.prose--article p + p, .prose.prose--article ul + p, .prose.prose--article ol + p, .prose.prose--article div + p, .prose.prose--article aside + p, .prose.prose--article figure + p { margin-block-start: var(--s3); }
+.prose.prose--article a { color: var(--cyan-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+.prose__lead { font-weight: var(--w-mid); color: var(--ink); }
+.prose.prose--article .prose__lead { color: var(--ink); }
+
+/* 핵심 요약 — 상하 헤어라인 · 시안 점 */
+.prose__summary { padding-block: var(--s3); border-block: var(--hair) solid var(--line); margin-block-end: var(--s4); scroll-margin-top: 96px; }
+.prose.prose--article .prose__summary h2 { font-size: var(--fs-label); font-weight: var(--w-mid); color: var(--ink-50); margin: 0 0 var(--s2); padding: 0; border: 0; }
+.prose.prose--article .prose__summary ul { list-style: none; padding: 0; margin: 0; gap: 10px; }
+.prose.prose--article .prose__summary li { position: relative; padding-inline-start: 18px; color: var(--ink); }
+.prose__summary li::before { content: ''; position: absolute; inset-inline-start: 0; inset-block-start: .72em; inline-size: 6px; block-size: 6px; border-radius: var(--radius-circle); background: var(--cyan); }
+
+/* 표 */
+.prose.prose--article .table-wrap { margin-block: var(--s3); }
+.prose.prose--article table { min-inline-size: 560px; }
+.prose.prose--article caption { caption-side: top; text-align: start; padding-block-end: 10px; font-size: var(--fs-label); font-weight: var(--w-mid); color: var(--ink-50); }
+.prose.prose--article thead th { border-block-end-color: var(--ink); }
+.prose.prose--article tbody th { font-size: var(--fs-sm); font-weight: var(--w-mid); color: var(--ink); }
+.prose.prose--article td { font-size: var(--fs-sm); color: var(--ink-70); }
+
+/* 단계 — 좌 번호(영문 마이크로) · 헤어라인 행 */
+.prose.prose--article .prose__steps { list-style: none; padding: 0; margin-block: var(--s3); gap: 0; border-block-start: var(--hair) solid var(--line); }
+.prose.prose--article .prose__steps > li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: var(--s2); padding-block: var(--s3); border-block-end: var(--hair) solid var(--line); }
+.prose__step-n { font-family: var(--font-en); font-size: var(--fs-micro); font-weight: var(--w-strong); letter-spacing: .16em; color: var(--cyan-ink); padding-block-start: 6px; font-variant-numeric: tabular-nums; }
+.prose.prose--article .prose__steps strong { display: block; font-weight: var(--w-mid); margin-block-end: 4px; }
+.prose.prose--article .prose__steps p { margin: 0; font-size: var(--fs-sm); }
+
+/* 콜아웃 — 좌 2px 시안 선 · 오프화이트 면 */
+.prose__note { margin-block: var(--s3); padding: var(--s3); border-inline-start: 2px solid var(--cyan); background: var(--bg-2); }
+.prose.prose--article .prose__note-t { font-size: var(--fs-label); font-weight: var(--w-mid); color: var(--ink-50); margin: 0 0 6px; }
+.prose.prose--article .prose__note p:last-child { margin: 0; color: var(--ink); }
+
+/* 체크리스트 — 헤어라인 박스 · CSS 체크 */
+.prose__check { margin-block: var(--s3); padding: var(--s3); border: var(--hair) solid var(--line); }
+.prose.prose--article .prose__check-t { font-weight: var(--w-mid); color: var(--ink); margin: 0 0 var(--s2); }
+.prose.prose--article .prose__check ul { list-style: none; padding: 0; margin: 0; }
+.prose.prose--article .prose__check li { position: relative; padding-inline-start: 26px; font-size: var(--fs-sm); }
+.prose__check li::before { content: ''; position: absolute; inset-inline-start: 2px; inset-block-start: .55em; inline-size: 11px; block-size: 6px; border-inline-start: 1.5px solid var(--cyan-ink); border-block-end: 1.5px solid var(--cyan-ink); transform: rotate(-45deg); }
+
+/* 그림 */
+.prose.prose--article figure { margin-block: var(--s4); }
+.prose.prose--article figure img { inline-size: 100%; border: var(--hair) solid var(--line); }
+.prose.prose--article figcaption { margin-block-start: 10px; font-size: var(--fs-label); color: var(--ink-50); }
+
+/* FAQ — details · 헤어라인 */
+.prose.prose--article .prose__faq details { border-block-end: var(--hair) solid var(--line); }
+.prose.prose--article .prose__faq summary { list-style: none; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); padding-block: var(--s2); font-size: var(--fs-body); font-weight: var(--w-mid); color: var(--ink); transition: color var(--d-ui) var(--e), padding-inline-start 280ms var(--e); }
+.prose.prose--article .prose__faq summary::-webkit-details-marker { display: none; }
+.prose.prose--article .prose__faq summary::after { content: '+'; flex: none; font-family: var(--font-en); font-weight: var(--w-mid); color: var(--cyan-ink); line-height: 1.6; }
+.prose.prose--article .prose__faq details[open] summary { color: var(--cyan-ink); padding-inline-start: 12px; }
+.prose.prose--article .prose__faq details[open] summary::after { content: '−'; }
+.prose.prose--article .prose__faq details > div { padding: 0 0 var(--s3) 12px; }
+.prose.prose--article .prose__faq details > div p { margin: 0; font-size: var(--fs-sm); }
+
+/* 함께 보면 좋은 페이지 · 아티클 말미 안내 */
+.prose__links { margin-block-start: var(--s5); padding-block-start: var(--s3); border-block-start: var(--hair) solid var(--line); }
+.prose.prose--article .prose__links-t { font-size: var(--fs-label); font-weight: var(--w-mid); color: var(--ink-50); margin: 0 0 var(--s2); }
+.prose.prose--article .prose__links ul { list-style: none; padding: 0; margin: 0; gap: 6px; }
+.prose.prose--article .prose__links li { font-size: var(--fs-sm); }
+.prose.prose--article .prose__links a { text-decoration: none; color: var(--ink-70); transition: color var(--d-ui) var(--e); }
+.prose.prose--article .prose__links a::before { content: '→ '; color: var(--cyan-ink); }
+.prose.prose--article .prose__links a:hover { color: var(--ink); }
+.prose__cta { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--s3); margin-block-start: var(--s4); padding: var(--s3) var(--s4); border: var(--hair) solid var(--line); background: var(--bg); }
+.prose.prose--article .prose__cta p { margin: 0; color: var(--ink); }
+.prose.prose--article .prose__cta a { text-decoration: none; }
+
+/* ── 관련 아티클 ── */
+.ins-related { padding-block: var(--section-y); background: var(--bg); }
+.ins-related__head { margin-block-end: var(--s4); }
+
+/* ── 반응형 ── */
+@media (max-width: 1023px) {
+  .ins-feature, .ins-grid { grid-template-columns: 1fr; }
+  .ins-feature__media { min-block-size: 0; aspect-ratio: 16 / 10; }
+  .ins-feature__body { padding: var(--s4) 0; }
+  .ins-grid--lines .ins-card__body { min-block-size: 0; }
+  .ins-list__head { grid-template-columns: 1fr; }
+  .ins-hero__fig { aspect-ratio: 16 / 9; }
+}
+@media (max-width: 767px) {
+  .ins-filter { gap: 0 var(--s3); margin-block-start: var(--s4); }
+  .ins-filter button { padding-block: 10px; }
+  .prose__cta { grid-template-columns: 1fr; }
+  .prose.prose--article .prose__steps > li { grid-template-columns: 1fr; gap: 4px; }
+}

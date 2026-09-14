@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glofind — Hero Directions</title>
+  <style>
+    :root {
+      --hc-paper: #f7f7f3;
+      --hc-white: #ffffff;
+      --hc-ink: #111814;
+      --hc-muted: #69736d;
+      --hc-line: #d2d8d2;
+      --hc-green: #087e79;
+      --hc-deep: #004f4d;
+      --hc-pale: #d9eeea;
+      --hc-display: Arial, "SUIT", "Pretendard", sans-serif;
+      --hc-sans: "SUIT", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --hc-max: 94rem;
+      --hc-gutter: 2.5rem;
+      --hc-gutter-mobile: 1.25rem;
+      --hc-header: 4.5rem;
+      --hc-line-w: .0625rem;
+      --hc-s1: .5rem;
+      --hc-s2: 1rem;
+      --hc-s3: 1.5rem;
+      --hc-s4: 2rem;
+      --hc-s5: 3rem;
+      --hc-s6: 4rem;
+      --hc-s7: 6rem;
+      --hc-state: 180ms;
+      --hc-ease: cubic-bezier(.2,.7,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { min-width: 20rem; margin: 0; background: var(--hc-paper); color: var(--hc-ink); font-family: var(--hc-sans); }
+    a { color: inherit; }
+    .hc-container { width: min(100% - (var(--hc-gutter) * 2), var(--hc-max)); margin-inline: auto; }
+    .hc-header { position: fixed; inset: 0 0 auto; z-index: 20; height: var(--hc-header); border-bottom: var(--hc-line-w) solid color-mix(in srgb, var(--hc-line) 82%, transparent); background: color-mix(in srgb, var(--hc-paper) 90%, transparent); backdrop-filter: blur(var(--hc-s2)); }
+    .hc-header__inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .hc-logo { font-family: var(--hc-display); font-size: 1.125rem; font-weight: 800; letter-spacing: -.07em; text-decoration: none; }
+    .hc-logo span { color: var(--hc-green); }
+    .hc-nav { display: flex; gap: var(--hc-s2); align-items: center; }
+    .hc-nav a, .hc-contact { min-height: 2.25rem; padding-inline: var(--hc-s2); border: var(--hc-line-w) solid var(--hc-line); background: var(--hc-white); color: var(--hc-muted); font-family: var(--hc-display); font-size: .625rem; font-weight: 700; letter-spacing: .1em; line-height: 2.125rem; text-decoration: none; text-transform: uppercase; transition: background-color var(--hc-state) var(--hc-ease), color var(--hc-state) var(--hc-ease); }
+    .hc-nav a:hover, .hc-contact:hover { background: var(--hc-green); border-color: var(--hc-green); color: var(--hc-white); }
+    .hc-contact { color: var(--hc-ink); }
+
+    .hc-intro { display: grid; min-height: 18rem; padding-top: calc(var(--hc-header) + var(--hc-s5)); padding-bottom: var(--hc-s5); place-items: end start; border-bottom: var(--hc-line-w) solid var(--hc-line); }
+    .hc-intro h1 { max-width: 42rem; margin: 0; font-family: var(--hc-display); font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -.085em; line-height: .94; word-break: keep-all; }
+    .hc-intro p { max-width: 28rem; margin: var(--hc-s3) 0 0; color: var(--hc-muted); font-size: .9375rem; line-height: 1.65; }
+
+    .hc-direction { scroll-margin-top: var(--hc-header); }
+    .hc-hero { position: relative; min-height: 100dvh; overflow: hidden; }
+    .hc-hero__meta { position: absolute; top: var(--hc-s3); left: var(--hc-s3); z-index: 1; display: flex; gap: var(--hc-s2); color: var(--hc-muted); font-family: var(--hc-display); font-size: .625rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .hc-hero__meta strong { color: var(--hc-green); }
+    .hc-hero__scroll { position: absolute; right: var(--hc-s3); bottom: var(--hc-s3); z-index: 1; display: flex; align-items: center; gap: var(--hc-s1); color: var(--hc-muted); font-family: var(--hc-display); font-size: .625rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .hc-hero__scroll::before { width: 2.5rem; height: var(--hc-line-w); background: currentColor; content: ""; }
+    .hc-title { margin: 0; font-family: var(--hc-display); font-weight: 800; letter-spacing: -.115em; line-height: .8; word-break: keep-all; }
+    .hc-title em { color: var(--hc-green); font: inherit; font-style: normal; }
+    .hc-section { min-height: 100dvh; padding: var(--hc-s6); }
+    .hc-section__label { margin: 0; color: var(--hc-green); font-family: var(--hc-display); font-size: .6875rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+
+    /* A — Copy as the only visual */
+    .hc-a .hc-hero { display: grid; align-items: end; padding: var(--hc-s6); background: var(--hc-paper); }
+    .hc-a .hc-title { max-width: 55rem; font-size: clamp(5.5rem, 11vw, 11.75rem); }
+    .hc-a .hc-section { display: grid; grid-template-columns: minmax(8rem, 1fr) minmax(0, 5fr); gap: var(--hc-s5); align-items: center; background: var(--hc-white); }
+    .hc-a .hc-section__statement { max-width: 50rem; margin: 0; font-family: var(--hc-display); font-size: clamp(2.8rem, 6vw, 6.5rem); font-weight: 800; letter-spacing: -.1em; line-height: .88; word-break: keep-all; }
+    .hc-a .hc-section__statement em { color: var(--hc-green); font: inherit; font-style: normal; }
+
+    /* B — One decisive colour field */
+    .hc-b .hc-hero { display: grid; grid-template-columns: 2fr 1fr; background: var(--hc-paper); }
+    .hc-b .hc-hero__left { display: grid; align-items: end; padding: var(--hc-s6); }
+    .hc-b .hc-title { max-width: 49rem; font-size: clamp(5rem, 10vw, 10.75rem); }
+    .hc-b .hc-hero__field { position: relative; display: flex; align-items: end; justify-content: flex-end; padding: var(--hc-s3); overflow: hidden; background: var(--hc-green); color: var(--hc-white); }
+    .hc-b .hc-hero__field span { font-family: var(--hc-display); font-size: clamp(10rem, 24vw, 22rem); font-weight: 800; letter-spacing: -.14em; line-height: .7; opacity: .16; }
+    .hc-b .hc-hero__field p { position: relative; z-index: 1; max-width: 9rem; margin: 0; font-family: var(--hc-display); font-size: .6875rem; font-weight: 700; letter-spacing: .1em; line-height: 1.5; text-transform: uppercase; }
+    .hc-b .hc-section { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--hc-line-w); padding: 0; background: var(--hc-line); }
+    .hc-b .hc-section__move { display: flex; flex-direction: column; justify-content: space-between; min-height: 100dvh; padding: var(--hc-s5); background: var(--hc-white); }
+    .hc-b .hc-section__number { color: var(--hc-green); font-family: var(--hc-display); font-size: clamp(5rem, 10vw, 10rem); font-weight: 800; letter-spacing: -.12em; line-height: .8; }
+    .hc-b .hc-section__move h3 { max-width: 14rem; margin: 0; font-family: var(--hc-display); font-size: clamp(1.75rem, 2.5vw, 2.5rem); font-weight: 800; letter-spacing: -.07em; line-height: 1.12; word-break: keep-all; }
+    .hc-b .hc-section__move p { max-width: 15rem; margin: var(--hc-s2) 0 0; color: var(--hc-muted); font-size: .875rem; line-height: 1.6; }
+
+    /* C — Editorial ledger */
+    .hc-c .hc-hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: stretch; background: var(--hc-paper); }
+    .hc-c .hc-hero__side { grid-column: 1 / span 2; display: flex; align-items: flex-end; padding: var(--hc-s3); border-right: var(--hc-line-w) solid var(--hc-line); color: var(--hc-muted); font-family: var(--hc-display); font-size: .625rem; font-weight: 700; letter-spacing: .1em; line-height: 1.45; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+    .hc-c .hc-hero__body { grid-column: 3 / -1; display: grid; align-content: center; padding: var(--hc-s6); }
+    .hc-c .hc-title { max-width: 58rem; font-size: clamp(5rem, 10.75vw, 11.5rem); }
+    .hc-c .hc-hero__rule { width: 100%; height: var(--hc-line-w); margin-top: var(--hc-s6); background: var(--hc-line); }
+    .hc-c .hc-hero__caption { display: flex; justify-content: space-between; gap: var(--hc-s3); max-width: 36rem; margin-top: var(--hc-s2); color: var(--hc-muted); font-size: .8125rem; line-height: 1.5; }
+    .hc-c .hc-section { display: grid; grid-template-columns: 1fr 1.45fr; gap: var(--hc-s6); align-items: end; background: var(--hc-deep); color: var(--hc-white); }
+    .hc-c .hc-section__quote { max-width: 42rem; margin: 0; font-family: var(--hc-display); font-size: clamp(2.75rem, 5.2vw, 5.75rem); font-weight: 800; letter-spacing: -.09em; line-height: .92; word-break: keep-all; }
+    .hc-c .hc-section__quote em { color: #84d8cf; font: inherit; font-style: normal; }
+    .hc-c .hc-section__caption { max-width: 21rem; margin: 0; color: color-mix(in srgb, var(--hc-white) 68%, transparent); font-size: .9375rem; line-height: 1.7; word-break: keep-all; }
+
+    .hc-choice { display: flex; align-items: center; justify-content: space-between; gap: var(--hc-s4); padding: var(--hc-s6) 0; border-top: var(--hc-line-w) solid var(--hc-line); }
+    .hc-choice h2 { max-width: 37rem; margin: 0; font-family: var(--hc-display); font-size: clamp(2.25rem, 4vw, 4.5rem); font-weight: 800; letter-spacing: -.09em; line-height: .92; word-break: keep-all; }
+    .hc-choice p { max-width: 24rem; margin: 0; color: var(--hc-muted); font-size: .9375rem; line-height: 1.7; }
+
+    @media (max-width: 1023px) {
+      .hc-b .hc-hero { grid-template-columns: 3fr 1fr; }
+      .hc-c .hc-hero__side { grid-column: 1 / span 1; }
+      .hc-c .hc-hero__body { grid-column: 2 / -1; }
+    }
+    @media (max-width: 767px) {
+      .hc-container { width: min(100% - (var(--hc-gutter-mobile) * 2), var(--hc-max)); }
+      .hc-nav a { display: none; }
+      .hc-intro { min-height: 16rem; }
+      .hc-hero__meta { top: var(--hc-s2); left: var(--hc-s2); }
+      .hc-hero__scroll { right: var(--hc-s2); bottom: var(--hc-s2); }
+      .hc-a .hc-hero { min-height: 100dvh; padding: var(--hc-s3); }
+      .hc-a .hc-title, .hc-b .hc-title, .hc-c .hc-title { font-size: clamp(4rem, 18vw, 6rem); }
+      .hc-a .hc-section { grid-template-columns: 1fr; padding: var(--hc-s3); }
+      .hc-b .hc-hero { grid-template-columns: 1fr; }
+      .hc-b .hc-hero__left { min-height: 72dvh; padding: var(--hc-s3); }
+      .hc-b .hc-hero__field { min-height: 28dvh; }
+      .hc-b .hc-section { grid-template-columns: 1fr; }
+      .hc-b .hc-section__move { min-height: 62dvh; padding: var(--hc-s3); }
+      .hc-c .hc-hero { grid-template-columns: 1fr; }
+      .hc-c .hc-hero__side { grid-column: auto; min-height: 3rem; padding: var(--hc-s2); border-right: 0; border-bottom: var(--hc-line-w) solid var(--hc-line); writing-mode: initial; transform: none; }
+      .hc-c .hc-hero__body { grid-column: auto; padding: var(--hc-s3); }
+      .hc-c .hc-section { grid-template-columns: 1fr; padding: var(--hc-s3); }
+      .hc-choice { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hc-header">
+    <div class="hc-container hc-header__inner">
+      <a class="hc-logo" href="#intro">Glo<span>find</span></a>
+      <nav class="hc-nav" aria-label="시안 탐색">
+        <a href="#direction-a">A</a><a href="#direction-b">B</a><a href="#direction-c">C</a>
+        <a class="hc-contact" href="mailto:hello@glofind.co.kr">프로젝트 상담</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hc-intro" id="intro">
+      <div class="hc-container">
+        <h1>Hero 3 Directions</h1>
+        <p>모든 시안은 Hero 안의 보조문·카드·CTA·데이터·그래픽을 제거하고, 한 화면에 하나의 문장만 남겼습니다.</p>
+      </div>
+    </section>
+
+    <section class="hc-direction hc-a" id="direction-a" aria-labelledby="a-title">
+      <div class="hc-hero">
+        <p class="hc-hero__meta"><strong>A / Blank Statement</strong><span>Type only</span></p>
+        <h2 class="hc-title" id="a-title">해외 시장,<br><em>전략대로</em><br>열립니다.</h2>
+        <p class="hc-hero__scroll">Scroll</p>
+      </div>
+      <div class="hc-section">
+        <p class="hc-section__label">01 / The first proof</p>
+        <p class="hc-section__statement">글로벌 확장은<br><em>더 많은 실행</em>이 아니라,<br>더 정확한 순서에서 시작됩니다.</p>
+      </div>
+    </section>
+
+    <section class="hc-direction hc-b" id="direction-b" aria-labelledby="b-title">
+      <div class="hc-hero">
+        <div class="hc-hero__left">
+          <p class="hc-hero__meta"><strong>B / Colour Field</strong><span>One contrast</span></p>
+          <h2 class="hc-title" id="b-title">해외 시장,<br><em>전략대로</em><br>열립니다.</h2>
+        </div>
+        <div class="hc-hero__field" aria-hidden="true"><span>01</span><p>Global B2B<br>Growth Agency</p></div>
+      </div>
+      <div class="hc-section" aria-label="섹션 2: 성장의 순서">
+        <article class="hc-section__move"><span class="hc-section__number">01</span><div><h3>시장을<br>정합니다.</h3><p>가장 먼저 이길 시장부터 결정합니다.</p></div></article>
+        <article class="hc-section__move"><span class="hc-section__number">02</span><div><h3>수요를<br>검증합니다.</h3><p>바이어의 맥락으로 메시지를 확인합니다.</p></div></article>
+        <article class="hc-section__move"><span class="hc-section__number">03</span><div><h3>성과를<br>확장합니다.</h3><p>검증된 운영을 반복 가능한 성장으로 만듭니다.</p></div></article>
+      </div>
+    </section>
+
+    <section class="hc-direction hc-c" id="direction-c" aria-labelledby="c-title">
+      <div class="hc-hero">
+        <p class="hc-hero__meta"><strong>C / Editorial Ledger</strong><span>Formal rhythm</span></p>
+        <div class="hc-hero__side">Glofind / Seoul / Global</div>
+        <div class="hc-hero__body">
+          <h2 class="hc-title" id="c-title">해외 시장,<br><em>전략대로</em><br>열립니다.</h2>
+          <div class="hc-hero__rule"></div>
+          <p class="hc-hero__caption"><span>Global B2B Growth</span><span>시장 선택부터 성과 확장까지.</span></p>
+        </div>
+        <p class="hc-hero__scroll">Scroll</p>
+      </div>
+      <div class="hc-section">
+        <p class="hc-section__label">01 / Why Glofind</p>
+        <p class="hc-section__quote">시장을 읽고,<br><em>결정을 정리하고,</em><br>실행을 연결합니다.</p>
+        <p class="hc-section__caption">다음 시장은 더 많은 활동이 아니라, 하나의 분명한 판단에서 시작됩니다.</p>
+      </div>
+    </section>
+
+    <section class="hc-container hc-choice">
+      <h2>어떤 한 장면이 글로파인드에 가장 가까운가요?</h2>
+      <p>A는 가장 미니멀한 선언형, B는 가장 직접적인 성장 시스템형, C는 가장 편집적이고 프리미엄한 에이전시형입니다.</p>
+    </section>
+  </main>
+</body>
+</html>

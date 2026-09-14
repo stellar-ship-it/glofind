@@ -1,0 +1,531 @@
+<meta charset="utf-8">
+<title>글로파인드 디자인 시스템</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* ══════════════ 셸 토큰 (문서 UI · 뷰어 테마 대응) ══════════════ */
+:root{
+  --doc-bg:#FAFAF8; --doc-sf:#FFFFFF; --doc-ink:#121212; --doc-mut:#404040;
+  --doc-line:#E8E8E8; --doc-soft:#E8E8E8; --doc-acc:#006A75;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --doc-bg:#0f0f0f; --doc-sf:#1a1a1a; --doc-ink:#E8E8E8; --doc-mut:#B0B0B0;
+    --doc-line:#242424; --doc-soft:#1a1a1a; --doc-acc:#4DD0DC;
+  }
+}
+:root[data-theme="dark"]{
+  --doc-bg:#0f0f0f; --doc-sf:#1a1a1a; --doc-ink:#E8E8E8; --doc-mut:#B0B0B0;
+  --doc-line:#242424; --doc-soft:#1a1a1a; --doc-acc:#4DD0DC;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0; padding:0 24px 100px; background:var(--doc-bg); color:var(--doc-ink);
+  font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;
+  font-size:16px; line-height:1.75; word-break:keep-all; overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px; margin:0 auto}
+.mn{font-family:'IBM Plex Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums}
+h1,h2,h3{font-family:'Gothic A1','Apple SD Gothic Neo',sans-serif; margin:0; text-wrap:balance}
+h1{font-size:clamp(32px,4vw,48px); font-weight:700; letter-spacing:-.03em; line-height:1.12}
+h2{font-size:26px; font-weight:600; letter-spacing:-.02em}
+h3{font-size:16px; font-weight:600}
+p{margin:0}
+.lede{font-size:17px; color:var(--doc-mut); max-width:66ch}
+.lede b{color:var(--doc-ink); font-weight:500}
+.eb{font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--doc-mut)}
+header.top{padding:72px 0 36px; border-bottom:1px solid var(--doc-line); display:flex; flex-direction:column; gap:18px}
+header.top .meta{display:flex; flex-wrap:wrap; gap:8px 28px}
+section.blk{padding:56px 0; border-bottom:1px solid var(--doc-soft); display:flex; flex-direction:column; gap:24px}
+section.blk:last-of-type{border-bottom:none}
+.hd{display:flex; flex-direction:column; gap:8px; max-width:70ch}
+.note{font-size:14px; color:var(--doc-mut)}
+.note b{color:var(--doc-ink); font-weight:600}
+.warn{border-left:2px solid #FFA726; padding:2px 0 2px 16px; font-size:14px; color:var(--doc-mut)}
+.warn b{color:var(--doc-ink); font-weight:600}
+.tbl{width:100%; overflow-x:auto}
+table.spec{border-collapse:collapse; width:100%; min-width:560px; font-size:14px; color:var(--doc-ink);
+  font-family:'IBM Plex Sans KR',sans-serif}
+table.spec th{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.07em; text-transform:uppercase;
+  font-weight:500; color:var(--doc-mut); text-align:left; padding:10px 18px 9px 0; border-bottom:1px solid var(--doc-line)}
+table.spec td{padding:11px 18px 11px 0; border-bottom:1px solid var(--doc-soft); vertical-align:top}
+table.spec td.t{font-family:'IBM Plex Mono',monospace; white-space:nowrap; color:var(--doc-acc)}
+table.spec td.m{color:var(--doc-mut)}
+/* 캔버스 — 컴포넌트가 실제로 사는 지면 */
+.canvas{background:#FAFAF8; border:1px solid var(--doc-line); padding:40px}
+.canvas.warm{background:#FFFFFF}
+.canvas.white{background:#FFFFFF}
+.canvas.ink{background:#0f0f0f}
+.canvas.flush{padding:0}
+.cap{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--doc-mut); margin-bottom:14px}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+@media (max-width:800px){.grid2{grid-template-columns:1fr}}
+
+/* ══════════════ ① 컬러 토큰 ══════════════ */
+.sw-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1px;
+  background:var(--doc-soft); border:1px solid var(--doc-soft)}
+.sw{background:var(--doc-sf); padding:0}
+.sw .chip{height:76px; display:block; border-bottom:1px solid var(--doc-soft)}
+.sw .meta{padding:12px 14px 14px}
+.sw .nm{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.02em}
+.sw .hx{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--doc-mut); margin-top:3px}
+.sw .use{font-size:12px; color:var(--doc-mut); margin-top:7px; line-height:1.55}
+
+/* ══════════════ ② 타이포 스케일 ══════════════ */
+.ty{display:grid; grid-template-columns:150px 1fr; gap:32px; align-items:baseline;
+  padding:26px 0; border-top:1px solid var(--doc-soft)}
+.ty:last-child{border-bottom:1px solid var(--doc-soft)}
+.ty .k{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.07em; color:var(--doc-mut); line-height:1.9}
+.ty .k b{display:block; color:var(--doc-ink); font-size:12px; letter-spacing:.06em; font-weight:500; margin-bottom:6px}
+.ty .s{color:var(--doc-ink); min-width:0}
+.t-display{font-family:'Gothic A1',sans-serif; font-size:96px; font-weight:700; letter-spacing:-.03em; line-height:1.02}
+.t-h1{font-family:'Gothic A1',sans-serif; font-size:86px; font-weight:700; letter-spacing:-.03em; line-height:1.02}
+.t-h2{font-family:'Gothic A1',sans-serif; font-size:46px; font-weight:700; letter-spacing:-.03em; line-height:1.15}
+.t-h3{font-family:'Gothic A1',sans-serif; font-size:24px; font-weight:600; letter-spacing:-.02em; line-height:1.4}
+.t-bodyl{font-size:19px; font-weight:400; line-height:1.75}
+.t-body{font-size:17px; font-weight:400; line-height:1.75}
+.t-label{font-size:13px; font-weight:500; letter-spacing:.03em; line-height:1.6}
+.t-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500; letter-spacing:.14em; text-transform:uppercase}
+.t-caption{font-size:13px; font-weight:400; line-height:1.7; color:#757575}
+.t-data{font-family:'IBM Plex Mono',monospace; font-size:46px; font-weight:400; letter-spacing:-.03em;
+  line-height:1; font-variant-numeric:tabular-nums}
+@media (max-width:760px){
+  .ty{grid-template-columns:1fr; gap:14px}
+  .t-display{font-size:52px} .t-h1{font-size:46px} .t-h2{font-size:34px} .t-data{font-size:34px}
+}
+
+/* ══════════════ ③ 컴포넌트 — 실제 동작 ══════════════ */
+.gf{--p:#FAFAF8; --w:#FFF; --dk:#0f0f0f; --i:#121212; --m:#404040; --l:#E8E8E8;
+    --a:#006A75; --a-h:#121212; --a-dk:#4DD0DC; --on:#E8E8E8; --on-m:#B0B0B0; --brand:#00ADBD;
+    --ease:cubic-bezier(.2,.6,.3,1);
+    font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif; word-break:keep-all}
+.gf *{box-sizing:border-box}
+.gf :where(a){text-decoration:none; color:inherit}
+.row{display:flex; flex-wrap:wrap; gap:20px; align-items:center}
+.row + .cap{margin-top:26px}
+
+/* 버튼 */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px;
+  padding:0 28px; border-radius:2px; font-size:15px; font-weight:500; border:1px solid transparent;
+  cursor:pointer; transition:background-color .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease)}
+.btn-pri{background:var(--i); color:#FAFAF8}
+.btn-pri:hover,.btn-pri.is-hover{background:var(--a)}
+.btn-sec{background:transparent; color:var(--i); border-color:var(--i)}
+.btn-sec:hover,.btn-sec.is-hover{background:var(--i); color:#FAFAF8}
+.btn-gho{background:transparent; color:var(--i); border-color:var(--l); padding:0 20px}
+.btn-gho:hover,.btn-gho.is-hover{border-color:var(--i)}
+.btn-arw{width:48px; height:48px; padding:0; border-radius:9999px; border-color:var(--l); background:transparent; color:var(--i)}
+.btn-arw:hover,.btn-arw.is-hover{background:var(--a); border-color:var(--a); color:#fff}
+.btn-arw svg{width:15px; height:15px}
+.btn[disabled],.btn.is-disabled{opacity:.38; pointer-events:none}
+.btn.is-focus,.btn:focus-visible{outline:2px solid var(--a); outline-offset:3px}
+/* 다크 지면용 */
+.on-dk .btn-pri{background:#fff; color:var(--i)}
+.on-dk .btn-pri:hover,.on-dk .btn-pri.is-hover{background:var(--a-dk); color:#0f0f0f}
+.on-dk .btn-sec{color:#fff; border-color:rgba(255,255,255,.5)}
+.on-dk .btn-sec:hover,.on-dk .btn-sec.is-hover{background:#fff; color:var(--i); border-color:#fff}
+.on-dk .btn.is-focus,.on-dk .btn:focus-visible{outline-color:var(--a-dk)}
+
+/* 링크 · 탭 · 언어 */
+.lnk{font-size:15px; font-weight:500; color:var(--i); border-bottom:1px solid var(--l); padding-bottom:3px;
+  transition:color .18s var(--ease), border-color .18s var(--ease)}
+.lnk:hover,.lnk.is-hover{color:var(--a); border-bottom-color:var(--a)}
+.lnk-a{font-size:14px; color:var(--a)}
+.lnk-a:hover,.lnk-a.is-hover{color:var(--a-h)}
+.tabs{display:flex; gap:0; border-bottom:1px solid var(--l)}
+.tab{padding:12px 22px; font-size:15px; color:var(--m); border-bottom:2px solid transparent; margin-bottom:-1px;
+  transition:color .18s var(--ease), border-color .18s var(--ease)}
+.tab:hover{color:var(--i)}
+.tab.on{color:var(--i); font-weight:500; border-bottom-color:var(--a)}
+.lan{display:flex; gap:10px; font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.06em; color:var(--m)}
+.lan b{color:var(--i); font-weight:500}
+.lan span{color:var(--l)}
+
+/* 로고 2색 */
+.logo{display:inline-flex; align-items:center; font-family:'Gothic A1',sans-serif;
+  font-size:23px; font-weight:600; letter-spacing:-.03em; line-height:1}
+.logo em{font-style:normal; color:var(--brand)}
+.logo.wt{color:#fff}
+.logo.bk{color:var(--i)}
+
+/* 헤더 + 메가메뉴 */
+.hdr{position:relative; background:var(--w); border-bottom:1px solid var(--l)}
+.hdr.dk{background:transparent; border-bottom-color:rgba(255,255,255,.16)}
+.hdr-in{display:flex; align-items:center; justify-content:space-between; padding:24px 40px}
+.nav{display:flex; align-items:center; gap:0; margin:0; padding:0; list-style:none}
+.nav > li > a{display:block; padding:10px 28px; font-size:15px; color:var(--m);
+  transition:color .18s var(--ease), background-color .18s var(--ease)}
+.hdr.dk .nav > li > a{color:rgba(255,255,255,.74)}
+.nav > li > a:hover,.nav > li.on > a{color:var(--i)}
+.hdr.dk .nav > li > a:hover,.hdr.dk .nav > li.on > a{color:#fff}
+.nav > li.on > a{background:#E6F8FA}
+.hdr.dk .nav > li.on > a{background:rgba(255,255,255,.08)}
+.mega{border-top:1px solid var(--l); background:var(--w); padding:34px 40px 38px; display:none}
+.hdr.open .mega{display:block}
+.mega-in{display:flex; justify-content:flex-start}
+.mega-col{width:224px; display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:0 24px; border-left:1px solid var(--l); border-right:1px solid var(--l); align-self:stretch}
+.mega-col a{display:block; width:100%; text-align:center; padding:11px 8px; font-size:14px; color:var(--m);
+  transition:color .18s var(--ease)}
+.mega-col a:hover{color:var(--a)}
+.mega-note{margin-left:40px; font-size:13px; color:var(--m); max-width:34ch; align-self:center}
+
+/* 폼 */
+.fld{display:flex; border:1px solid var(--i); max-width:420px}
+.fld input{flex:1; border:0; background:transparent; padding:14px 16px; font:inherit; font-size:15px;
+  color:var(--i); min-width:0}
+.fld input::placeholder{color:var(--m)}
+.fld input:focus{outline:2px solid var(--a); outline-offset:-2px}
+.fld button{border:0; background:var(--i); color:#FAFAF8; font:inherit; font-size:15px; font-weight:500;
+  padding:0 26px; cursor:pointer; transition:background-color .18s var(--ease)}
+.fld button:hover{background:var(--a)}
+
+/* 푸터 */
+.ft{background:var(--dk); color:var(--on-m); padding:56px 40px 28px}
+.ft .cols{display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:44px}
+.ft .tg{margin-top:14px; font-family:'Gothic A1',sans-serif; font-weight:300; font-size:15px;
+  letter-spacing:-.02em; color:#fff}
+.ft .ds{margin-top:10px; font-size:13px; max-width:32ch}
+.ft h4{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  font-weight:500; color:var(--on-m); margin:0 0 14px}
+.ft ul{margin:0; padding:0; list-style:none; font-size:13px; display:flex; flex-direction:column; gap:9px}
+.ft ul a{transition:color .18s var(--ease)}
+.ft ul a:hover{color:#fff}
+.ft .bot{margin-top:44px; padding-top:20px; border-top:1px solid rgba(255,255,255,.14);
+  display:flex; justify-content:space-between; font-size:12px; gap:16px; flex-wrap:wrap}
+@media (max-width:760px){.ft .cols{grid-template-columns:1fr 1fr}}
+
+/* 그리드 다이어그램 */
+.gd{position:relative; height:150px; background:#FAFAF8; border:1px solid var(--doc-line); overflow:hidden}
+.gd .content{position:absolute; top:0; bottom:0; left:8.33%; right:8.33%; background:rgba(0,112,122,.10);
+  border-left:1px solid var(--doc-acc); border-right:1px solid var(--doc-acc);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono',monospace; font-size:12px; color:#006A75; letter-spacing:.06em}
+.gd .g{position:absolute; top:0; bottom:0; width:8.33%; background:rgba(20,25,26,.05);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono',monospace; font-size:11px; color:#757575}
+.gd .g.l{left:0} .gd .g.r{right:0}
+
+/* 간격 스케일 */
+.sp{display:flex; flex-direction:column; gap:8px}
+.sp .r{display:grid; grid-template-columns:70px 1fr; gap:16px; align-items:center}
+.sp .r span{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--doc-mut)}
+.sp .r i{display:block; height:14px; background:var(--doc-acc); opacity:.55}
+
+@media (prefers-reduced-motion:reduce){
+  .gf *{transition-duration:.01ms !important}
+}
+:focus-visible{outline:2px solid var(--doc-acc); outline-offset:3px}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="meta">
+    <span class="eb">Glofind · Design System</span>
+    <span class="eb">V2.0 · 2026.08.26</span>
+    <span class="eb">A · B 공용</span>
+  </div>
+  <h1>글로파인드 디자인 시스템</h1>
+  <p class="lede">화면을 그리기 전에 <b>반복 요소를 먼저 확정</b>하는 문서입니다. 시안 A(다크 오프닝)와 B(스플릿 지면)는 방향이 갈리지만 <b>이 층은 공유</b>합니다 — 방향이 어느 쪽으로 정해져도 여기부터 구현하면 됩니다. 아래 버튼·링크·헤더는 그림이 아니라 <b>실제로 동작합니다</b>. 마우스를 올려 상태를 확인하세요.</p>
+</header>
+
+<!-- ① 그리드 -->
+<section class="blk">
+  <div class="hd"><h2>01 · 그리드</h2>
+    <p class="lede">팀 표준(캔버스 1920 / 콘텐츠 1440 / 거터 240)을 1440 캔버스에 비례 적용했습니다. 현재 사이트는 콘텐츠 1240에 거터 100이었고, 시안도 그렇게 그렸다가 <b>거터 120으로 맞춰 다시 잡았습니다.</b></p></div>
+  <div class="gd">
+    <div class="g l">120</div>
+    <div class="content">CONTENT 1200</div>
+    <div class="g r">120</div>
+  </div>
+  <div class="tbl"><table class="spec">
+    <thead><tr><th>토큰</th><th>값</th><th>쓰는 자리</th></tr></thead>
+    <tbody>
+      <tr><td class="t">--canvas</td><td class="t">1440</td><td class="m">디자인 기준 폭. 이보다 넓으면 콘텐츠는 중앙 고정, 배경만 늘어납니다.</td></tr>
+      <tr><td class="t">--content</td><td class="t">1200</td><td class="m">본문·카드·버튼이 들어가는 폭. 좌우 대칭 — 한쪽만 어긋나는 배치 금지.</td></tr>
+      <tr><td class="t">--gutter</td><td class="t">120</td><td class="m">좌우 여백. 모바일 20 / 태블릿 40.</td></tr>
+      <tr><td class="t">--read</td><td class="t">≤760</td><td class="m">인사이트 본문처럼 길게 읽는 글. 한 줄 65자 안팎.</td></tr>
+      <tr><td class="t">full-bleed</td><td class="t">100%</td><td class="m">히어로 사진·다크 밴드·푸터. <b>배경만</b> 화면 끝까지, 글자는 콘텐츠 폭 안에.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ② 간격 -->
+<section class="blk">
+  <div class="hd"><h2>02 · 간격 · 섹션 리듬</h2>
+    <p class="lede">8px 그리드. 섹션 간격은 <b>100으로 균일</b>하게 두고, 배경 밴드는 <b>위·아래 패딩을 대칭</b>으로 잡습니다(위 100 · 아래 100). 위아래가 어긋나면 밴드가 기울어 보입니다.</p></div>
+  <div class="grid2">
+    <div class="sp">
+      <div class="r"><span>8</span><i style="width:8px"></i></div>
+      <div class="r"><span>16</span><i style="width:16px"></i></div>
+      <div class="r"><span>24</span><i style="width:24px"></i></div>
+      <div class="r"><span>32</span><i style="width:32px"></i></div>
+      <div class="r"><span>48</span><i style="width:48px"></i></div>
+      <div class="r"><span>64</span><i style="width:64px"></i></div>
+      <div class="r"><span>80</span><i style="width:80px"></i></div>
+      <div class="r"><span>100</span><i style="width:100px"></i></div>
+      <div class="r"><span>120</span><i style="width:120px"></i></div>
+    </div>
+    <div class="tbl"><table class="spec">
+      <thead><tr><th>용도</th><th>값</th></tr></thead>
+      <tbody>
+        <tr><td>섹션 ↔ 섹션</td><td class="t">100</td></tr>
+        <tr><td>밴드 내부 상·하 패딩</td><td class="t">100 / 100 (대칭)</td></tr>
+        <tr><td>표제 ↔ 리드 문장</td><td class="t">20</td></tr>
+        <tr><td>리드 ↔ 본문 블록</td><td class="t">48</td></tr>
+        <tr><td>괘선 행 상·하 패딩</td><td class="t">28~32</td></tr>
+        <tr><td>버튼 ↔ 버튼</td><td class="t">24</td></tr>
+        <tr><td>모바일 좌우 거터</td><td class="t">20</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ③ 컬러 -->
+<section class="blk">
+  <div class="hd"><h2>03 · 컬러 토큰</h2>
+    <p class="lede">전부 <b>브랜드 가이드 V1.0의 <span class="mn">:root</span> 값</b>입니다. 이전 시안에서 제가 임의로 만든 회색(<span class="mn">#5E6B6D</span> 등)이 탁함의 원인이었고, 전부 가이드 값으로 되돌렸습니다. <b>가이드 밖 색은 한 개도 쓰지 않습니다.</b></p></div>
+  <div class="sw-grid">
+    <div class="sw"><span class="chip" style="background:#00ADBD"></span><div class="meta"><div class="nm">primary / cyan</div><div class="hx">#00ADBD</div><div class="use"><b>색면으로 크게.</b> 히어로·CTA 밴드 전체. 이 위의 글자는 반드시 잉크</div></div></div>
+    <div class="sw"><span class="chip" style="background:#4DD0DC"></span><div class="meta"><div class="nm">primary / cyan-l</div><div class="hx">#4DD0DC</div><div class="use">다크 밴드 위 액센트·링크. #0f0f0f 대비 10.4:1</div></div></div>
+    <div class="sw"><span class="chip" style="background:#A3E8EE"></span><div class="meta"><div class="nm">primary / cyan-ll</div><div class="hx">#A3E8EE</div><div class="use">바·구분선 등 보조 그래픽</div></div></div>
+    <div class="sw"><span class="chip" style="background:#E6F8FA"></span><div class="meta"><div class="nm">primary / cyan-pale</div><div class="hx">#E6F8FA</div><div class="use">자료 화면 바닥, 부드러운 색면 밴드</div></div></div>
+    <div class="sw"><span class="chip" style="background:#008A98"></span><div class="meta"><div class="nm">primary / cyan-d</div><div class="hx">#008A98</div><div class="use">호버·경계. 본문 텍스트에는 대비 부족(3.9:1)</div></div></div>
+    <div class="sw"><span class="chip" style="background:#006A75"></span><div class="meta"><div class="nm">primary / cyan-dd</div><div class="hx">#006A75</div><div class="use"><b>밝은 지면의 텍스트 액센트.</b> 대비 6.4:1 — AA 통과</div></div></div>
+    <div class="sw"><span class="chip" style="background:#121212"></span><div class="meta"><div class="nm">neutral / ink</div><div class="hx">#121212</div><div class="use">표제·본문. Primary 버튼 채움</div></div></div>
+    <div class="sw"><span class="chip" style="background:#404040"></span><div class="meta"><div class="nm">neutral / ink70</div><div class="hx">#404040</div><div class="use"><b>본문 보조 문장 기본값.</b> 대비 9.9:1</div></div></div>
+    <div class="sw"><span class="chip" style="background:#757575"></span><div class="meta"><div class="nm">neutral / ink50</div><div class="hx">#757575</div><div class="use"><b>흰 배경 캡션에만.</b> #FAFAF8 위에서는 4.41:1로 AA 미달 — 본문 보조는 ink70을 씁니다</div></div></div>
+    <div class="sw"><span class="chip" style="background:#E8E8E8"></span><div class="meta"><div class="nm">neutral / ink20</div><div class="hx">#E8E8E8</div><div class="use">괘선·표 구분선</div></div></div>
+    <div class="sw"><span class="chip" style="background:#FAFAF8"></span><div class="meta"><div class="nm">neutral / bg</div><div class="hx">#FAFAF8</div><div class="use">기본 지면</div></div></div>
+    <div class="sw"><span class="chip" style="background:#FFFFFF"></span><div class="meta"><div class="nm">neutral / white</div><div class="hx">#FFFFFF</div><div class="use">카드·밴드</div></div></div>
+    <div class="sw"><span class="chip" style="background:#0f0f0f"></span><div class="meta"><div class="nm">dark / bg</div><div class="hx">#0f0f0f</div><div class="use">서비스 밴드·푸터</div></div></div>
+    <div class="sw"><span class="chip" style="background:#1a1a1a"></span><div class="meta"><div class="nm">dark / surface</div><div class="hx">#1a1a1a</div><div class="use">다크 위 카드</div></div></div>
+    <div class="sw"><span class="chip" style="background:#E8E8E8"></span><div class="meta"><div class="nm">dark / text</div><div class="hx">#E8E8E8</div><div class="use">다크 밴드 본문</div></div></div>
+    <div class="sw"><span class="chip" style="background:#B0B0B0"></span><div class="meta"><div class="nm">dark / text-s</div><div class="hx">#B0B0B0</div><div class="use">다크 밴드 보조. 대비 8.8:1</div></div></div>
+    <div class="sw"><span class="chip" style="background:#00BA88"></span><div class="meta"><div class="nm">semantic / success</div><div class="hx">#00BA88</div><div class="use">폼 성공. 브랜드 액센트와 분리</div></div></div>
+    <div class="sw"><span class="chip" style="background:#FFA726"></span><div class="meta"><div class="nm">semantic / warning</div><div class="hx">#FFA726</div><div class="use">폼 경고</div></div></div>
+    <div class="sw"><span class="chip" style="background:#EF5350"></span><div class="meta"><div class="nm">semantic / error</div><div class="hx">#EF5350</div><div class="use">폼 오류</div></div></div>
+  </div>
+  <p class="warn"><b>시안 위에는 흰 글자를 쓸 수 없습니다.</b> <span class="mn">#00ADBD</span> 위의 흰색은 대비 <b>2.72:1</b>로 AA(4.5:1)에 한참 못 미칩니다. 반대로 잉크(<span class="mn">#0f0f0f</span>)를 올리면 <b>7.07:1</b>로 통과합니다. 그래서 시안 색면 밴드의 글자·버튼·라벨은 전부 잉크입니다 — 밝은 색면에 검은 글자라 오히려 더 선명하게 읽힙니다.<br><br><b>밝은 지면의 텍스트 액센트는 <span class="mn">#006A75</span>(cyan-dd)</b>를 씁니다. 가이드에 이미 있는 값이고 대비 6.4:1로 통과합니다. 앞서 제가 <span class="mn">#00707A</span>를 새로 만들었던 건 불필요했습니다 — 가이드에 답이 있었습니다.</p>
+</section>
+
+<!-- ④ 타이포 -->
+<section class="blk">
+  <div class="hd"><h2>04 · 타이포그래피</h2>
+    <p class="lede">표제는 <b>Gothic A1 700</b>, 본문은 <b>IBM Plex Sans KR 400</b>, 수치는 <b>IBM Plex Mono</b>(tabular). 표제와 본문을 다른 가족으로 나눠 뼈대로 위계를 만듭니다. 굵기는 <b>700 / 600 / 500 / 400 네 단계</b>만 쓰고, 위계는 굵기가 아니라 <b>크기 차이</b>가 만듭니다.</p></div>
+  <div>
+    <div class="ty"><div class="k"><b>Display</b>Gothic A1 700<br>96 / -.03em / 1.02</div><div class="s"><span class="t-display">해외 시장,</span></div></div>
+    <div class="ty"><div class="k"><b>H1</b>Gothic A1 700<br>86 / -.03em / 1.02</div><div class="s"><span class="t-h1">전략대로 열립니다.</span></div></div>
+    <div class="ty"><div class="k"><b>H2</b>Gothic A1 700<br>46 / -.03em / 1.15</div><div class="s"><span class="t-h2">전략은 실행에서 증명됩니다.</span></div></div>
+    <div class="ty"><div class="k"><b>H3</b>Gothic A1 600<br>24 / -.02em / 1.4</div><div class="s"><span class="t-h3">Market Entry · 시장 진입 설계</span></div></div>
+    <div class="ty"><div class="k"><b>Data</b>IBM Plex Mono 400<br>46 / tabular-nums</div><div class="s"><span class="t-data">320%+</span></div></div>
+    <div class="ty"><div class="k"><b>Body-L</b>Plex Sans KR 400<br>19 / 0 / 1.75</div><div class="s"><span class="t-bodyl">업종이 같으면 시작이 빠릅니다. 65개 브랜드의 운영 기록에서 같은 조건의 사례를 먼저 꺼내 씁니다.</span></div></div>
+    <div class="ty"><div class="k"><b>Body</b>Plex Sans KR 400<br>17 / 0 / 1.75</div><div class="s"><span class="t-body">시장 선택부터 현지 수요 창출, 검색과 AI에서의 발견성, 성과 최적화까지 하나의 팀으로 운영합니다.</span></div></div>
+    <div class="ty"><div class="k"><b>Label</b>Plex Sans KR 500<br>13 / +.03em</div><div class="s"><span class="t-label">평균 해외 리드 증가율</span></div></div>
+    <div class="ty"><div class="k"><b>Eyebrow</b>IBM Plex Mono 500<br>12 / +.14em / UPPER</div><div class="s"><span class="t-eyebrow">Global B2B Growth Partner</span></div></div>
+    <div class="ty"><div class="k"><b>Caption</b>Plex Sans KR 400<br>13 / 0 / 1.7</div><div class="s"><span class="t-caption">화면 구조 예시이며 실제 값은 프로젝트별로 채웁니다.</span></div></div>
+  </div>
+  <div class="tbl"><table class="spec">
+    <thead><tr><th>규칙</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>단계 수</td><td class="m">표제 4단(Display·H1·H2·H3) + 본문 3단 + 라벨 3단. <b>사이 크기를 새로 만들지 않습니다</b> — 현재 사이트가 40종으로 늘어난 게 위계가 납작해진 원인.</td></tr>
+      <tr><td>굵기</td><td class="m">표제 <b>700</b> · 소제목 600 · 라벨 500 · 본문 400. <b>300은 쓰지 않습니다.</b> 현재 사이트도 700을 62회 쓰지만 크기가 40종으로 흩어져 위계가 안 생겼습니다 — 굵기가 아니라 크기 단계를 줄이는 게 해법입니다.</td></tr>
+      <tr><td>자간</td><td class="m"><b>−0.03em이 하한입니다.</b> 에이전시 3곳 실측에서 −0.03em보다 조인 곳이 없었고, Cossette는 181px에 자간 거의 0이었습니다 — 글자가 크면 조일 필요가 없습니다. 작은 라벨은 오히려 +0.03~0.14em으로 벌립니다.</td></tr>
+      <tr><td>줄바꿈</td><td class="m"><span class="mn">word-break: keep-all</span> 전역. 없으면 「프레임워/크」처럼 단어가 잘립니다 — 현재 사이트에 이 설정이 없습니다.</td></tr>
+      <tr><td>행간</td><td class="m">표제 <b>1.02</b>(히어로) · <b>1.15</b>(섹션 표제) · 본문 1.75. 실측한 라틴 하한은 0.90이지만 <b>한글은 1.02 아래에서 윗줄 받침과 아랫줄이 겹칩니다</b> — 104px/800에서 확인했습니다.</td></tr>
+      <tr><td>줄 길이</td><td class="m">본문 65자 안팎, 80자 초과 금지.</td></tr>
+      <tr><td>숫자</td><td class="m">지표·표·비용은 전부 모노 + <span class="mn">tabular-nums</span>. 자릿수가 흔들리지 않습니다.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ⑤ 로고 -->
+<section class="blk">
+  <div class="hd"><h2>05 · 로고 · 이미지 대체 규칙</h2>
+    <p class="lede">밝은 지면용·어두운 지면용 2색. 마크와 워드마크는 가로 정렬로 묶어 <b>수직 중심을 공유</b>합니다.</p></div>
+  <div class="grid2">
+    <div><div class="cap">logo_bk — 밝은 지면</div><div class="canvas gf"><span class="logo bk">Gl<em>o</em>find</span></div></div>
+    <div><div class="cap">logo_wt — 어두운 지면</div><div class="canvas ink gf"><span class="logo wt">Gl<em>o</em>find</span></div></div>
+  </div>
+  <div class="hd" style="margin-top:14px"><h3>이미지 자리에 무엇을 놓는가</h3>
+    <p class="note">사진을 쓰지 않기로 하면서 이미지 자리가 비었습니다. <b>추상 그래픽을 그려 넣지 않습니다</b> — 직접 그린 다이어그램은 이 회사만의 것처럼 보이지만 실제로는 설명이 필요한 그림이 됩니다. 대신 <b>실제로 고객에게 전달하는 화면</b>을 그 자리에 놓습니다.</p></div>
+  <div class="tbl"><table class="spec">
+    <thead><tr><th>규칙</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>히어로</td><td class="m"><b>점 지도.</b> Natural Earth(퍼블릭 도메인) 좌표를 170×66 격자로 찍어 만든 자체 에셋(PNG 14KB). 시안 색면 위에 잉크 점으로 깔고, <b>진출 시장에만 마커</b>를 붙입니다. 스톡 지구본·발광 3D 렌더는 쓰지 않습니다.</td></tr>
+      <tr><td>Why</td><td class="m"><b>주간 성과 리포트 카드.</b> “주간 성과 리포트, 숫자로만” 문구가 있는 자리입니다.</td></tr>
+      <tr><td>서비스</td><td class="m"><b>채널 믹스.</b> 채널별 비중 바. cyan-pale 위.</td></tr>
+      <tr><td>비교표</td><td class="m">원본 사이트의 대형/글로파인드/소형 표. Why 아래 풀폭.</td></tr>
+      <tr><td>쓰지 않는 것</td><td class="m"><b>큰 숫자 4개를 가로로 늘어놓는 지표 블록.</b> 오래된 문법이라 뺐습니다. 숫자는 문장 안이나 사례 카드 안에 둡니다.</td></tr>
+      <tr><td>Process</td><td class="m"><b>시장 우선순위 평가표.</b> 인사이트의 5단계 프레임워크를 화면으로.</td></tr>
+      <tr><td>수치</td><td class="m">전부 <b>구조 예시</b>입니다. 화면 안에 예시임을 표기하고, 실제 값으로 교체합니다.</td></tr>
+      <tr><td>반복 금지</td><td class="m">같은 자료 화면을 두 곳에 넣지 않습니다. 두 번 나오면 자료가 장식이 됩니다.</td></tr>
+      </tbody>
+  </table></div>
+</section>
+
+<!-- ⑥ 버튼 -->
+<section class="blk">
+  <div class="hd"><h2>06 · 버튼 — 상태</h2>
+    <p class="lede">모든 버튼에 <b>Default / Hover / Focus / Disabled</b>를 정의합니다. 호버는 <b>색·채움 변화로 먼저 구분</b>하고 그림자는 쓰지 않습니다 — 플랫한 톤이라 색만으로 충분합니다. 아래는 실제로 올려볼 수 있고, 오른쪽 열은 상태를 고정해 둔 것입니다.</p></div>
+  <div class="cap">밝은 지면 · 왼쪽=실제 동작 / 오른쪽=상태 고정</div>
+  <div class="canvas gf">
+    <div class="row" style="gap:44px">
+      <div class="row"><a class="btn btn-pri">프로젝트 상담하기</a><a class="btn btn-pri is-hover">Hover</a><a class="btn btn-pri is-focus">Focus</a><a class="btn btn-pri is-disabled">Disabled</a></div>
+    </div>
+    <div class="cap">Primary — 잉크 채움 → 호버 시 액센트</div>
+    <div class="row"><a class="btn btn-sec">케이스 스터디 보기</a><a class="btn btn-sec is-hover">Hover</a><a class="btn btn-sec is-focus">Focus</a></div>
+    <div class="cap">Secondary — 외곽선 → 호버 시 채움 반전</div>
+    <div class="row"><a class="btn btn-gho">서비스 전체 보기</a><a class="btn btn-gho is-hover">Hover</a>
+      <a class="btn btn-arw" aria-label="다음"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="btn btn-arw is-hover" aria-label="다음 (호버)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+    <div class="cap">Ghost / Arrow 44×44 이상 — 외곽선 → 호버 시 액센트 채움</div>
+  </div>
+  <div class="cap">어두운 지면 (히어로·CTA 밴드)</div>
+  <div class="canvas ink gf on-dk">
+    <div class="row"><a class="btn btn-pri">무료 상담 신청</a><a class="btn btn-pri is-hover">Hover</a>
+      <a class="btn btn-sec">케이스 스터디 보기</a><a class="btn btn-sec is-hover">Hover</a><a class="btn btn-sec is-focus">Focus</a></div>
+  </div>
+  <p class="note"><b>터치 타깃:</b> 모든 버튼 최소 높이 48px, 원형 버튼 48×48. 모바일에서 버튼 사이 간격 12px 이상.</p>
+</section>
+
+<!-- ⑦ 링크·탭·언어 -->
+<section class="blk">
+  <div class="hd"><h2>07 · 링크 · 탭 · 언어</h2></div>
+  <div class="canvas gf">
+    <div class="row" style="gap:36px">
+      <a class="lnk">케이스 스터디 보기</a><a class="lnk is-hover">Hover</a>
+      <a class="lnk-a">해외 진출 전략으로 해결하기 →</a><a class="lnk-a is-hover">Hover</a>
+    </div>
+    <div class="cap">텍스트 링크 — 밑줄 색 전환 / 액센트 링크 — 색 심화</div>
+    <div class="tabs" style="margin-bottom:8px">
+      <a class="tab on">전체</a><a class="tab">뷰티 · 화장품</a><a class="tab">테크 · 전자제품</a><a class="tab">제조 · 부품</a>
+    </div>
+    <div class="cap">탭 — 활성은 액센트 밑줄 2px + 굵기 500</div>
+    <div class="lan"><b>KR</b><span>/</span><a>EN</a></div>
+    <div class="cap">언어 전환</div>
+  </div>
+</section>
+
+<!-- ⑧ 헤더 + 메가메뉴 -->
+<section class="blk">
+  <div class="hd"><h2>08 · 헤더 · 메가메뉴</h2>
+    <p class="lede">헤더는 <b>Default(닫힘)</b>와 <b>Open(메가 열림)</b> 두 상태를 가진 하나의 컴포넌트입니다. 두 상태에서 <b>네비 아이템 위치와 간격은 절대 움직이지 않습니다.</b> 2뎁스 컬럼은 Services 아이템의 <b>중심 x에 맞춰</b> 놓이고, 컬럼 좌우 구분선은 패널 <b>풀높이</b>로 내립니다. 활성 카테고리에는 옅은 배경을 깝니다.</p></div>
+  <div class="cap">Default — 밝은 지면</div>
+  <div class="canvas white flush gf">
+    <div class="hdr">
+      <div class="hdr-in"><span class="logo bk">Gl<em>o</em>find</span>
+        <ul class="nav"><li><a>Services</a></li><li><a>Cases</a></li><li><a>About</a></li><li><a>Insights</a></li></ul>
+        <a class="btn btn-pri" style="min-height:44px; padding:0 22px; font-size:14px">무료 상담 신청</a></div>
+    </div>
+  </div>
+  <div class="cap">Open — Services 호버 시. 네비 위치 불변, 컬럼이 Services 아래 정렬</div>
+  <div class="canvas white flush gf">
+    <div class="hdr open">
+      <div class="hdr-in"><span class="logo bk">Gl<em>o</em>find</span>
+        <ul class="nav"><li class="on"><a>Services</a></li><li><a>Cases</a></li><li><a>About</a></li><li><a>Insights</a></li></ul>
+        <a class="btn btn-pri" style="min-height:44px; padding:0 22px; font-size:14px">무료 상담 신청</a></div>
+      <div class="mega">
+        <div class="mega-in" style="padding-left:calc(50% - 112px - 90px)">
+          <div class="mega-col">
+            <a>해외 진출 전략 수립</a><a>브랜드 미디어 운영</a><a>인플루언서 캠페인</a><a>퍼포먼스 광고</a><a>SEO · GEO · AEO</a>
+          </div>
+          <p class="mega-note">시장 진입부터 성과 최적화까지 하나의 운영 흐름으로 설계합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cap">Default — 어두운 히어로 위 (시안 A)</div>
+  <div class="canvas ink flush gf">
+    <div class="hdr dk">
+      <div class="hdr-in"><span class="logo wt">Gl<em>o</em>find</span>
+        <ul class="nav"><li><a>Services</a></li><li><a>Cases</a></li><li><a>About</a></li><li><a>Insights</a></li></ul>
+        <span class="on-dk"><a class="btn btn-sec" style="min-height:44px; padding:0 22px; font-size:14px">무료 상담 신청</a></span></div>
+    </div>
+  </div>
+  <p class="note"><b>스크롤 동작:</b> 시안 A는 히어로 위에서 투명 → 히어로를 벗어나면 흰 배경 솔리드로 전환합니다. 시안 B는 처음부터 솔리드입니다. 전환은 배경색·글자색만 바꾸고 <b>높이는 바뀌지 않습니다</b> — 높이가 줄면 본문이 밀려 올라가 레이아웃이 흔들립니다.</p>
+</section>
+
+<!-- ⑨ 폼 -->
+<section class="blk">
+  <div class="hd"><h2>09 · 폼</h2>
+    <p class="lede">현재 홈에 있는 건 뉴스레터 구독 한 곳입니다. 상담 신청 폼은 별도 페이지라 여기서는 인풋 기본형만 정의합니다.</p></div>
+  <div class="canvas gf">
+    <div class="fld"><input type="email" placeholder="work@company.com" aria-label="이메일"><button type="button">구독하기</button></div>
+    <div class="cap">인풋 높이 48 · 포커스 시 액센트 아웃라인 2px · 라벨은 placeholder로 대체하지 않음(실제 구현 시 시각 라벨 추가)</div>
+  </div>
+</section>
+
+<!-- ⑩ 푸터 -->
+<section class="blk">
+  <div class="hd"><h2>10 · 푸터</h2></div>
+  <div class="canvas ink flush gf">
+    <div class="ft">
+      <div class="cols">
+        <div><span class="logo wt">Gl<em>o</em>find</span>
+          <div class="tg">Find. Enter. Grow.</div>
+          <div class="ds">B2B 기업의 해외 시장 진입과 성장을 설계하는 글로벌 마케팅 파트너.</div></div>
+        <div><h4>Services</h4><ul><li><a>해외 진출 전략 수립</a></li><li><a>브랜드 미디어 운영</a></li><li><a>인플루언서 캠페인</a></li><li><a>디지털 광고 운영</a></li><li><a>검색 · AI 최적화</a></li></ul></div>
+        <div><h4>Company</h4><ul><li><a>About</a></li><li><a>Cases</a></li><li><a>Insights</a></li><li><a>Contact</a></li></ul></div>
+        <div><h4>Contact</h4><ul><li><a>hello@glofind.co</a></li><li><a>LinkedIn</a></li><li>평일 09:00–18:00 KST</li></ul></div>
+      </div>
+      <div class="bot"><span>© 2026 글로파인드. All rights reserved.</span><span class="mn">BRAND GUIDELINES V2.0</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑪ 모션 -->
+<section class="blk">
+  <div class="hd"><h2>11 · 모션</h2>
+    <p class="lede">화면당 <b>두 개까지</b>. 많이 넣을수록 고급이 되지 않습니다. <span class="mn">transform</span>과 <span class="mn">opacity</span>만 애니메이션합니다 — width·height·padding을 움직이면 레이아웃이 다시 계산되며 끊깁니다.</p></div>
+  <div class="tbl"><table class="spec">
+    <thead><tr><th>토큰</th><th>값</th><th>쓰는 자리</th></tr></thead>
+    <tbody>
+      <tr><td class="t">--ease</td><td class="t">cubic-bezier(.2,.6,.3,1)</td><td class="m">등장·상태 전이 공통</td></tr>
+      <tr><td class="t">--dur-micro</td><td class="t">180ms</td><td class="m">버튼·링크·탭 호버</td></tr>
+      <tr><td class="t">--dur-enter</td><td class="t">700ms</td><td class="m">스크롤 리빌 (y 24px · opacity 0→1)</td></tr>
+      <tr><td class="t">--dur-exit</td><td class="t">120ms</td><td class="m">퇴장은 등장의 60~70%. 느리면 답답합니다</td></tr>
+      <tr><td class="t">--stagger</td><td class="t">80ms</td><td class="m">괘선 행·카드 순차 등장</td></tr>
+      <tr><td>시안 A 히어로</td><td class="t">텍스트 페이드업</td><td class="m">y 24px · 700ms · 줄 단위 stagger 80ms</td></tr>
+      <tr><td>시안 B 히어로</td><td class="t">표제 분절 리빌</td><td class="m">글자당 40ms · 사진 clip-path 축소 900ms</td></tr>
+    </tbody>
+  </table></div>
+  <p class="warn"><b>반드시 대응할 것 두 가지.</b> ① <span class="mn">prefers-reduced-motion: reduce</span>에서 모든 전환을 끕니다. ② <b>리빌이 실패해도 콘텐츠가 보여야 합니다.</b> 현재 사이트는 스크롤 위치를 건너뛰어 진입하면 히어로 아래가 비는 현상이 있었습니다 — 초기 상태를 <span class="mn">opacity:0</span>으로 두면 리빌이 안 걸릴 때 영영 안 보입니다. IntersectionObserver 미지원·실패 시 즉시 보이도록 처리합니다.</p>
+</section>
+
+<!-- ⑫ 반응형 -->
+<section class="blk">
+  <div class="hd"><h2>12 · 반응형</h2>
+    <p class="lede">팀 표준 브레이크포인트를 씁니다. 임의 값 금지. 모바일은 데스크탑 축소가 아니라 <b>정보 우선순위로 재배치</b>합니다.</p></div>
+  <div class="tbl"><table class="spec">
+    <thead><tr><th>구간</th><th>폭</th><th>규칙</th></tr></thead>
+    <tbody>
+      <tr><td>모바일</td><td class="t">≤ 767</td><td class="m">1단 스택 · 거터 20 · 햄버거 · 본문 16px · 터치 48px · 좌우 스크롤 금지</td></tr>
+      <tr><td>태블릿</td><td class="t">768–1023</td><td class="m">2단까지 · 거터 40 · 좌우 분할은 세로로 풀림</td></tr>
+      <tr><td>데스크탑</td><td class="t">1024–1279</td><td class="m">거터 80 · 콘텐츠 유동</td></tr>
+      <tr><td>기준</td><td class="t">≥ 1280</td><td class="m">콘텐츠 1200 중앙 고정 · 거터 120 · 배경만 full-bleed</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>모바일 재배치 원칙:</b> 시안 A는 히어로 높이를 600으로 줄이고 표제 44px, 지표를 2×2로. 시안 B는 좌우 분할을 <b>텍스트 → 사진 → 지표</b> 순으로 풀어 사진이 화면을 반 이상 먹지 않게 합니다. 자료 화면(리포트·평가표)은 표를 가로 스크롤로 두지 않고 <b>행 단위 카드</b>로 바꿉니다.</p>
+</section>
+
+<!-- ⑬ 넘기기 전 -->
+<section class="blk">
+  <div class="hd"><h2>13 · 아직 안 정한 것</h2></div>
+  <div class="tbl"><table class="spec">
+    <thead><tr><th>항목</th><th>왜 아직인가</th></tr></thead>
+    <tbody>
+      <tr><td>방향 A / B</td><td class="m">전체 흐름 보고 결정하기로 했습니다. 이 문서는 두 안 공용이라 <b>결정 전에도 구현을 시작할 수 있습니다.</b></td></tr>
+      <tr><td>의미색 (성공·경고·오류)</td><td class="m">상담 폼이 별도 페이지라 폼 작업 들어갈 때 정의합니다. 브랜드 액센트와 <b>반드시 분리</b>합니다.</td></tr>
+      <tr><td>히어로 사진</td><td class="m">실사 + 자료 화면 혼합으로 방향은 정했지만, 히어로에 쓸 실사는 여전히 촬영이 필요합니다.</td></tr>
+      <tr><td>수치 근거</td><td class="m">65+ · 11+ · 320%+ · 82%+ · 340%+ 의 출처 확인 전입니다. 확인 안 되는 값은 섹션째 뺍니다.</td></tr>
+      <tr><td>다크 모드</td><td class="m">기업 사이트라 우선순위에서 뺐습니다. 필요해지면 다크 밴드 토큰을 그대로 확장하면 됩니다.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</div>

@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="글로파인드 모던 매거진형 풀블리드 Hero 시안">
+  <title>Glofind — Editorial Full-Bleed Direction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500&family=SUIT:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gm-paper: #f6f7f4;
+      --gm-ink: #111817;
+      --gm-muted: #59605e;
+      --gm-line: rgba(17, 24, 23, .24);
+      --gm-line-soft: rgba(17, 24, 23, .12);
+      --gm-teal: #007a80;
+      --gm-max: 90rem;
+      --gm-gutter: clamp(1.25rem, 4.16vw, 5rem);
+      --gm-header-h: 5.75rem;
+      --gm-display: "Montserrat", "Arial", sans-serif;
+      --gm-body: "SUIT", "Apple SD Gothic Neo", sans-serif;
+      --gm-ease: cubic-bezier(.2, .7, .2, 1);
+      --gm-fast: 180ms;
+      --gm-reveal: 780ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--gm-paper); }
+    body { min-width: 20rem; margin: 0; overflow-x: hidden; background: var(--gm-paper); color: var(--gm-ink); font-family: var(--gm-body); }
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .gm-shell { position: relative; }
+    .gm-header {
+      position: fixed;
+      z-index: 10;
+      inset: 0 0 auto;
+      height: var(--gm-header-h);
+      color: var(--gm-ink);
+      transition: background-color var(--gm-fast) ease, border-color var(--gm-fast) ease;
+    }
+    .gm-header.is-scrolled { border-bottom: 1px solid var(--gm-line-soft); background: color-mix(in srgb, var(--gm-paper) 90%, transparent); backdrop-filter: blur(.75rem); }
+    .gm-header__inner {
+      display: flex;
+      width: min(100%, var(--gm-max));
+      height: 100%;
+      margin: 0 auto;
+      padding-inline: var(--gm-gutter);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .gm-logo {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: baseline;
+      color: var(--gm-ink);
+      font-family: var(--gm-display);
+      font-size: .99rem;
+      font-weight: 800;
+      letter-spacing: -.075em;
+      line-height: 1;
+      text-decoration: none;
+    }
+    .gm-logo::after { width: .3rem; height: .3rem; margin-left: .1rem; border-radius: 50%; background: var(--gm-teal); content: ""; }
+    .gm-nav { display: flex; align-items: center; gap: clamp(1.1rem, 2.1vw, 2.35rem); }
+    .gm-nav__link, .gm-enquiry {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+      border: 0;
+      background: transparent;
+      color: var(--gm-ink);
+      font-family: var(--gm-display);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .gm-nav__link::after, .gm-enquiry::after {
+      position: absolute;
+      right: 0;
+      bottom: .55rem;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform var(--gm-fast) var(--gm-ease);
+    }
+    .gm-nav__link:hover::after, .gm-enquiry:hover::after, .gm-nav__link:focus-visible::after, .gm-enquiry:focus-visible::after { transform: scaleX(1); transform-origin: left center; }
+    .gm-enquiry { margin-left: clamp(.1rem, 1.1vw, 1rem); color: var(--gm-teal); }
+    .gm-menu { display: none; }
+    :focus-visible { outline: 2px solid var(--gm-teal); outline-offset: .25rem; }
+
+    .gm-hero {
+      position: relative;
+      display: flex;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #d1d6d0;
+    }
+    .gm-hero__image, .gm-hero__tint { position: absolute; inset: 0; }
+    .gm-hero__image {
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 57% 61%;
+      filter: saturate(.88) contrast(.98);
+      transform: scale(1.035);
+      animation: gm-settle 1.2s var(--gm-ease) .08s both;
+    }
+    .gm-hero__tint {
+      z-index: -1;
+      background: linear-gradient(90deg, rgba(246, 247, 244, .68) 0%, rgba(246, 247, 244, .36) 34%, rgba(246, 247, 244, .06) 61%, rgba(17, 24, 23, .08) 100%);
+    }
+    .gm-hero__frame {
+      display: grid;
+      width: min(100%, var(--gm-max));
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: calc(var(--gm-header-h) + clamp(1.5rem, 4.5vh, 3.75rem)) var(--gm-gutter) clamp(1.5rem, 3.3vh, 2.75rem);
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: 1fr auto;
+      column-gap: clamp(.75rem, 1.38vw, 1.5rem);
+    }
+    .gm-hero__copy {
+      align-self: center;
+      grid-column: 1 / span 8;
+      margin-top: clamp(1rem, 9vh, 6rem);
+    }
+    .gm-hero__eyebrow {
+      display: flex;
+      margin: 0 0 clamp(1rem, 3vh, 2rem);
+      align-items: center;
+      gap: .65rem;
+      color: var(--gm-teal);
+      font-family: var(--gm-display);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      animation: gm-rise var(--gm-reveal) var(--gm-ease) .3s both;
+    }
+    .gm-hero__eyebrow::before { width: 2.1rem; height: 1px; background: currentColor; content: ""; }
+    .gm-title { margin: 0; font-family: var(--gm-body); font-size: clamp(3.45rem, 7.18vw, 8.5rem); font-weight: 700; letter-spacing: -.102em; line-height: .91; word-break: keep-all; }
+    .gm-title__line { display: block; overflow: hidden; }
+    .gm-title__line > span { display: block; animation: gm-title-line .94s var(--gm-ease) both; }
+    .gm-title__line:nth-child(1) > span { animation-delay: .38s; }
+    .gm-title__line:nth-child(2) > span { animation-delay: .48s; }
+    .gm-title__line:nth-child(3) > span { color: var(--gm-teal); animation-delay: .58s; }
+    .gm-hero__caption {
+      max-width: 19rem;
+      margin: clamp(1.5rem, 4vh, 3rem) 0 0;
+      color: var(--gm-ink);
+      font-size: .86rem;
+      font-weight: 500;
+      letter-spacing: -.025em;
+      line-height: 1.6;
+      animation: gm-rise var(--gm-reveal) var(--gm-ease) .7s both;
+    }
+    .gm-hero__meta, .gm-hero__scroll { align-self: end; font-family: var(--gm-display); font-size: .61rem; font-weight: 700; letter-spacing: .12em; line-height: 1.2; text-transform: uppercase; }
+    .gm-hero__scroll { display: flex; grid-column: 1 / span 3; align-items: center; gap: .7rem; color: var(--gm-ink); text-decoration: none; animation: gm-rise var(--gm-reveal) var(--gm-ease) .82s both; }
+    .gm-hero__scroll::before { width: 2.25rem; height: 1px; background: currentColor; content: ""; transition: width var(--gm-fast) var(--gm-ease); }
+    .gm-hero__scroll:hover::before, .gm-hero__scroll:focus-visible::before { width: 3.25rem; }
+    .gm-hero__meta { grid-column: 11 / -1; color: color-mix(in srgb, var(--gm-ink) 68%, transparent); text-align: right; animation: gm-rise var(--gm-reveal) var(--gm-ease) .82s both; }
+
+    .gm-statement {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      padding: clamp(5.5rem, 10vh, 8.5rem) var(--gm-gutter) clamp(2.5rem, 5vh, 4rem);
+      background: var(--gm-paper);
+      grid-template-columns: minmax(7rem, 1fr) minmax(0, 5fr) minmax(9rem, 1.15fr);
+      column-gap: clamp(1rem, 2.78vw, 3.4rem);
+    }
+    .gm-statement__kicker, .gm-statement__note, .gm-statement__number { margin: 0; font-family: var(--gm-display); font-size: .64rem; font-weight: 700; letter-spacing: .11em; line-height: 1.45; text-transform: uppercase; }
+    .gm-statement__kicker { color: var(--gm-teal); }
+    .gm-statement__main { align-self: center; grid-column: 2; max-width: 56rem; padding-block: clamp(2rem, 8vh, 5rem); }
+    .gm-statement__title { margin: 0; font-size: clamp(2.5rem, 5.45vw, 6.7rem); font-weight: 700; letter-spacing: -.102em; line-height: .97; word-break: keep-all; }
+    .gm-statement__title em { color: var(--gm-teal); font: inherit; font-style: normal; }
+    .gm-statement__rule { width: 100%; height: 1px; margin-block: clamp(2.1rem, 5.8vh, 4.2rem) clamp(1rem, 2vh, 1.5rem); background: var(--gm-line); }
+    .gm-statement__lead { max-width: 27rem; margin: 0; color: var(--gm-muted); font-size: clamp(.94rem, 1.04vw, 1.06rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.68; word-break: keep-all; }
+    .gm-statement__aside { display: flex; align-self: end; grid-column: 3; flex-direction: column; gap: 1rem; padding-bottom: .25rem; }
+    .gm-statement__note { color: var(--gm-muted); font-size: .58rem; line-height: 1.8; }
+    .gm-statement__number { color: var(--gm-ink); }
+    [data-reveal] { opacity: 0; transform: translateY(1.5rem); transition: opacity .78s ease, transform .78s var(--gm-ease); }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+
+    @keyframes gm-settle { from { opacity: 0; transform: scale(1.07); } to { opacity: 1; transform: scale(1.035); } }
+    @keyframes gm-title-line { from { opacity: 0; transform: translateY(105%); } to { opacity: 1; transform: none; } }
+    @keyframes gm-rise { from { opacity: 0; transform: translateY(1.25rem); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 1023px) {
+      .gm-nav__link { display: none; }
+      .gm-hero__copy { grid-column: 1 / span 10; }
+      .gm-statement { grid-template-columns: minmax(6rem, 1fr) minmax(0, 4fr); }
+      .gm-statement__aside { display: none; }
+    }
+    @media (max-width: 767px) {
+      :root { --gm-header-h: 4.8rem; --gm-gutter: 1.25rem; }
+      .gm-nav { gap: .3rem; }
+      .gm-enquiry { display: none; }
+      .gm-menu { display: inline-flex; width: 2.75rem; height: 2.75rem; padding: 0; align-items: center; justify-content: center; border: 0; background: transparent; color: var(--gm-ink); cursor: pointer; }
+      .gm-menu::before, .gm-menu::after { position: absolute; width: 1.22rem; height: 1px; background: currentColor; content: ""; }
+      .gm-menu::before { transform: translateY(-.22rem); }
+      .gm-menu::after { transform: translateY(.22rem); }
+      .gm-hero__tint { background: linear-gradient(90deg, rgba(246, 247, 244, .8) 0%, rgba(246, 247, 244, .52) 62%, rgba(246, 247, 244, .17) 100%); }
+      .gm-hero__image { object-position: 60% 62%; }
+      .gm-hero__frame { padding-top: calc(var(--gm-header-h) + 2.2rem); grid-template-rows: 1fr auto; }
+      .gm-hero__copy { align-self: center; grid-column: 1 / -1; margin-top: 2.5rem; }
+      .gm-hero__eyebrow { font-size: .58rem; }
+      .gm-title { font-size: clamp(3.1rem, 15vw, 4.7rem); letter-spacing: -.11em; line-height: .93; }
+      .gm-hero__caption { max-width: 15rem; margin-top: 1.55rem; font-size: .8rem; }
+      .gm-hero__scroll { grid-column: 1 / span 5; font-size: .54rem; }
+      .gm-hero__meta { grid-column: 9 / -1; font-size: .54rem; }
+      .gm-statement { min-height: 92svh; padding-top: 5.5rem; grid-template-columns: 1fr; row-gap: 1.8rem; }
+      .gm-statement__main { grid-column: 1; padding-block: 0; }
+      .gm-statement__title { font-size: clamp(2.45rem, 11.8vw, 4.25rem); letter-spacing: -.11em; }
+      .gm-statement__lead { max-width: 19rem; font-size: .94rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="gm-shell">
+    <header class="gm-header" id="gm-header">
+      <div class="gm-header__inner">
+        <a class="gm-logo" href="#top" aria-label="Glofind 홈">GLOFIND</a>
+        <nav class="gm-nav" aria-label="주 내비게이션">
+          <a class="gm-nav__link" href="#statement">Services</a>
+          <a class="gm-nav__link" href="cases.html">Cases</a>
+          <a class="gm-nav__link" href="about.html">About</a>
+          <a class="gm-nav__link" href="insights/index.html">Insights</a>
+          <a class="gm-enquiry" href="#contact">Project Enquiry</a>
+          <button class="gm-menu" type="button" aria-label="메뉴 열기"></button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="gm-hero" aria-labelledby="gm-hero-title">
+        <img class="gm-hero__image" src="assets/images/glofind-hero-architectural-studio.webp" alt="도시가 내려다보이는 고층 스튜디오의 창가와 의자">
+        <div class="gm-hero__tint" aria-hidden="true"></div>
+        <div class="gm-hero__frame">
+          <div class="gm-hero__copy">
+            <p class="gm-hero__eyebrow">Global B2B Agency · Seoul</p>
+            <h1 class="gm-title" id="gm-hero-title">
+              <span class="gm-title__line"><span>해외 시장,</span></span>
+              <span class="gm-title__line"><span>전략대로</span></span>
+              <span class="gm-title__line"><span>열립니다.</span></span>
+            </h1>
+            <p class="gm-hero__caption">시장 안에서 시작해, 실행으로 증명되는 B2B 성장 전략을 설계합니다.</p>
+          </div>
+          <a class="gm-hero__scroll" href="#statement">Scroll to explore</a>
+          <p class="gm-hero__meta">Glofind<br>2026</p>
+        </div>
+      </section>
+
+      <section class="gm-statement" id="statement" aria-labelledby="gm-statement-title">
+        <p class="gm-statement__kicker" data-reveal>01 — What we build</p>
+        <div class="gm-statement__main" data-reveal>
+          <h2 class="gm-statement__title" id="gm-statement-title">시장을 먼저 읽고,<br><em>성과가 남는</em><br>진입을 설계합니다.</h2>
+          <div class="gm-statement__rule" aria-hidden="true"></div>
+          <p class="gm-statement__lead">글로벌 B2B의 성과는 진출 자체가 아니라, 현지의 구매 맥락을 읽고 실행의 밀도를 만드는 일에서 시작됩니다.</p>
+        </div>
+        <aside class="gm-statement__aside" aria-label="섹션 정보" data-reveal>
+          <p class="gm-statement__note">Market entry<br>Demand creation<br>Growth operations</p>
+          <p class="gm-statement__number">01 / 02</p>
+        </aside>
+      </section>
+
+      <section id="contact" hidden aria-label="문의"></section>
+    </main>
+  </div>
+
+  <script>
+    const header = document.querySelector('#gm-header');
+    const revealItems = document.querySelectorAll('[data-reveal]');
+
+    const updateHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .18 });
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add('is-visible'));
+    }
+  </script>
+</body>
+</html>

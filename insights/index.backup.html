@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insights — 글로벌 B2B 마케팅 인사이트 | Glofind</title>
+  <meta name="description" content="해외 시장 진입, 해외 진출 전략, SEO·GEO·AEO, 인플루언서 마케팅에 관한 실전 인사이트를 공유합니다.">
+  <link rel="canonical" href="https://glofind.co/insights/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=SUIT:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <style>
+    /* ── Hero ── */
+    .page-hero {
+      padding: 140px 0 72px;
+      background:
+        radial-gradient(ellipse 65% 80% at 85% 15%, rgba(0,173,189,.12) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 5% 85%, rgba(77,208,220,.08) 0%, transparent 52%),
+        var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--ink20) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ink20) 1px, transparent 1px);
+      background-size: 64px 64px; opacity: 0.022; pointer-events: none;
+    }
+    .page-breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .06em;
+      color: var(--ink50); margin-bottom: 24px; text-transform: uppercase;
+    }
+    .page-breadcrumb a { color: var(--ink50); transition: color .2s; }
+    .page-breadcrumb a:hover { color: var(--cyan); }
+    .page-breadcrumb-sep { color: var(--ink20); }
+    .page-h1 {
+      font-family: 'Montserrat', 'SUIT', sans-serif;
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.08;
+      color: var(--ink); margin-bottom: 16px;
+    }
+    .page-h1 .accent { color: var(--cyan); }
+    .page-sub {
+      font-size: 17px; color: var(--ink70);
+      max-width: 520px; line-height: 1.75; word-break: keep-all;
+    }
+
+    /* ── Filter Tabs ── */
+    .filter-bar {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap; padding: 32px 0 0;
+    }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 999px;
+      border: 1.5px solid var(--ink20); background: transparent;
+      font-size: 13px; font-weight: 700; color: var(--ink60);
+      cursor: pointer; transition: all .2s; font-family: 'SUIT', sans-serif;
+    }
+    .filter-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .filter-btn.active {
+      background: var(--cyan); border-color: var(--cyan);
+      color: #fff;
+    }
+
+    /* ── Featured Article ── */
+    .featured-article {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--ink20); border-radius: var(--r-xl);
+      overflow: hidden; margin-bottom: var(--sp-xl);
+      transition: box-shadow .25s;
+    }
+    .featured-article:hover { box-shadow: var(--shadow-lg); }
+    @media(max-width:768px){ .featured-article { grid-template-columns: 1fr; } }
+    .featured-visual {
+      background: var(--dark-bg);
+      min-height: 320px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .featured-visual-inner {
+      display: flex; flex-direction: column; gap: 10px; padding: var(--sp-lg);
+      width: 100%;
+    }
+    .featured-vis-row {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--r-md); padding: 12px 16px;
+    }
+    .featured-vis-icon { flex-shrink: 0; color: var(--cyan); display: flex; align-items: center; }
+    .featured-vis-icon svg { width: 20px; height: 20px; }
+    .featured-vis-row p { font-size: 13px; color: var(--dark-text); font-weight: 600; }
+    .featured-vis-row span { font-size: 11px; color: var(--dark-text-s); display: block; margin-top: 2px; }
+    .featured-body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+    .article-category {
+      display: inline-block; padding: 4px 12px;
+      background: var(--cyan-pale); color: var(--cyan-d);
+      border-radius: 999px; font-size: 12px; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .featured-body h2 {
+      font-family: 'Montserrat', 'SUIT', sans-serif;
+      font-size: clamp(20px, 2.5vw, 28px); font-weight: 900;
+      letter-spacing: -.03em; color: var(--ink); line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .featured-body p { font-size: 15px; color: var(--ink60); line-height: 1.75; margin-bottom: 24px; }
+    .article-meta {
+      display: flex; align-items: center; gap: 16px;
+      font-size: 13px; color: var(--ink50);
+    }
+    .article-meta-dot { width: 4px; height: 4px; background: var(--ink30); border-radius: 50%; }
+    .read-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 700; color: var(--cyan);
+      transition: gap .2s;
+    }
+    .read-link:hover { gap: 10px; }
+
+    /* ── Article Grid ── */
+    .articles-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .article-card {
+      border: 1px solid var(--ink20); border-radius: var(--r-lg);
+      overflow: hidden; background: var(--white);
+      transition: box-shadow .25s, border-color .25s;
+      display: flex; flex-direction: column;
+    }
+    .article-card:hover { box-shadow: var(--shadow-md); border-color: var(--cyan); }
+    .article-thumb {
+      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+      height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--cyan);
+    }
+    .article-thumb svg { width: 52px; height: 52px; opacity: .85; }
+    .article-content { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+    .article-content .article-category { margin-bottom: 12px; }
+    .article-content h3 {
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      line-height: 1.45; margin-bottom: 10px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .article-content p {
+      font-size: 14px; color: var(--ink60); line-height: 1.7; margin-bottom: 16px;
+      flex: 1;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .article-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--ink50); margin-top: auto; padding-top: 16px;
+      border-top: 1px solid var(--ink20);
+    }
+
+    /* ── Newsletter ── */
+    .newsletter-bar {
+      background: var(--dark-bg); border-radius: var(--r-xl);
+      padding: var(--sp-xl); display: grid;
+      grid-template-columns: 1fr 1fr; gap: var(--sp-xl); align-items: center;
+      margin-top: var(--sp-xl);
+    }
+    @media(max-width:768px){ .newsletter-bar { grid-template-columns: 1fr; } }
+    .newsletter-bar h3 {
+      font-family: 'Montserrat', sans-serif; font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 900; color: var(--dark-text); letter-spacing: -.03em;
+      margin-bottom: 10px;
+    }
+    .newsletter-bar p { font-size: 15px; color: var(--dark-text-s); line-height: 1.7; }
+    .newsletter-form { display: flex; gap: 8px; }
+    .newsletter-form input {
+      flex: 1; padding: 13px 18px;
+      background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: var(--r-full); color: var(--dark-text);
+      font-size: 14px; font-family: 'SUIT', sans-serif;
+      outline: none; transition: border-color .2s;
+    }
+    .newsletter-form input::placeholder { color: var(--dark-text-s); }
+    .newsletter-form input:focus { border-color: var(--cyan); }
+    .newsletter-form button {
+      padding: 13px 24px; background: var(--cyan); border: none;
+      border-radius: var(--r-full); color: #fff; font-size: 14px;
+      font-weight: 800; cursor: pointer; white-space: nowrap;
+      transition: background .2s; font-family: 'SUIT', sans-serif;
+    }
+    .newsletter-form button:hover { background: var(--cyan-d); }
+
+    /* ── CTA ── */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--cyan-d) 0%, var(--cyan) 100%);
+      padding: var(--sp-xl) 0; text-align: center;
+    }
+    .cta-strip h2 {
+      font-family: 'Montserrat', sans-serif; font-size: clamp(22px, 3vw, 32px);
+      font-weight: 900; color: #fff; margin-bottom: 12px; letter-spacing: -.02em;
+    }
+    .cta-strip p { font-size: 15px; color: rgba(255,255,255,.85); margin-bottom: 28px; }
+    .btn-white {
+      background: #fff; color: var(--cyan-d); padding: 14px 32px;
+      border-radius: var(--r-full); font-weight: 800; font-size: 15px;
+      display: inline-block; transition: transform .2s, box-shadow .2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">본문 바로가기</a>
+<div class="scroll-progress" role="progressbar" aria-label="스크롤 진행도"></div>
+
+<nav class="nav" role="navigation" aria-label="메인 내비게이션">
+  <div class="container nav-inner">
+    <a href="../" class="nav-logo" aria-label="Glofind 홈으로">
+      <img src="../assets/images/logo-light.png" alt="Glofind" width="81" height="32">
+    </a>
+    <button class="nav-hamburger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links" role="list">
+      <li class="nav-has-dropdown">
+            <a href="../services/index.html">Services <span class="nav-chevron">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="../services/gtm.html">해외 진출 전략 수립</a>
+              <a href="../services/media.html">브랜드 미디어 운영</a>
+              <a href="../services/influencer.html">인플루언서 캠페인</a>
+              <a href="../services/ads.html">퍼포먼스 광고</a>
+              <a href="../services/seo-geo-aeo.html">SEO · GEO · AEO</a>
+            </div>
+          </li>
+      <li><a href="../cases.html">Cases</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="index.html" class="active">Insights</a></li>
+      <li><a href="../#contact" class="btn btn-sm btn-primary">상담 신청</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="page-hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <nav class="page-breadcrumb" aria-label="경로">
+      <a href="../">Home</a><span class="page-breadcrumb-sep">/</span>
+      <span aria-current="page">Insights</span>
+    </nav>
+    <h1 class="page-h1">글로벌 B2B<br><span class="accent">마케팅 인사이트</span></h1>
+    <p class="page-sub">해외 시장 진입·해외 진출 전략·SEO·GEO·AEO·인플루언서 마케팅. 실전에서 검증한 인사이트를 공유합니다.</p>
+    <div class="filter-bar" role="tablist" aria-label="카테고리 필터">
+      <button class="filter-btn active" role="tab" aria-selected="true">전체</button>
+      <button class="filter-btn" role="tab" aria-selected="false">해외 진출 전략</button>
+      <button class="filter-btn" role="tab" aria-selected="false">SEO · AI 검색</button>
+      <button class="filter-btn" role="tab" aria-selected="false">퍼포먼스</button>
+      <button class="filter-btn" role="tab" aria-selected="false">시장 리서치</button>
+      <button class="filter-btn" role="tab" aria-selected="false">인플루언서</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- Featured -->
+<section class="section" aria-labelledby="featured-h">
+  <div class="container">
+    <p class="sec-label reveal">Featured</p>
+    <h2 class="section-h2 reveal" id="featured-h" style="display:none">추천 아티클</h2>
+    <article class="featured-article reveal">
+      <div class="featured-visual" style="position:relative;overflow:hidden;">
+        <img src="../assets/images/hero-global-map.webp" alt="" loading="lazy"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;pointer-events:none;">
+        <div class="featured-visual-inner" style="position:relative;z-index:1;">
+          <div class="featured-vis-row">
+            <span class="featured-vis-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="8" width="20" height="12" rx="2"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1.2" fill="currentColor" stroke="none"/><circle cx="8" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="16" cy="14" r="1.2" fill="currentColor" stroke="none"/><line x1="6" y1="8" x2="6" y2="8.01"/><line x1="18" y1="8" x2="18" y2="8.01"/></svg></span>
+            <div><p>ChatGPT가 브랜드를 추천하게 만드는 법</p><span>GEO 최적화 핵심 전략</span></div>
+          </div>
+          <div class="featured-vis-row">
+            <span class="featured-vis-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+            <div><p>llms.txt 설정 가이드</p><span>AI 크롤러 접근 허용 & 구조화</span></div>
+          </div>
+          <div class="featured-vis-row">
+            <span class="featured-vis-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+            <div><p>오프사이트 신뢰 신호 빌딩</p><span>미디어·커뮤니티 언급 확보 전략</span></div>
+          </div>
+          <div class="featured-vis-row">
+            <span class="featured-vis-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span>
+            <div><p>AI 인용 빈도 모니터링</p><span>ChatGPT·Perplexity·Gemini 측정법</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="featured-body">
+        <span class="article-category">SEO · AI 검색</span>
+        <h2>2026년 GEO 완전 가이드: ChatGPT가 내 브랜드를 추천하게 만드는 7가지 전략</h2>
+        <p>생성형 AI가 검색을 대체하기 시작했습니다. ChatGPT·Perplexity·Gemini에서 브랜드가 인용되려면 SEO와 다른 접근이 필요합니다. llms.txt부터 AI 인용 아티클까지 — 실전 GEO 전략을 공개합니다.</p>
+        <div class="article-meta">
+          <span>Glofind 팀</span>
+          <span class="article-meta-dot"></span>
+          <span>2026. 05. 15</span>
+          <span class="article-meta-dot"></span>
+          <span>12분 읽기</span>
+        </div>
+        <a href="#" class="read-link" style="margin-top:20px">아티클 읽기 →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<!-- Articles Grid -->
+<section class="section" style="background:var(--cyan-pale)" aria-labelledby="articles-h">
+  <div class="container">
+    <p class="sec-label reveal">Latest</p>
+    <h2 class="section-h2 reveal" id="articles-h">최신 아티클</h2>
+    <div class="articles-grid">
+
+      <article class="article-card reveal">
+        <div class="article-thumb"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div>
+        <div class="article-content">
+          <span class="article-category">해외 진출 전략</span>
+          <h3>B2B SaaS의 동남아 첫 진입, 어디서 시작해야 하나</h3>
+          <p>베트남·태국·인도네시아·싱가포르 중 어느 시장이 SaaS에 더 적합한지 데이터로 비교합니다.</p>
+          <div class="article-footer">
+            <span>2026. 05. 08</span>
+            <a href="#" class="read-link" style="font-size:13px">읽기 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card reveal">
+        <div class="article-thumb"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" opacity=".4"/></svg></div>
+        <div class="article-content">
+          <span class="article-category">시장 리서치</span>
+          <h3>ICP 없이 B2B 마케팅을 시작하면 안 되는 이유</h3>
+          <p>Ideal Customer Profile이 없는 상태에서 광고·콘텐츠·세일즈를 시작하면 왜 예산이 낭비되는지 구체적 사례로 설명합니다.</p>
+          <div class="article-footer">
+            <span>2026. 04. 28</span>
+            <a href="#" class="read-link" style="font-size:13px">읽기 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card reveal">
+        <div class="article-thumb"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+        <div class="article-content">
+          <span class="article-category">퍼포먼스</span>
+          <h3>LinkedIn 광고 CTR 3% 만들기: B2B 광고 소재 분석</h3>
+          <p>LinkedIn 업계 평균 CTR은 0.4%입니다. 3~5%를 달성하는 광고에는 어떤 공통점이 있는지 소재·타겟·포맷별로 분석합니다.</p>
+          <div class="article-footer">
+            <span>2026. 04. 15</span>
+            <a href="#" class="read-link" style="font-size:13px">읽기 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card reveal">
+        <div class="article-thumb"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="article-content">
+          <span class="article-category">SEO · AI 검색</span>
+          <h3>AEO란 무엇인가: Google Featured Snippet 최적화 실전 가이드</h3>
+          <p>Answer Engine Optimization의 개념부터 스키마 마크업 적용, FAQ 페이지 최적화까지 단계별로 설명합니다.</p>
+          <div class="article-footer">
+            <span>2026. 04. 02</span>
+            <a href="#" class="read-link" style="font-size:13px">읽기 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card reveal">
+        <div class="article-thumb"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="article-content">
+          <span class="article-category">인플루언서</span>
+          <h3>B2B 인플루언서 마케팅: LinkedIn KOL을 선택하는 5가지 기준</h3>
+          <p>팔로워 수보다 중요한 것이 있습니다. B2B 의사결정자에게 실제로 닿는 LinkedIn KOL을 선별하는 검증 프레임워크를 공개합니다.</p>
+          <div class="article-footer">
+            <span>2026. 03. 20</span>
+            <a href="#" class="read-link" style="font-size:13px">읽기 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card reveal">
+        <div class="article-thumb"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+        <div class="article-content">
+          <span class="article-category">해외 진출 전략</span>
+          <h3>포지셔닝 재설계로 전환율 82% 높인 B2B 제조기업 케이스</h3>
+          <p>기존 '기술 우위' 메시지에서 '바이어 결과 중심' 메시지로 전환한 후 어떤 변화가 일어났는지 상세히 공개합니다.</p>
+          <div class="article-footer">
+            <span>2026. 03. 05</span>
+            <a href="#" class="read-link" style="font-size:13px">읽기 →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Newsletter -->
+<section class="section" aria-labelledby="newsletter-h">
+  <div class="container">
+    <div class="newsletter-bar reveal">
+      <div>
+        <h3 id="newsletter-h">글로벌 마케팅 인사이트,<br>격주 뉴스레터로 받아보세요</h3>
+        <p>해외 진출 전략·AI 검색 트렌드·퍼포먼스 사례를 정제해서 격주 화요일에 발송합니다. 구독 취소는 언제든 가능합니다.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="return false">
+        <input type="email" placeholder="이메일 주소 입력" aria-label="이메일 주소">
+        <button type="submit">구독하기</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div class="container">
+    <h2>인사이트를 실행으로 연결합니다.</h2>
+    <p>무료 초기 상담 · 빠른 전략 방향 제안</p>
+    <a href="../#contact" class="btn btn-white">무료 전략 상담 신청 →</a>
+  </div>
+</div>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <a href="../" class="nav-logo" aria-label="Glofind 홈으로">
+            <img src="../assets/images/logo-dark.png" alt="Glofind" width="81" height="32">
+          </a>
+        </div>
+        <p class="footer-tagline">Find. Enter. Grow.</p>
+        <p>수출기업의 해외 마케팅을 전략부터 실행까지 책임지는 글로벌 B2B 마케팅 에이전시</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="../services/gtm.html">해외 진출 전략 수립</a></li>
+          <li><a href="../services/seo-geo-aeo.html">검색 · AI 최적화</a></li>
+          <li><a href="../services/media.html">브랜드 미디어 운영</a></li>
+          <li><a href="../services/ads.html">퍼포먼스 광고</a></li>
+          <li><a href="../services/influencer.html">인플루언서 캠페인</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../cases.html">Cases</a></li>
+          <li><a href="index.html">Insights</a></li>
+          <li><a href="../#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@glofind.co">hello@glofind.co</a></li>
+          <li><a href="https://www.linkedin.com/company/glofind" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><span style="font-size:13px;color:var(--dark-text-s)">평일 09:00–18:00 KST</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 글로파인드. All rights reserved.</p>
+      <span>Brand Guidelines V1.0</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

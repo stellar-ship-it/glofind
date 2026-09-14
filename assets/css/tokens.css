@@ -1,0 +1,90 @@
+/* ============================================================
+   Glofind — tokens.css
+   구조·타입·모션: hucord.com · goodai-global.com · ancors.co.kr 실측(2026-08-29)
+   색 체계:       wadiz.kr 실측(2026-09-03) — 근거와 금지 조항은 /CLAUDE.md 참조.
+   여기 없는 hex·px를 다른 파일에서 직접 쓰지 않는다.
+   ============================================================ */
+
+/* Pretendard — 4곳 만장일치(와디즈 포함). 라틴/숫자는 Montserrat 로 페어링 */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ── 색 ────────────────────────────────────────────────
+     [수정] 2026-09-03 — 중성 그레이(#111/#7A7A7A/#F5F5F5)를 폐기.
+     와디즈 실측: 잉크·그레이가 전부 '블루 틴트'라 민트와 같은 온도로 앉는다.
+     중성 회색 위의 시안은 탁하게 보였고, 쿨 그레이 위의 시안은 맑게 보인다. */
+  --ink:      #191F28;   /* 와디즈 실측 최다 텍스트색 (4,225회) */
+  --ink-70:   #4E5968;   /* 실측 보조 텍스트 */
+  --ink-50:   #6B7684;   /* 실측 3차 텍스트 */
+  --ink-30:   #8B95A1;   /* 실측 플레이스홀더·비활성 */
+  --line:     #E5E8EB;   /* 실측 #F2F5F8 은 헤어라인으로 너무 옅어 8B95A1 쪽으로 한 단계 */
+  --line-2:   #F2F5F8;
+  --surface:  #FFFFFF;   /* 기본 면 — 와디즈는 흰 바탕 */
+  --bg:       #F2F5F8;   /* 실측 최다 면색 (521회) — 쿨 그레이 */
+  --bg-2:     #FAFBFD;   /* 실측 오프화이트 — 카드·칩 */
+  --tint:     #E6FAFA;   /* 실측 민트 틴트 — 하이라이트 면 1곳에만 */
+  --black:    #191F28;   /* 다크 섹션 — 실측 다크 면 */
+  --black-2:  #10141B;   /* 푸터 — 다크 섹션과 단차 */
+  --on-black:      #F2F5F8;
+  --on-black-70:   #C5CBD3;   /* 다크 위 본문 — 50 은 사진 위에서 안 읽힌다 */
+  --on-black-50:   #8B95A1;
+  --on-black-line: #2A313C;
+
+  /* 브랜드 시안 — hex 는 글로핀드 것을 유지, '쓰는 방식'을 와디즈에서 가져온다.
+     와디즈: primary 버튼 = 민트 면 + 흰 글자 / 틴트 면 / 선·아이콘. */
+  --cyan:        #00ADBD;   /* 브랜드 원색 — 버튼 면·선·마커·다크 위 */
+  --cyan-hover:  #009AA9;   /* 버튼 hover (명도 −8%) */
+  --cyan-ink:    #007F8B;   /* 밝은 면 위 텍스트 — 4.6:1 */
+  --cyan-deep:   #005C66;
+  --on-cyan:     #FFFFFF;   /* 시안 면 위 글자 — 와디즈 실측 */
+
+  /* 사진 위 스크림 — 잉크(#191F28)의 반투명. 그라디언트가 아니라 단색 면이다 */
+  --scrim:       rgba(25, 31, 40, .66);
+  --scrim-cap:   rgba(25, 31, 40, .66);
+  --scrim-soft:  rgba(25, 31, 40, .28);   /* 3D 판 위 — 판이 보여야 한다 */
+  --cyan-veil:   rgba(0, 173, 189, .08);   /* 커서 링 hover 채움 */
+  --err:         #C4292E;                  /* 폼 에러 — 유일한 경고색 */
+
+  /* ── 타입 ──────────────────────────────────────────────
+     대비 9배(실측 5.7 / 22.5 / 7.1 의 중앙 계열). 최대 168px = 한글 가독 상한 */
+  --font: 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
+  --font-en: 'Montserrat', var(--font);
+
+  /* [수정] 2026-09-03 v3 — 8단계를 5단계로. 위계는 단계 수가 아니라 간극이 만든다 */
+  --fs-display: clamp(56px, 8.4vw, 120px);   /* 1 디스플레이 */
+  --fs-h2:      clamp(36px, 4.2vw, 60px);    /* 2 섹션 제목 — 2026-09-11 80→60 (히어로와 위계 분리) */
+  --fs-h3:      clamp(22px, 2vw, 28px);      /* 3 중제목 */
+  --fs-lead:    var(--fs-body);
+  --fs-body:    17px;                        /* 4 본문 */
+  --fs-sm:      16px;                        /* 2026-09-11 15→16 */
+  --fs-label:   14px;                        /* 5 캡션·라벨 (한글) — 2026-09-11 13→14 */
+  --fs-micro:   12px;                        /* 2026-09-11 11→12 */                        /* 5' 영문 마이크로 라벨 — Montserrat 600 · .16em · 대문자 한 벌 */
+  --fs-stat:    clamp(52px, 6.4vw, 104px);   /* 4열(≈296px)에 '340%+' 가 한 줄로 들어가는 상한 */
+
+  /* 웨이트 — 400 압도. 700은 디스플레이에만 */
+  --w-body:    400;
+  --w-mid:     500;
+  --w-strong:  600;
+  --w-display: 700;
+
+  /* ── 공간 ──────────────────────────────────────────────*/
+  --w-content: 1280px;
+  --gutter:    clamp(20px, 4.4vw, 48px);
+  --section-y: clamp(80px, 9vw, 132px);
+  --s1: 8px;  --s2: 16px;  --s3: 24px;  --s4: 40px;
+  --s5: 64px; --s6: 96px;
+
+  /* ── 형태 — 각짐이 기본. 원형과 pill 만 예외 ─────────────*/
+  --radius:        0;
+  --radius-pill:   999px;
+  --radius-circle: 50%;
+  --hair:          1px;
+
+  /* ── 모션 — ancors cubic-bezier(.22,1,.36,1) 채택 ────────*/
+  --e:        cubic-bezier(.22, 1, .36, 1);
+  --e-out:    cubic-bezier(.33, 1, .68, 1);
+  --d-ui:     250ms;
+  --d-reveal: 700ms;
+  --d-long:   1200ms;
+}
