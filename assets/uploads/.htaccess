@@ -1,0 +1,7 @@
+# 업로드 폴더 — 스크립트 실행 차단
+Options -Indexes -ExecCGI
+<FilesMatch "\.(php|phtml|php[0-9]|phar|cgi|pl|py|sh)$">
+    Require all denied
+</FilesMatch>
+RemoveHandler .php .phtml .phar
+php_flag engine off

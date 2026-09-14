@@ -3,3 +3,7 @@
 *.zip
 .lazyweb/
 .claude/
+api/config.local.php
+api/data/
+assets/uploads/*
+!assets/uploads/.htaccess

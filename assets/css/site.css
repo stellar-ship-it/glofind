@@ -935,3 +935,7 @@ html:not(.has-gsap) .hero.tmask { block-size: auto; }
 html:not(.has-gsap) .hero.tmask .tmask__pin { position: relative; block-size: auto; min-block-size: 100svh; }
 html:not(.has-gsap) .tmask__svg { display: none; }
 html:not(.has-gsap) .tmask__content { opacity: 1; transform: none; }
+
+/* 상담 폼 전송 상태 · 허니팟 */
+.form-note.is-error { color: #C0392B; }
+#contact-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }

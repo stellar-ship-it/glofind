@@ -1,0 +1,14 @@
+AddDefaultCharset UTF-8
+Options -Indexes
+<FilesMatch "^(config|layout)\.php$">
+    Require all denied
+</FilesMatch>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(lib|templates)/ - [F]
+</IfModule>
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>

@@ -1,7 +1,13 @@
 # 카페24(Apache) 이전용 — Vercel 에서는 .vercelignore 로 제외된다.
 Options -Indexes
-DirectoryIndex index.html
+DirectoryIndex index.html index.php
 RewriteEngine On
+
+# 소스·설정·문서 직접 접근 차단
+RewriteRule ^(\.git|api/data|api/_dev|admin/(lib|templates)) - [F]
+<FilesMatch "^(config\.local\.php|CLAUDE\.md|README-handoff\.md|\.gitignore|\.vercelignore|vercel\.json)$">
+    Require all denied
+</FilesMatch>
 
 # 옛 .html 주소 → 확장자 없는 폴더 주소로 301 (클라이언트가 직접 요청한 경우에만)
 RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]

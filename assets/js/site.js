@@ -190,14 +190,33 @@
       f.addEventListener('input', () => { if (f.classList.contains('is-error')) check(f); });
       f.addEventListener('change', () => { if (f.type === 'checkbox') check(f); });
     });
+    const note = form.querySelector('.form-note');
+    const noteBase = note ? note.textContent : '';
     form.addEventListener('submit', e => {
       e.preventDefault();
       let ok = true, first = null;
       fields.forEach(f => { if (!check(f)) { ok = false; first = first || f; } });
       if (!ok) { first?.focus(); return; }
-      form.style.display = 'none';
-      done?.classList.add('is-on');
-      done?.focus?.();
+      const btn = form.querySelector('button[type="submit"]');
+      const payload = {};
+      new FormData(form).forEach((v, k) => { payload[k] = v; });
+      payload.consent = !!form.querySelector('#consent')?.checked;
+      payload.page = location.pathname;
+      if (btn) btn.disabled = true;
+      if (note) { note.textContent = '전송 중…'; note.classList.remove('is-error'); }
+      fetch('/api/inquiry-submit.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(r => r.json().then(j => ({ ok: r.ok && j.ok, msg: j.message })))
+        .then(({ ok, msg }) => {
+          if (!ok) throw new Error(msg || '전송에 실패했습니다.');
+          form.style.display = 'none';
+          done?.classList.add('is-on');
+          done?.focus?.();
+        })
+        .catch(err => {
+          if (btn) btn.disabled = false;
+          if (note) { note.textContent = (err.message || '전송에 실패했습니다.') + ' hello@glofind.co 로 보내주셔도 됩니다.'; note.classList.add('is-error'); }
+          else alert(err.message || '전송에 실패했습니다.');
+        });
     });
   }
 
@@ -237,4 +256,14 @@
       });
     });
   }
+})();
+
+/* 방문 기록 비컨 — /api/visit.php (정적 호스팅에서는 조용히 실패) */
+(function () {
+  if (location.protocol === 'file:' || /^\/(admin|api)\b/.test(location.pathname)) return;
+  try {
+    const body = JSON.stringify({ p: location.pathname });
+    if (navigator.sendBeacon) navigator.sendBeacon('/api/visit.php', new Blob([body], { type: 'application/json' }));
+    else fetch('/api/visit.php', { method: 'POST', body, keepalive: true }).catch(() => {});
+  } catch (e) {}
 })();

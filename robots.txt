@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /privacy/
+Disallow: /admin/
+Disallow: /api/
 
 Sitemap: https://glofind.co/sitemap.xml

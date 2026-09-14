@@ -7,7 +7,10 @@ index.html              메인
 about/ · cases/ · privacy/          각 폴더의 index.html — URL 은 /about/ 처럼 확장자 없이 노출 (2026-09-14)
 services/<slug>/ · insights/<slug>/   동일 구조. 링크·에셋 경로는 전부 루트 절대경로(/assets/…)
 sitemap.xml · robots.txt · favicon.ico   검색 엔진·브라우저용
-vercel.json             Vercel — 옛 .html 주소 301 · trailingSlash. .vercelignore 로 문서·.htaccess 제외
+vercel.json             Vercel — 옛 .html 주소 301 · trailingSlash. .vercelignore 로 문서·.htaccess·admin·api 제외
+admin/                  관리자(PHP) — 대시보드·인사이트·문의·설정·백업. 카페24(PHP+MySQL)에서만 동작
+api/                    공개 API — inquiry-submit.php(상담 폼) · visit.php(방문 비컨) · db.php · config.local.php(Git 제외)
+assets/uploads/         관리자에서 올린 이미지 (Git 제외, 서버에서만 존재)
 .htaccess               카페24(Apache) 이전용 — 같은 301 규칙. 폴더째 올리면 그대로 동작
 assets/css/tokens.css   디자인 토큰 — 색·타입·간격·모션. 다른 파일에서 hex/px 직접 사용 금지
 assets/css/site.css     컴포넌트 (신규 시스템 페이지 전용)
@@ -83,3 +86,31 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 - 신규: `cases.html`(실사례 6건 4블록 + 후기), `privacy.html`(개인정보처리방침 초안, "확인 필요" 표시), about `.history` 섹션, 폼 동의 체크박스(`.field--consent`, site.js `contactForm`이 체크박스 검증), 푸터 `.footer__legal`.
 - 로고: `assets/images/logo-{light,dark}.webp`(투명, 14KB). 원본 PNG는 체커보드가 박힌 불투명 파일이었으므로 다시 쓰지 말 것. `logo-*.png`도 투명본으로 교체됨.
 - 승인·확인 대기 항목은 `보완사항_체크리스트_20260904.md` 상단 "진행 현황" 참조.
+
+## 관리자 (2026-09-14 추가)
+
+넥스트바이오 관리자 구조(PHP 세션 로그인 · CSRF · JSON API)를 따르되, 화면은 글로파인드 토큰(라운드 0·그림자 0·1px 선·시안 포인트)으로 만들었다.
+
+| 메뉴 | 하는 일 |
+|---|---|
+| 대시보드 | 오늘·이번 주 방문자, 미처리 문의, 발행 아티클 · 일간 30일/주간 12주/월간 12개월 그래프+표 · 최근 문의 · 많이 본 페이지 |
+| 인사이트 | 목록(검색·필터·발행/추천 토글·일괄 삭제·전체 재발행) · 편집기(Summernote, 이미지 업로드 → webp 변환, FAQ·관련 링크·CTA) · 미리보기 |
+| 문의 관리 | 상담 폼 접수 목록 · 상세 모달(상태·내부 메모) · 일괄 상태 변경 · CSV 내려받기 |
+| 설정 | 알림 이메일 · 카테고리 순서 · 비밀번호 변경 · 쓰기 권한 점검 |
+| 백업·복원 | DB 전체를 JSON 으로 내려받기 / 복원(복원 후 전체 재발행) |
+
+**인사이트는 정적 생성이다.** 저장·발행 토글·삭제·설정 변경 때마다 `insights/<slug>/index.html`, `insights/index.html`, `sitemap.xml` 을 다시 쓴다. 방문자는 항상 HTML 파일을 받는다. 기존 10편은 `api/_dev/insights-seed.json` 으로 DB 에 들어가며, 생성 결과는 원본과 동일하다(섹션 id 만 `sec-N`).
+
+### 카페24 설치 순서
+1. `api/config.local.sample.php` → `api/config.local.php` 로 복사해 MySQL 접속 정보, `ADMIN_ID`, `APP_SALT`, `INSTALL_KEY` 를 채운다.
+2. 폴더째 업로드 후 `https://glofind.co/api/_dev/install.php?key=INSTALL_KEY` 를 한 번 연다 → 테이블 생성 + 아티클 10편 시드.
+3. `api/_dev/` 폴더를 삭제한다.
+4. `/admin/` 접속 → 최초 화면에서 관리자 비밀번호를 만든다(소스에 비밀번호 없음, DB 해시만).
+5. 설정 화면의 '쓰기 권한' 이 전부 OK 인지 확인한다(`insights/`, `assets/uploads/`, `sitemap.xml` 은 PHP 가 써야 한다).
+6. 문의 알림 메일은 PHP `mail()` — 카페24 기본 발송으로 나간다. 발신 주소는 `ADMIN_EMAIL`.
+
+### Vercel 단계에서는
+admin·api 가 배포에서 제외되므로 상담 폼은 전송 실패 메시지(메일 안내)를 보이고, 방문 비컨은 조용히 실패한다. 인사이트는 Git 에 든 정적 파일 그대로 서비스된다.
+
+### 로컬 확인
+`api/config.local.php` 에 `define('DB_DRIVER','sqlite');` 만 두면 `api/data/glofind.sqlite` 로 동작한다. `php api/_dev/install.php` 로 설치, 미리보기 서버는 `.claude/launch.json` 의 `glofind-php`.

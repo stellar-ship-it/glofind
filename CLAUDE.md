@@ -95,3 +95,6 @@
 - `assets/css/motion.css` — 모션·질감 레이어
 - `assets/js/motion.js` — Tier 1 모션 (리빌·패럴랙스·자기력·상하이동·커서·단어 분해)
 - `assets/js/motion2.js` — Tier 2 모션 (GSAP ScrollTrigger + Lenis: 히어로 스크럽·프로세스 진행선·티커 속도·호버 이미지) — 가드로 감싸 미로드 시 Tier 1만 동작
+- `admin/` — 관리자(PHP). 스타일은 `admin/assets/css/admin.css` 한 파일, 토큰은 `tokens.css` 를 그대로 읽는다. 위 금지 조항이 관리자에도 적용된다
+- `admin/lib/publisher.php` + `admin/templates/` — 인사이트 정적 생성. 공개 아티클 마크업을 바꾸려면 `insights/*/index.html` 이 아니라 여기를 고치고 '전체 재발행' 한다
+- `api/` — 공개 엔드포인트(상담 폼 접수 · 방문 비컨) · DB 래퍼. 자격증명은 `api/config.local.php`(Git 제외)에만

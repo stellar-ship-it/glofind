@@ -1,0 +1,107 @@
+<!-- ============================================================
+     CTA — 다크 밴드 (about.html .cta · 폼 없음)
+     ============================================================ -->
+<section class="cta is-dark" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="cta__grid">
+      <div>
+        <h2 class="t-h2 m-split" id="cta-heading">인사이트를 실행으로 연결합니다.</h2>
+        <p class="reveal">30분 전략 상담 · 초기 진단 리포트 제공 · B2B 성공사례 보유</p>
+      </div>
+      <div class="cta__actions reveal-right">
+        <a href="/#contact" class="btn btn--solid">전략 세션 신청 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer role="contentinfo">
+  <div class="container">
+    <p class="footer__display" aria-hidden="true">Find<i>.</i> Enter<i>.</i> Grow<i>.</i></p>
+
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="/" aria-label="Glofind 홈으로">
+          <img src="/assets/images/logo-dark.webp" alt="Glofind" width="81" height="32">
+        </a>
+        <p class="footer__tag">Find. Enter. Grow.</p>
+        <p>수출기업의 해외 마케팅을 전략부터 실행까지 책임지는 글로벌 B2B 마케팅 에이전시</p>
+      </div>
+
+      <div class="footer__col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services/gtm/">해외 진출 전략 수립</a></li>
+          <li><a href="/services/seo-geo-aeo/">SEO · GEO · AEO</a></li>
+          <li><a href="/services/media/">브랜드 미디어 운영</a></li>
+          <li><a href="/services/ads/">퍼포먼스 광고</a></li>
+          <li><a href="/services/influencer/">인플루언서 캠페인</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/cases/">Cases</a></li>
+          <li><a href="/insights/">Insights</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@glofind.co">hello@glofind.co</a></li>
+          <li><a href="https://www.linkedin.com/company/glofind" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li>평일 09:00–18:00 KST</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__legal">
+      <span>(주)글로파인드</span><span>대표 · 강정규</span><span>사업자등록번호 · 확인 필요</span><span>주소 · 확인 필요</span><span>개인정보보호책임자 · 김슬기</span>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 글로파인드. All rights reserved.</p>
+      <p><a href="/privacy/">개인정보처리방침</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="/assets/js/site.js?v=20260911g"></script>
+<script src="/assets/js/motion.js?v=20260911g"></script>
+<script src="/assets/js/motion2.js?v=20260911g"></script>
+<script>
+/* 카테고리 필터 — 라이브러리 없음 */
+(function () {
+  var tabs = document.querySelectorAll('.ins-filter [role="tab"]');
+  var items = document.querySelectorAll('.ins-feature[data-cat], .ins-card[data-cat]');
+  var count = document.getElementById('ins-count');
+  if (!tabs.length) return;
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var c = t.dataset.cat, n = 0;
+      tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+      items.forEach(function (el) {
+        var show = c === 'all' || el.dataset.cat === c;
+        el.hidden = !show;
+        if (show) { n++; el.classList.add('is-in'); }
+      });
+      if (count) count.textContent = n;
+    });
+  });
+})();
+</script>
+</body>
+</html>
