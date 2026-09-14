@@ -113,4 +113,4 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 admin·api 가 배포에서 제외되므로 상담 폼은 전송 실패 메시지(메일 안내)를 보이고, 방문 비컨은 조용히 실패한다. 인사이트는 Git 에 든 정적 파일 그대로 서비스된다.
 
 ### 로컬 확인
-`api/config.local.php` 에 `define('DB_DRIVER','sqlite');` 만 두면 `api/data/glofind.sqlite` 로 동작한다. `php api/_dev/install.php` 로 설치, 미리보기 서버는 `.claude/launch.json` 의 `glofind-php`.
+`api/config.local.php` 에 `define('DB_DRIVER','sqlite');` 만 두면 `api/data/glofind.sqlite` 로 동작한다. `php api/_dev/install.php` 로 설치, 미리보기 서버는 `php -S localhost:8765 -t . api/_dev/router.php` (라우터가 /admin → /admin/ 을 붙여 준다).
