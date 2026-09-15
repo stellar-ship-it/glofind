@@ -1,7 +1,12 @@
 # 업로드 폴더 — 스크립트 실행 차단
 Options -Indexes -ExecCGI
 <FilesMatch "\.(php|phtml|php[0-9]|phar|cgi|pl|py|sh)$">
-    Require all denied
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
 </FilesMatch>
 RemoveHandler .php .phtml .phar
-php_flag engine off

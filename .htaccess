@@ -6,7 +6,13 @@ RewriteEngine On
 # 소스·설정·문서 직접 접근 차단
 RewriteRule ^(\.git|api/data|api/_dev|admin/(lib|templates)) - [F]
 <FilesMatch "^(config\.local\.php|CLAUDE\.md|README-handoff\.md|\.gitignore|\.vercelignore|vercel\.json)$">
-    Require all denied
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # 옛 .html 주소 → 확장자 없는 폴더 주소로 301 (클라이언트가 직접 요청한 경우에만)
