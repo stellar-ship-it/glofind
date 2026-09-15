@@ -25,7 +25,7 @@ function inquiry_mail_body(array $q, array $services, string $adminUrl): array {
 
     $text = "새 상담 신청이 접수되었습니다. (#{$q['id']})\n\n";
     foreach ($rows as [$k, $v]) $text .= "$k: $v\n";
-    $text .= "\n문의 내용:\n{$q['message']}\n\n관리자에서 처리: $adminUrl\n";
+    $text .= "\n문의 내용:\n{$q['message']}\n";
 
     $tr = '';
     foreach ($rows as [$k, $v]) {
@@ -44,8 +44,7 @@ function inquiry_mail_body(array $q, array $services, string $adminUrl): array {
       . '<tr><td style="padding:8px 32px 4px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' . $tr . '</table></td></tr>'
       . '<tr><td style="padding:20px 32px 0"><div style="font-size:14px;font-weight:500;color:#6B7684;margin-bottom:8px">문의 내용</div>'
       . '<div style="padding:16px 18px;background:#FAFBFD;border:1px solid #F2F5F8;font-size:15px;line-height:1.75;color:#191F28;white-space:pre-wrap">' . $e($q['message']) . '</div></td></tr>'
-      . '<tr><td style="padding:24px 32px 32px"><a href="' . $e($adminUrl) . '" style="display:inline-block;padding:12px 22px;background:#00ADBD;color:#FFFFFF;font-size:14px;font-weight:500;text-decoration:none">관리자에서 처리하기 →</a>'
-      . '<div style="font-size:14px;color:#8B95A1;margin-top:14px">회신은 이 메일에 답장하면 문의자에게 바로 갑니다.</div></td></tr>'
+      . '<tr><td style="padding:20px 32px 32px"><div style="font-size:14px;color:#8B95A1">이 메일에 답장하면 문의자에게 바로 갑니다.</div></td></tr>'
       . '</table>'
       . '<div style="font-family:Montserrat,Arial,sans-serif;font-size:12px;letter-spacing:.08em;color:#8B95A1;margin-top:18px">GLO-FIND.COM</div>'
       . '</td></tr></table></body></html>';
