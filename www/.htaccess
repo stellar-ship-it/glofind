@@ -4,7 +4,7 @@ DirectoryIndex index.html index.php
 RewriteEngine On
 
 # 소스·설정·문서 직접 접근 차단
-RewriteRule ^(\.git|api/data|api/_dev|admin/(lib|templates)) - [F]
+RewriteRule ^(\.git|api/_dev|admin/(lib|templates)) - [F]
 <FilesMatch "^(config\.local\.php|CLAUDE\.md|README-handoff\.md|\.gitignore|\.vercelignore|vercel\.json)$">
     <IfModule mod_authz_core.c>
         Require all denied

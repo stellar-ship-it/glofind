@@ -90,6 +90,9 @@
 
 ## 파일 구성
 
+**업로드 규칙: `www/` 안의 내용만 서버에 올린다. 그 밖(`dev/`·`docs/`·루트 파일)은 전부 로컬 전용이다.**
+`dev/` — 로컬 설정(config.local.php)·SQLite·개발 서버 라우터. `docs/` — 핸드오프·배포 안내. 아래 경로는 모두 `www/` 기준.
+
 - `assets/css/tokens.css` — 위 토큰. 다른 파일에서 hex/px를 직접 쓰지 않는다
 - `assets/css/site.css` — 컴포넌트 · `assets/css/pages/*.css` — 서비스·인사이트 페이지 전용 (구 main.css 는 2026-09-14 제거)
 - `assets/css/motion.css` — 모션·질감 레이어

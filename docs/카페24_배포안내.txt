@@ -1,0 +1,41 @@
+글로파인드 카페24 배포 안내 (2026-09-15)
+
+[0] 사전 조건
+ - 카페24 웹호스팅(PHP + MySQL). PHP 버전은 8.0 이상으로 설정 (카페24 관리 > PHP 버전 변경).
+ - 카페24 관리에서 MySQL 비밀번호를 확인/설정해 둔다. DB명·사용자명은 보통 카페24 아이디와 같다.
+
+[1] 설정 파일 (업로드 전, 내 컴퓨터에서)
+ - 프로젝트 폴더의 www/ 가 곧 서버에 올릴 전부다. 그 밖(dev/, docs/, 루트 파일)은 올리지 않는다.
+ - www/api/config.local.sample.php 를 복사해 www/api/config.local.php 를 만들고 DB_NAME / DB_USER / DB_PASS 를 채운다.
+   (또는 바탕화면 zip 안의 config.local.php 를 쓴다 — APP_SALT·INSTALL_KEY 가 이미 채워져 있다)
+
+[2] 업로드
+ - FTP 또는 카페24 웹FTP 로 프로젝트 www/ 안의 내용 전부를 서버의 www/ (문서 루트) 안에 올린다.
+   서버 www/ 바로 아래에 index.html, admin/, api/, assets/, .htaccess 가 보여야 한다.
+ - 숨김 파일(.htaccess, .user.ini) 이 빠지지 않았는지 확인한다. FTP 프로그램에서 '숨김 파일 표시' 를 켠다.
+
+[3] 폴더 권한
+ - insights/, assets/uploads/, api/ 폴더와 sitemap.xml 파일을 PHP 가 쓸 수 있어야 한다.
+   FTP 에서 권한이 755(폴더)/644(파일) 인데 발행이 실패하면 707/606 으로 올린다.
+
+[4] 설치 (한 번만)
+ - 브라우저에서 아래 주소를 연다. (install-key.txt 의 값과 같다)
+   https://glofind.co/api/_dev/install.php?key=f59d5f1aff1245b6
+   → "schema ok (mysql)", "seeded 10 insights", "done" 이 보이면 성공.
+ - 성공 후 서버의 api/_dev/ 폴더를 통째로 삭제한다.
+
+[5] 관리자 첫 접속
+ - https://glofind.co/admin  → 최초 화면에서 관리자 비밀번호를 만든다 (아이디 admin).
+ - 설정 메뉴의 '쓰기 권한' 이 전부 OK 인지 확인한다.
+ - 인사이트 메뉴에서 '전체 재발행' 을 한 번 눌러 본다. 파일 12개 생성 메시지가 뜨면 끝.
+
+[6] 도메인 전환
+ - glofind.co 가 아직 Vercel 을 보고 있으면, 도메인 관리(DNS)에서 A 레코드를 카페24 서버 IP 로 바꾸고
+   카페24 관리 > 도메인 연결에 glofind.co 를 등록한다. 반영까지 최대 하루.
+ - 전환 후 https://glofind.co/services/gtm.html 을 열어 /services/gtm/ 으로 넘어가는지 확인한다.
+ - SSL(https) 은 카페24 관리에서 무료 인증서를 신청해 켠다.
+
+[7] 확인 목록
+ - 메인 상담 폼 전송 → 관리자 > 문의 관리에 뜨는지, 알림 메일이 오는지
+ - 관리자 > 대시보드에 방문자가 쌓이는지 (사이트를 몇 번 열어 본 뒤)
+ - https://glofind.co/sitemap.xml 열리는지

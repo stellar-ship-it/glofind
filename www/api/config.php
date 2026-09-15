@@ -1,11 +1,14 @@
 <?php
 /* 공통 설정 로더 — 실제 자격증명은 config.local.php(Git 제외)에만 둔다. */
+/* 운영 서버: www/api/config.local.php  ·  로컬 개발: 프로젝트/dev/config.local.php (www 밖이라 업로드되지 않는다) */
 if (file_exists(__DIR__ . '/config.local.php')) {
     require_once __DIR__ . '/config.local.php';
+} elseif (file_exists(dirname(__DIR__, 2) . '/dev/config.local.php')) {
+    require_once dirname(__DIR__, 2) . '/dev/config.local.php';
 }
 
 if (!defined('DB_DRIVER'))      define('DB_DRIVER', 'sqlite');            // mysql | sqlite
-if (!defined('DB_SQLITE_PATH')) define('DB_SQLITE_PATH', __DIR__ . '/data/glofind.sqlite');
+if (!defined('DB_SQLITE_PATH')) define('DB_SQLITE_PATH', dirname(__DIR__, 2) . '/dev/data/glofind.sqlite');
 if (!defined('DB_HOST'))        define('DB_HOST', 'localhost');
 if (!defined('DB_NAME'))        define('DB_NAME', '');
 if (!defined('DB_USER'))        define('DB_USER', '');

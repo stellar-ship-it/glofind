@@ -1,8 +1,14 @@
 # 글로파인드 웹사이트 — 핸드오프 (2026-09-03 · v2)
 
-## 폴더 구조
+## 폴더 구조 (2026-09-15 재편)
+
+**규칙 하나: `www/` 안의 내용만 서버에 올린다.** 나머지는 로컬 전용.
 
 ```
+www/                    ← 서버 문서 루트에 그대로 올리는 폴더 (아래 항목은 모두 www/ 안)
+dev/                    로컬 전용 — config.local.php(SQLite 설정) · data/(SQLite) · router.php(개발 서버)
+docs/                   로컬 전용 — 이 문서 · 카페24_배포안내.txt
+vercel.json             Vercel 은 outputDirectory=www 로 www 만 서비스한다
 index.html              메인
 about/ · cases/ · privacy/          각 폴더의 index.html — URL 은 /about/ 처럼 확장자 없이 노출 (2026-09-14)
 services/<slug>/ · insights/<slug>/   동일 구조. 링크·에셋 경로는 전부 루트 절대경로(/assets/…)
@@ -102,8 +108,8 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 **인사이트는 정적 생성이다.** 저장·발행 토글·삭제·설정 변경 때마다 `insights/<slug>/index.html`, `insights/index.html`, `sitemap.xml` 을 다시 쓴다. 방문자는 항상 HTML 파일을 받는다. 기존 10편은 `api/_dev/insights-seed.json` 으로 DB 에 들어가며, 생성 결과는 원본과 동일하다(섹션 id 만 `sec-N`).
 
 ### 카페24 설치 순서
-1. `api/config.local.sample.php` → `api/config.local.php` 로 복사해 MySQL 접속 정보, `ADMIN_ID`, `APP_SALT`, `INSTALL_KEY` 를 채운다.
-2. 폴더째 업로드 후 `https://glofind.co/api/_dev/install.php?key=INSTALL_KEY` 를 한 번 연다 → 테이블 생성 + 아티클 10편 시드.
+1. `www/api/config.local.sample.php` → 서버의 `api/config.local.php` 로 복사해 MySQL 접속 정보, `ADMIN_ID`, `APP_SALT`, `INSTALL_KEY` 를 채운다.
+2. `www/` 안의 내용을 서버 `www/` 에 올린 뒤 `https://glofind.co/api/_dev/install.php?key=INSTALL_KEY` 를 한 번 연다 → 테이블 생성 + 아티클 10편 시드.
 3. `api/_dev/` 폴더를 삭제한다.
 4. `/admin/` 접속 → 최초 화면에서 관리자 비밀번호를 만든다(소스에 비밀번호 없음, DB 해시만).
 5. 설정 화면의 '쓰기 권한' 이 전부 OK 인지 확인한다(`insights/`, `assets/uploads/`, `sitemap.xml` 은 PHP 가 써야 한다).
@@ -113,4 +119,4 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 admin·api 가 배포에서 제외되므로 상담 폼은 전송 실패 메시지(메일 안내)를 보이고, 방문 비컨은 조용히 실패한다. 인사이트는 Git 에 든 정적 파일 그대로 서비스된다.
 
 ### 로컬 확인
-`api/config.local.php` 에 `define('DB_DRIVER','sqlite');` 만 두면 `api/data/glofind.sqlite` 로 동작한다. `php api/_dev/install.php` 로 설치, 미리보기 서버는 `php -S localhost:8765 -t . api/_dev/router.php` (라우터가 /admin → /admin/ 을 붙여 준다).
+`dev/config.local.php` 에 `define('DB_DRIVER','sqlite');` 가 있으면 `dev/data/glofind.sqlite` 로 동작한다(www 밖이라 업로드되지 않는다). 설치는 `php www/api/_dev/install.php`, 미리보기 서버는 `php -S localhost:8765 -t www dev/router.php`.

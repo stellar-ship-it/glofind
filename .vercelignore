@@ -1,8 +1,9 @@
 .claude
-.htaccess
 CLAUDE.md
-README-handoff.md
 .gitignore
-admin
-api
-assets/uploads
+docs
+dev
+www/admin
+www/api
+www/assets/uploads
+www/.htaccess
