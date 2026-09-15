@@ -25,8 +25,13 @@ class Database {
             }
         } catch (PDOException $e) {
             error_log('[DB] 연결 실패: ' . $e->getMessage());
-            throw new Exception('데이터베이스 연결 실패');
+            throw new Exception('데이터베이스 연결 실패', 0, $e);
         }
+    }
+
+    /* 설치 여부 — settings 테이블이 있으면 설치된 것으로 본다 */
+    public function isInstalled(): bool {
+        try { $this->pdo->query('SELECT 1 FROM settings LIMIT 1'); return true; } catch (Exception $e) { return false; }
     }
 
     public function driver(): string { return $this->driver; }

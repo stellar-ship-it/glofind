@@ -3,8 +3,12 @@
 /* 운영 서버: www/api/config.local.php  ·  로컬 개발: 프로젝트/dev/config.local.php (www 밖이라 업로드되지 않는다) */
 if (file_exists(__DIR__ . '/config.local.php')) {
     require_once __DIR__ . '/config.local.php';
+    define('CONFIG_LOCAL_FILE', 'api/config.local.php');
 } elseif (file_exists(dirname(__DIR__, 2) . '/dev/config.local.php')) {
     require_once dirname(__DIR__, 2) . '/dev/config.local.php';
+    define('CONFIG_LOCAL_FILE', 'dev/config.local.php');
+} else {
+    define('CONFIG_LOCAL_FILE', '');
 }
 
 if (!defined('DB_DRIVER'))      define('DB_DRIVER', 'sqlite');            // mysql | sqlite

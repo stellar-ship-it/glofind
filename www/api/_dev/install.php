@@ -8,7 +8,17 @@ if (!$cli) {
     header('Content-Type: text/plain; charset=utf-8');
     if (!defined('INSTALL_KEY') || !hash_equals(INSTALL_KEY, $_GET['key'] ?? '')) { http_response_code(403); exit("forbidden\n"); }
 }
-$db = get_db();
+echo "config: " . (CONFIG_LOCAL_FILE ?: '(없음 — api/config.local.php 를 만드세요)') . "\n";
+echo "driver: " . DB_DRIVER . (DB_DRIVER === 'mysql' ? " · host=" . DB_HOST . " · db=" . DB_NAME . " · user=" . DB_USER : '') . "\n";
+echo "php: " . PHP_VERSION . " · pdo_mysql " . (extension_loaded('pdo_mysql') ? 'ok' : '없음') . "\n";
+try {
+    $db = get_db();
+} catch (Throwable $e) {
+    $prev = $e->getPrevious();
+    echo "DB 접속 실패: " . ($prev ? $prev->getMessage() : $e->getMessage()) . "\n";
+    echo "→ 카페24 관리 > MySQL 에서 DB명·사용자·비밀번호를 확인해 config.local.php 에 넣으세요. 호스트는 보통 localhost 입니다.\n";
+    exit;
+}
 $db->ensureSchema();
 echo "schema ok (" . $db->driver() . ")\n";
 if ($db->count('insights') === 0 && file_exists(__DIR__ . '/insights-seed.json')) {

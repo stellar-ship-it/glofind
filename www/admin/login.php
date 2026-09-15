@@ -6,11 +6,21 @@ require_once __DIR__ . '/config.php';
 if (!empty($_SESSION['admin_authenticated'])) { header('Location: dashboard.php'); exit; }
 
 $error = ''; $notice = ''; $dbError = ''; $hash = null;
-try {
-    $db = get_db();
-    $hash = $db->setting('admin_password_hash');
-} catch (Throwable $e) {
-    $dbError = '데이터베이스에 연결할 수 없습니다. api/config.local.php 를 확인하고 api/_dev/install.php 를 실행하세요.';
+if (CONFIG_LOCAL_FILE === '') {
+    $dbError = 'api/config.local.php 파일이 없습니다. config.local.sample.php 를 복사해 DB 정보를 채운 뒤 api/ 폴더에 올리세요.';
+} elseif (DB_DRIVER === 'mysql' && (DB_NAME === '' || DB_USER === '' || str_contains(DB_NAME, '입력'))) {
+    $dbError = 'api/config.local.php 의 DB_NAME · DB_USER · DB_PASS 가 아직 채워지지 않았습니다.';
+} else {
+    try {
+        $db = get_db();
+        if (!$db->isInstalled()) {
+            $dbError = 'DB 접속은 되지만 아직 설치 전입니다. 브라우저에서 /api/_dev/install.php?key=INSTALL_KEY 를 한 번 연 뒤 다시 접속하세요.';
+        } else {
+            $hash = $db->setting('admin_password_hash');
+        }
+    } catch (Throwable $e) {
+        $dbError = 'DB 접속 실패 — api/config.local.php 의 호스트·DB명·사용자·비밀번호를 확인하세요. 상세 원인은 /api/_dev/install.php?key=INSTALL_KEY 에서 볼 수 있습니다.';
+    }
 }
 $setupMode = !$dbError && empty($hash);
 
