@@ -4,4 +4,4 @@ Disallow: /privacy/
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://glofind.co/sitemap.xml
+Sitemap: https://glo-find.com/sitemap.xml

@@ -104,7 +104,7 @@ $csrf = csrf_token();
     </form>
     <?php endif; ?>
   </div>
-  <p class="login__foot">© Glofind · <a href="/">glofind.co</a></p>
+  <p class="login__foot">© Glofind · <a href="/">glo-find.com</a></p>
 </main>
 </body>
 </html>

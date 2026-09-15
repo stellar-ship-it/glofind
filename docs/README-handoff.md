@@ -65,7 +65,7 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 ## 배포 절차
 
 1. `?v=20260903` 캐시버스팅 값을 배포 날짜로 일괄 치환 (index.html · about.html).
-2. canonical · OG url 이 `https://glofind.co` 인지 확인 (로컬 주소 잔존 금지).
+2. canonical · OG url 이 `https://glo-find.com` 인지 확인 (로컬 주소 잔존 금지).
 3. 정적 호스팅에 폴더째 업로드. 존재하지 않는 URL 이 HTTP 404 를 반환하는지 확인.
 4. 콘솔 에러 0 · 375 가로스크롤 없음 확인 (이번 세션에서 index · about 둘 다 확인 완료).
 
@@ -109,7 +109,7 @@ CLAUDE.md               디자인 토큰 근거·금지 조항 (실측 기록)
 
 ### 카페24 설치 순서
 1. `www/api/config.local.sample.php` → 서버의 `api/config.local.php` 로 복사해 MySQL 접속 정보, `ADMIN_ID`, `APP_SALT`, `INSTALL_KEY` 를 채운다.
-2. `www/` 안의 내용을 서버 `www/` 에 올린 뒤 `https://glofind.co/api/_dev/install.php?key=INSTALL_KEY` 를 한 번 연다 → 테이블 생성 + 아티클 10편 시드.
+2. `www/` 안의 내용을 서버 `www/` 에 올린 뒤 `https://glo-find.com/api/_dev/install.php?key=INSTALL_KEY` 를 한 번 연다 → 테이블 생성 + 아티클 10편 시드.
 3. `api/_dev/` 폴더를 삭제한다.
 4. `/admin/` 접속 → 최초 화면에서 관리자 비밀번호를 만든다(소스에 비밀번호 없음, DB 해시만).
 5. 설정 화면의 '쓰기 권한' 이 전부 OK 인지 확인한다(`insights/`, `assets/uploads/`, `sitemap.xml` 은 PHP 가 써야 한다).

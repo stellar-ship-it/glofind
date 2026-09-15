@@ -14,6 +14,6 @@ define('DB_CHARSET', 'utf8mb4');
 
 define('ADMIN_ID', 'admin');              // 관리자 아이디. 비밀번호는 최초 접속 시 화면에서 설정한다
 define('ADMIN_EMAIL', 'hello@glofind.co'); // 문의 알림 수신(기본값, 관리자 > 설정에서 변경 가능)
-define('SITE_URL', 'https://glofind.co');
+define('SITE_URL', 'https://glo-find.com');
 define('APP_SALT', '아무 긴 무작위 문자열');   // 방문자 IP 해시용
 define('INSTALL_KEY', '설치용 비밀키');       // api/_dev/install.php?key= 에 쓰고 설치 후 삭제

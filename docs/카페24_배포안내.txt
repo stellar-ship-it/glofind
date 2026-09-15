@@ -20,22 +20,22 @@
 
 [4] 설치 (한 번만)
  - 브라우저에서 아래 주소를 연다. (install-key.txt 의 값과 같다)
-   https://glofind.co/api/_dev/install.php?key=f59d5f1aff1245b6
+   https://glo-find.com/api/_dev/install.php?key=f59d5f1aff1245b6
    → "schema ok (mysql)", "seeded 10 insights", "done" 이 보이면 성공.
  - 성공 후 서버의 api/_dev/ 폴더를 통째로 삭제한다.
 
 [5] 관리자 첫 접속
- - https://glofind.co/admin  → 최초 화면에서 관리자 비밀번호를 만든다 (아이디 admin).
+ - https://glo-find.com/admin  → 최초 화면에서 관리자 비밀번호를 만든다 (아이디 admin).
  - 설정 메뉴의 '쓰기 권한' 이 전부 OK 인지 확인한다.
  - 인사이트 메뉴에서 '전체 재발행' 을 한 번 눌러 본다. 파일 12개 생성 메시지가 뜨면 끝.
 
 [6] 도메인 전환
- - glofind.co 가 아직 Vercel 을 보고 있으면, 도메인 관리(DNS)에서 A 레코드를 카페24 서버 IP 로 바꾸고
-   카페24 관리 > 도메인 연결에 glofind.co 를 등록한다. 반영까지 최대 하루.
- - 전환 후 https://glofind.co/services/gtm.html 을 열어 /services/gtm/ 으로 넘어가는지 확인한다.
+ - glo-find.com 가 아직 Vercel 을 보고 있으면, 도메인 관리(DNS)에서 A 레코드를 카페24 서버 IP 로 바꾸고
+   카페24 관리 > 도메인 연결에 glo-find.com 를 등록한다. 반영까지 최대 하루.
+ - 전환 후 https://glo-find.com/services/gtm.html 을 열어 /services/gtm/ 으로 넘어가는지 확인한다.
  - SSL(https) 은 카페24 관리에서 무료 인증서를 신청해 켠다.
 
 [7] 확인 목록
  - 메인 상담 폼 전송 → 관리자 > 문의 관리에 뜨는지, 알림 메일이 오는지
  - 관리자 > 대시보드에 방문자가 쌓이는지 (사이트를 몇 번 열어 본 뒤)
- - https://glofind.co/sitemap.xml 열리는지
+ - https://glo-find.com/sitemap.xml 열리는지

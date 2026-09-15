@@ -20,7 +20,7 @@ if (!defined('DB_PASS'))        define('DB_PASS', '');
 if (!defined('DB_CHARSET'))     define('DB_CHARSET', 'utf8mb4');
 if (!defined('ADMIN_ID'))       define('ADMIN_ID', 'admin');
 if (!defined('ADMIN_EMAIL'))    define('ADMIN_EMAIL', 'hello@glofind.co');
-if (!defined('SITE_URL'))       define('SITE_URL', 'https://glofind.co');
+if (!defined('SITE_URL'))       define('SITE_URL', 'https://glo-find.com');
 if (!defined('APP_SALT'))       define('APP_SALT', 'change-me-in-config-local');
 if (!defined('SITE_ROOT'))      define('SITE_ROOT', dirname(__DIR__));
 
