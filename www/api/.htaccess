@@ -8,7 +8,4 @@ Options -Indexes
         Deny from all
     </IfModule>
 </FilesMatch>
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^_dev/ - [F]
-</IfModule>
+# api/_dev/ 는 INSTALL_KEY 로 보호된다. 설치 후 폴더를 삭제한다.

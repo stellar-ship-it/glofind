@@ -4,7 +4,7 @@ DirectoryIndex index.html index.php
 RewriteEngine On
 
 # 소스·설정·문서 직접 접근 차단
-RewriteRule ^(\.git|api/_dev|admin/(lib|templates)) - [F]
+RewriteRule ^(\.git|admin/(lib|templates)) - [F]
 <FilesMatch "^(config\.local\.php|CLAUDE\.md|README-handoff\.md|\.gitignore|\.vercelignore|vercel\.json)$">
     <IfModule mod_authz_core.c>
         Require all denied
@@ -15,10 +15,11 @@ RewriteRule ^(\.git|api/_dev|admin/(lib|templates)) - [F]
     </IfModule>
 </FilesMatch>
 
-# 옛 .html 주소 → 확장자 없는 폴더 주소로 301 (클라이언트가 직접 요청한 경우에만)
-RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]
+# 옛 .html 주소 → 확장자 없는 폴더 주소로 301
+# (IS_SUBREQ: DirectoryIndex 가 내부적으로 index.html 을 찾는 서브요청에는 적용하지 않아 무한 루프를 막는다)
+RewriteCond %{IS_SUBREQ} false
 RewriteRule ^index\.html$ / [R=301,L]
-RewriteCond %{THE_REQUEST} \s/+(services|insights)/index\.html[\s?]
+RewriteCond %{IS_SUBREQ} false
 RewriteRule ^(services|insights)/index\.html$ /$1/ [R=301,L]
-RewriteCond %{THE_REQUEST} \s/+[^?\s]+\.html[\s?]
+RewriteCond %{IS_SUBREQ} false
 RewriteRule ^(.+)\.html$ /$1/ [R=301,L]
