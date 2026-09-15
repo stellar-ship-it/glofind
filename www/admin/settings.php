@@ -12,9 +12,9 @@ ob_start();
   <div class="card">
     <div class="card__head"><div><p class="micro">Notification</p><h2>문의 알림 · 카테고리</h2></div></div>
     <div class="card__body" style="display:grid; gap:20px">
-      <div class="field"><label for="notify_email">문의 알림 받을 이메일</label><input type="email" id="notify_email" value="<?= e($notify) ?>"><span class="hint">상담 신청이 들어오면 이 주소로 메일이 갑니다. 발신은 <?= e(ADMIN_EMAIL) ?>.</span></div>
+      <div class="field"><label for="notify_email">문의 알림 받을 이메일 (여러 명은 쉼표로)</label><input type="text" id="notify_email" value="<?= e($notify) ?>" placeholder="a@glo-find.com, b@glo-find.com"><span class="hint">상담 신청이 들어오면 이 주소들로 HTML 메일이 갑니다. 발신은 <?= e(ADMIN_EMAIL) ?>. 저장 후 '테스트 메일' 로 수신을 확인하세요.</span></div>
       <div class="field"><label for="categories">인사이트 카테고리 (한 줄에 하나 · 표시 순서)</label><textarea id="categories" rows="6"><?= e($cats) ?></textarea><span class="hint">목록 페이지의 필터 버튼 순서가 됩니다. 저장하면 목록을 다시 생성합니다.</span></div>
-      <div><button type="button" class="btn btn--solid" id="btnSaveSettings">저장</button></div>
+      <div class="btn-group"><button type="button" class="btn btn--solid" id="btnSaveSettings">저장</button><button type="button" class="btn btn--ghost" id="btnTestMail">테스트 메일 보내기</button></div>
     </div>
   </div>
 
@@ -46,6 +46,10 @@ ob_start();
 <script>
 document.getElementById('btnSaveSettings').addEventListener('click', function () {
   api('api/settings.php', { action: 'save', notify_email: document.getElementById('notify_email').value, categories: document.getElementById('categories').value }).then(function () { toast('저장했습니다.'); });
+});
+document.getElementById('btnTestMail').addEventListener('click', function () {
+  var b = this; b.disabled = true;
+  api('api/settings.php', { action: 'test_mail' }).then(function (r) { toast('보냈습니다 → ' + r.to.join(', ')); }).finally(function () { b.disabled = false; });
 });
 document.getElementById('btnPassword').addEventListener('click', function () {
   var a = document.getElementById('pw_new').value, b = document.getElementById('pw_new2').value;

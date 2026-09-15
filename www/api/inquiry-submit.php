@@ -52,18 +52,15 @@ try {
         'created_at' => date('Y-m-d H:i:s'),
     ]);
 
-    // 알림 메일 — 실패해도 접수는 유지
+    // 알림 메일 — 실패해도 접수는 유지 (수신자는 설정의 notify_email, 쉼표로 여러 명)
     try {
-        $to = $db->setting('notify_email', ADMIN_EMAIL);
-        if ($to && filter_var($to, FILTER_VALIDATE_EMAIL)) {
-            $subject = '=?UTF-8?B?' . base64_encode("[글로파인드] 새 상담 신청 — {$company} {$name}") . '?=';
-            $body = "새 상담 신청이 접수되었습니다. (#{$id})\n\n"
-                  . "회사명: {$company}\n담당자: {$name}\n이메일: {$email}\n연락처: {$phone}\n"
-                  . "관심 서비스: {$services[$service]}\n진출 희망 지역: {$country}\n\n"
-                  . "문의 내용:\n{$message}\n\n관리자: " . SITE_URL . "/admin/inquiries.php\n";
-            $headers = "From: " . ADMIN_EMAIL . "\r\nReply-To: {$email}\r\nContent-Type: text/plain; charset=UTF-8\r\n";
-            @mail($to, $subject, $body, $headers);
-        }
+        require_once __DIR__ . '/mail.php';
+        $to = mail_recipients((string)$db->setting('notify_email', ''), ADMIN_EMAIL);
+        [$subj, $text, $html] = inquiry_mail_body([
+            'id' => $id, 'company' => $company, 'name' => $name, 'email' => $email, 'phone' => $phone,
+            'service' => $service, 'country' => $country, 'message' => $message, 'created_at' => date('Y-m-d H:i'),
+        ], $services, SITE_URL . '/admin/inquiries.php?open=' . $id);
+        send_html_mail($to, $subj, $text, $html, ADMIN_EMAIL, $email);
     } catch (Throwable $e) { error_log('[inquiry] mail: ' . $e->getMessage()); }
 
     out(true, '문의가 접수되었습니다.');
