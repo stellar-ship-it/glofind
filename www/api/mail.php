@@ -40,7 +40,7 @@ function inquiry_mail_body(array $q, array $services, string $adminUrl): array {
       . '<tr><td style="padding:28px 32px 22px;border-bottom:1px solid #E5E8EB">'
       . '<div style="font-family:Montserrat,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#00ADBD">Glofind · New inquiry</div>'
       . '<div style="font-size:22px;font-weight:600;letter-spacing:-.02em;color:#191F28;margin-top:10px">새 상담 신청이 접수되었습니다</div>'
-      . '<div style="font-size:14px;color:#6B7684;margin-top:6px">접수번호 #' . (int)$q['id'] . ' · 1영업일 내 회신 약속</div></td></tr>'
+      . '<div style="font-size:14px;color:#6B7684;margin-top:6px">접수번호 #' . (int)$q['id'] . '</div></td></tr>'
       . '<tr><td style="padding:8px 32px 4px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' . $tr . '</table></td></tr>'
       . '<tr><td style="padding:20px 32px 0"><div style="font-size:14px;font-weight:500;color:#6B7684;margin-bottom:8px">문의 내용</div>'
       . '<div style="padding:16px 18px;background:#FAFBFD;border:1px solid #F2F5F8;font-size:15px;line-height:1.75;color:#191F28;white-space:pre-wrap">' . $e($q['message']) . '</div></td></tr>'
